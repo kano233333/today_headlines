@@ -11,6 +11,13 @@ import Car from '../car'
 export default [
   {
     path: '/',
+    component:Recommend,
+    meta: {
+      keepAlive: true
+    }
+  },
+  {
+    path: '/Recommend',
     name: "Recommend",
     component: Recommend,
     meta: {

@@ -25,7 +25,6 @@ Vue.use(api)
 //自定义css
 import './assets/css/reset.css'
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

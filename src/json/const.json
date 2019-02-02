@@ -1,0 +1,13 @@
+{
+  "nav":{
+    "推荐":"Recommend",
+    "热点":"Hot",
+    "科技":"Tech",
+    "娱乐":"Entertainment",
+    "游戏":"Game",
+    "体育":"Sports",
+    "汽车":"Car",
+    "财经":"Finance",
+    "搞笑":"Funny"
+  }
+}
