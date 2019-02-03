@@ -1,8 +1,12 @@
 <template>
   <div id="nav">
-    <ul>
-      <li v-for="(value,key,index) in constData['nav']">
-        <router-link :to="value">{{key}}</router-link>
+    <img src="../assets/img/logo.png">
+    <ul class="nav_ul">
+      <li v-for="(value,key,index) in constData['nav']" v-show="index<12">
+        <router-link v-show="index<12" :to="value">{{key}}</router-link>
+      </li>
+      <li>
+        <a>更多</a>
       </li>
     </ul>
   </div>
@@ -23,8 +27,15 @@
 <style scoped lang="less">
   /*在小于768像素的屏幕*/
   @media (max-width: 767px) {
-    html #nav ul {
-      display: flex;
+    html #nav {
+      >img {
+        width:0;
+        height:0;
+        display:block;
+      }
+      .nav_ul {
+        display: flex;
+      }
     }
   }
   /*在768和991像素之间的屏幕*/
@@ -35,11 +46,34 @@
   @media (min-width: 1200px) {}
 
   #nav {
-    min-width:200px;
-    ul {
+    min-width:120px;
+    >img {
+      width:100%;
+      max-width:120px;
+      max-height: 60px;
+    }
+    .nav_ul {
       display: block;
       li {
-        padding:8px 10px;
+        text-align: center;
+        min-width:40px;
+        a {
+          display: block;
+          color:#666;
+          padding:12px 0;
+          margin:2px 0;
+          transition:0.5s all;
+        }
+        a:hover {
+          color:#fff;
+          background-color:#ED4040;
+          border-radius:5px;
+        }
+        .link_active {
+          color:#fff;
+          background-color:#ED4040;
+          border-radius:5px;
+        }
       }
     }
   }

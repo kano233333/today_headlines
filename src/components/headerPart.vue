@@ -22,7 +22,7 @@
     color:#fff;
     font-size:15px;
     .header_row>div{
-      padding:5px 0;
+      padding:8px 0;
     }
   }
 </style>

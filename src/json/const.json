@@ -8,6 +8,13 @@
     "体育":"Sports",
     "汽车":"Car",
     "财经":"Finance",
-    "搞笑":"Funny"
+    "搞笑":"Funny",
+    "军事":"Military",
+    "国际":"World",
+    "旅游":"Travel",
+    "历史":"History",
+    "养生":"Regimen",
+    "美文":"Essay",
+    "探索":"Discovery"
   }
 }

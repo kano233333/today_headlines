@@ -57,7 +57,7 @@ export default {
 }
   .main {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     /*min-height: calc(100vh - 150px);*/
     >div {
       border:1px solid chocolate;
@@ -66,7 +66,7 @@ export default {
       max-width:20%;
     }
     .main_news {
-      min-width:55%;
+      min-width:65%;
     }
   }
 </style>
