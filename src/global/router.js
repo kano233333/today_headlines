@@ -8,6 +8,6 @@ export default new Router({
   routes: [
     ...index
   ],
-  mode:'history',
+  mode:'hash',
   linkActiveClass:'link_active'
 })

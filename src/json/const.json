@@ -1,20 +1,21 @@
 {
   "nav":{
-    "推荐":"Recommend",
-    "热点":"Hot",
-    "科技":"Tech",
-    "娱乐":"Entertainment",
-    "游戏":"Game",
-    "体育":"Sports",
-    "汽车":"Car",
-    "财经":"Finance",
-    "搞笑":"Funny",
-    "军事":"Military",
-    "国际":"World",
-    "旅游":"Travel",
-    "历史":"History",
-    "养生":"Regimen",
-    "美文":"Essay",
-    "探索":"Discovery"
+    "推荐":"recommend",
+    "热点":"hot",
+    "科技":"tech",
+    "娱乐":"entertainment",
+    "游戏":"game",
+    "体育":"sports",
+    "汽车":"car",
+    "财经":"finance",
+    "搞笑":"funny",
+    "军事":"military",
+    "国际":"world",
+    "旅游":"travel",
+    "历史":"history",
+    "养生":"regimen",
+    "美文":"essay",
+    "探索":"discovery",
+    "育儿":"baby"
   }
 }

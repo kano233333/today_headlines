@@ -66,7 +66,10 @@ export default {
       max-width:20%;
     }
     .main_news {
-      min-width:65%;
+      min-width:55%;
+    }
+    .main_other {
+      min-width:25%;
     }
   }
 </style>

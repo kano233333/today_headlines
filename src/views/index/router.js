@@ -17,72 +17,72 @@ export default [
     }
   },
   {
-    path: '/Recommend',
-    name: "Recommend",
+    path: '/recommend',
+    name: "recommend",
     component: Recommend,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Tech',
-    name: "Tech",
+    path: '/tech',
+    name: "tech",
     component: Tech,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Hot',
-    name: "Hot",
+    path: '/hot',
+    name: "hot",
     component: Hot,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Sports',
-    name: "Sports",
+    path: '/sports',
+    name: "sports",
     component: Sports,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Game',
-    name: "Game",
+    path: '/game',
+    name: "game",
     component: Game,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Funny',
-    name: "Funny",
+    path: '/funny',
+    name: "funny",
     component: Funny,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Finance',
-    name: "Finance",
+    path: '/finance',
+    name: "finance",
     component: Finance,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Entertainment',
-    name: "Entertainment",
+    path: '/entertainment',
+    name: "entertainment",
     component: Entertainment,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/Car',
-    name: "Car",
+    path: '/car',
+    name: "car",
     component: Finance,
     meta: {
       keepAlive: true
