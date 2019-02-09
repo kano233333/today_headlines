@@ -1,7 +1,7 @@
 <template>
   <div id="recommend">
     <img-play></img-play>
-    <news-list v-for="(value,index) in list"></news-list>
+    <news-list v-for="item in list"></news-list>
   </div>
 </template>
 

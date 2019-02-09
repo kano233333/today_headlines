@@ -1,32 +1,31 @@
 <template>
-  <div id="app">
-    <!--<header-part v-show=""></header-part>-->
-    <!--<div class="main">-->
-      <!--<div class="main_nav" v-show="">-->
-        <!--<nav-part></nav-part>-->
-      <!--</div>-->
-      <!--<div class="main_news">-->
+  <div id="index">
+    <header-part></header-part>
+    <div class="main">
+      <div class="main_nav">
+        <nav-part></nav-part>
+      </div>
+      <div class="main_news">
         <router-view></router-view>
-      <!--</div>-->
-      <!--<div class="main_other" v-show="">right</div>-->
-    <!--</div>-->
-    <!--&lt;!&ndash;<footer-part></footer-part>&ndash;&gt;-->
+      </div>
+      <div class="main_other">right</div>
+    </div>
   </div>
 </template>
 
 <script>
-import HeaderPart from './components/headerPart'
-import NavPart from './components/navPart'
-import FooterPart from './components/footerPart'
+  import HeaderPart from '../../components/headerPart'
+  import NavPart from '../../components/navPart'
+  import FooterPart from '../../components/footerPart'
 
-export default {
-  name: 'App',
-  components:{
-    HeaderPart,
-    NavPart,
-    FooterPart
+  export default {
+    name: 'index',
+    components:{
+      HeaderPart,
+      NavPart,
+      FooterPart
+    }
   }
-}
 </script>
 
 <style lang="less">
@@ -51,10 +50,10 @@ export default {
   @media (min-width: 992px) and (max-width: 1199px) {}
   /*在大于1200像素的屏幕*/
   @media (min-width: 1200px) {}
-  #app{
-  display: flex;
-  flex-direction:column;
-}
+  #index{
+    display: flex;
+    flex-direction:column;
+  }
   .main {
     display: flex;
     justify-content: center;
