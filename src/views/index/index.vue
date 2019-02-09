@@ -8,7 +8,11 @@
       <div class="main_news">
         <router-view></router-view>
       </div>
-      <div class="main_other">right</div>
+      <div class="main_other">
+        <Search></Search>
+        <sign-card class="sign_margin"></sign-card>
+        <hot-news></hot-news>
+      </div>
     </div>
   </div>
 </template>
@@ -17,13 +21,19 @@
   import HeaderPart from '../../components/headerPart'
   import NavPart from '../../components/navPart'
   import FooterPart from '../../components/footerPart'
+  import Search from '../../components/search'
+  import SignCard from '../../components/signCard'
+  import HotNews from '../../components/hotNews'
 
   export default {
     name: 'index',
     components:{
       HeaderPart,
       NavPart,
-      FooterPart
+      FooterPart,
+      Search,
+      SignCard,
+      HotNews
     }
   }
 </script>
@@ -59,7 +69,9 @@
     justify-content: center;
     /*min-height: calc(100vh - 150px);*/
     >div {
-      border:1px solid chocolate;
+      padding-top:15px;
+      margin:0 5px;
+      /*border:1px solid chartreuse;*/
     }
     .main_nav {
       max-width:20%;
@@ -68,7 +80,10 @@
       min-width:55%;
     }
     .main_other {
-      min-width:25%;
+      max-width:25%;
+      .sign_margin {
+        margin:20px 0;
+      }
     }
   }
 </style>

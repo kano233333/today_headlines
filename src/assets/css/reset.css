@@ -51,6 +51,25 @@ a{
 	text-decoration: none;
 }
 
-input, textarea{
-	border: 1px solid #eee;
+input,button, textarea{
+	border: 1px solid #cecece;
+	outline: none;
+	color:#bdbdbd;
+}
+
+input::-webkit-input-placeholder{
+	color:#bdbdbd;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+	color:#bdbdbd;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+	color:#bdbdbd;
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+	color:#bdbdbd;
+}
+
+button {
+
 }

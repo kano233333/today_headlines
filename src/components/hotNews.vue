@@ -1,6 +1,6 @@
 <template>
-  <div id="recommend">
-    <img-play></img-play>
+  <div class="hot_news">
+    <h3>24小时热闻</h3>
     <div class="news_list">
       <a class="list" v-for="item in list">
         <news-bar :data="item"></news-bar>
@@ -11,11 +11,10 @@
 </template>
 
 <script>
-  import imgPlay from '../../components/imgPlay'
-  import newsBar from '../../components/newsBar'
+  import NewsBar from './newsBar'
 
   export default {
-    name: "index",
+    name: "hotNews",
     data(){
       return {
         list:[
@@ -43,20 +42,28 @@
       }
     },
     components:{
-      imgPlay,
-      newsBar
+      NewsBar
     }
   }
 </script>
 
 <style scoped lang="less">
+  .hot_news {
+    padding:20px 15px;
+    background-color:#F4F5F6;
+    border-top:5px solid #ef5353;
+    h3 {
+      font-size:18px;
+      font-weight:700;
+    }
+  }
+
   .news_list {
-    margin-top:20px;
     .list {
       display: block;
       margin:15px 0;
-      height:100/1499*100vw;
-      font-size:18px;
+      height:65/1499*100vw;
+      font-size:14px;
     }
     a {
       color:#666;

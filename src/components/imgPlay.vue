@@ -86,8 +86,6 @@
 <style scoped lang="less">
   #img_play {
     height: 300px;
-    border:1px solid chocolate;
-    padding:15px;
     display: flex;
     .img_show {
       width:90%;
