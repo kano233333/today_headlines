@@ -33,7 +33,8 @@
         transition:0.5s all;
       }
       img:hover {
-        transform:scale(1.2);
+        width:120%;
+        height:120%;
       }
     }
     .bar_detail {

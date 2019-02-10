@@ -2,7 +2,10 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-* {transition:0.3s all;}
+* {
+	transition:0.3s all;
+	/*animation:0.5s Show forwards;*/
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -70,6 +73,38 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 	color:#bdbdbd;
 }
 
-button {
+hr {
+	height:1px;
+	border:none;
+	background-color: #dddedd
+}
+.weather_air {
+	background-color: rgb(92, 191, 76);
+	color:#fff;
+	padding:2px 5px;
+	border-radius:8px;
+}
 
+@keyframes Show {
+	0% {
+		opacity:0;
+		transform:scale(0);
+	}
+	100% {
+		opacity:1;
+		transform:scale(1);
+	}
+}
+
+.ivu-dropdown-rel {
+	border:1px solid #dddedd;
+	border-radius:10%;
+	padding:8px;
+}
+.ivu-dropdown {
+	margin-left: 0;
+}
+.ivu-dropdown-menu {
+	max-height:200px;
+	overflow-y: scroll;
 }

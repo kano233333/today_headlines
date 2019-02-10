@@ -65,6 +65,7 @@
     flex-direction:column;
   }
   .main {
+    /*z-index:-1;*/
     display: flex;
     justify-content: center;
     /*min-height: calc(100vh - 150px);*/
