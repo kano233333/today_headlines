@@ -4,8 +4,14 @@
       <p>
         登录后可以保存您的浏览喜好、评论、收藏，并与APP同步更可以发布微头条
       </p>
-      <Button class="in">登录</Button>
-      <Button type="primary">注册</Button>
+      <router-link to="signIn">
+        <Button class="in">
+          登录
+        </Button>
+      </router-link>
+      <router-link to="signIn">
+        <Button type="primary">注册</Button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -38,16 +44,12 @@
         line-height:1.5;
       }
       button {
-        width:60%;
-        margin:10px;
+        width:65%;
+        display: block;
+        margin:10px auto;
       }
-      .in {
-        background-color:#ef5353;
-        border:none;
-        color:#fff;
-      }
-      .in:hover {
-        background-color: #ef827e;
+      a {
+        width:100%;
       }
     }
   }
