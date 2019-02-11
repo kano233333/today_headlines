@@ -7,8 +7,11 @@ import Funny from '../funny'
 import Finance from '../finance'
 import Entertainment from '../entertainment'
 import Car from '../car'
-import SignIn from '../user/signIn'
+import Sign from '../user/sign'
 import index from './index'
+import Login from '../user/in'
+import Register from '../user/register'
+
 export default [
   {
     path: '/',
@@ -93,8 +96,18 @@ export default [
     ]
   },
   {
-    path:'/signIn',
-    name:'signIn',
-    component: SignIn
+    path:'/sign',
+    name:'sign',
+    component: Sign,
+    children:[
+      {
+        path:'/sign/in',
+        component:Login
+      },
+      {
+        path:'/sign/register',
+        component:Register
+      }
+    ]
   }
 ]

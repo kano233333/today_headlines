@@ -4,7 +4,7 @@
       <p>
         登录后可以保存您的浏览喜好、评论、收藏，并与APP同步更可以发布微头条
       </p>
-      <router-link to="signIn">
+      <router-link to="sign/in">
         <Button class="in">
           登录
         </Button>
