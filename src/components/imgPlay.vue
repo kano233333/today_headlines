@@ -1,7 +1,7 @@
 <template>
   <div id="img_play" @mouseenter="clear()" @mouseleave="play()">
     <div class="img_show" ref="imgs">
-      <img v-for="(value,index) in imgs" :src="value.src" :style="{'height':imgOpacity(index)}">
+      <img v-for="(value,index) in imgs" :src="value.src" :style="{'opacity':imgOpacity(index)}">
       <p class="img_title">{{imgs[imgIndex].title}}</p>
     </div>
     <div class="img_nav">
@@ -64,7 +64,7 @@
       },
       imgOpacity(index){
         if(index===this.imgIndex){
-          return '100%';
+          return '1';
         } else {
           return '0';
         }

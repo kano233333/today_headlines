@@ -3,7 +3,7 @@
     <img src="../assets/img/logo.png">
     <ul class="nav_ul">
       <li v-for="(value,key,index) in constData['nav']" v-show="index<12">
-        <router-link v-show="index<12" :to="value">{{key}}</router-link>
+        <router-link v-show="index<12" :to="key">{{value}}</router-link>
       </li>
       <li>
         <a>更多</a>

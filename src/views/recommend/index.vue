@@ -22,22 +22,38 @@
           {
             title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
             imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:0
+            id:0,
+            author:'中国科技协会',
+            time:'2018',
+            type:'finance',
+            recommendNum:12
           },
           {
             title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
             imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:1
+            id:1,
+            author:'中国科技协会',
+            time:'2018',
+            type:'baby',
+            recommendNum:5
           },
           {
             title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
             imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:2
+            id:2,
+            author:'中国科技协会',
+            time:'2018',
+            type:'history',
+            recommendNum:15
           },
           {
             title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
             imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:3
+            id:3,
+            author:'中国科技协会',
+            time:'2018',
+            type:'tech',
+            recommendNum:18
           }
         ]
       }

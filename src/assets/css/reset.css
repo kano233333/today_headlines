@@ -108,3 +108,7 @@ hr {
 	max-height:200px;
 	overflow-y: scroll;
 }
+
+.main_news .bar_detail p:nth-of-type(1){
+	font-weight:700;
+}
