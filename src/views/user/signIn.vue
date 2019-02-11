@@ -128,11 +128,10 @@
       position: relative;
     }
     .main_bg {
-      transform: scale(0.9);
+      transform: scale(0.5);
       position:absolute;
-      top:-230px;
-      left:-300px;
-      /*z-index: -1;*/
+      top:-330px;
+      left:-80px;
     }
   }
 </style>
