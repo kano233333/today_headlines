@@ -11,6 +11,9 @@ import Sign from '../user/sign'
 import index from './index'
 import Login from '../user/in'
 import Register from '../user/register'
+import Center from '../user/center'
+import Search from '../search/index'
+import Article from '../article/detail'
 
 export default [
   {
@@ -109,5 +112,17 @@ export default [
         component:Register
       }
     ]
+  },
+  {
+    path:'/usercenter',
+    component:Center
+  },
+  {
+    path:'/search',
+    component:Search
+  },
+  {
+    path:'/article/:id',
+    component:Article
   }
 ]

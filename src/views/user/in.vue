@@ -1,23 +1,25 @@
 <template>
   <div class="sign_main">
-      <img class="main_bg" src="../../assets/img/sign_in_bg.png">
-      <div class="username">
-        <sicon name="username" scale="3.0"></sicon>
-        <input type="text" placeholder="用户名">
-      </div>
-      <div class="passwd">
-        <sicon name="passwd" scale="3.0"></sicon>
-        <input :type="inputType" placeholder="密码">
-        <span @click="isSee=true">
-          <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
-        </span>
-        <span @click="isSee=false">
-          <sicon class="eye" name="not_see" scale="3.0" v-show="isSee"></sicon>
-        </span>
-      </div>
-      <p class="tip">登录即表示你同意 <a>用户协议</a> 和 <a>隐私条款</a> <a>忘记密码</a></p>
-      <Button class="in">登录</Button>
+    <img class="main_bg" src="../../assets/img/sign_in_bg.png">
+    <div class="username">
+      <sicon name="username" scale="3.0"></sicon>
+      <input type="text" placeholder="用户名">
+    </div>
+    <div class="passwd">
+      <sicon name="passwd" scale="3.0"></sicon>
+      <input :type="inputType" placeholder="密码">
+      <span @click="isSee=true">
+        <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
+      </span>
+      <span @click="isSee=false">
+        <sicon class="eye" name="not_see" scale="3.0" v-show="isSee"></sicon>
+      </span>
+    </div>
+    <p class="tip">登录即表示你同意 <a>用户协议</a> 和 <a>隐私条款</a> <a>忘记密码</a></p>
+    <Button class="in">登录</Button>
+    <router-link to="/sign/register">
       <Button type="primary">注册</Button>
+    </router-link>
     </div>
 </template>
 

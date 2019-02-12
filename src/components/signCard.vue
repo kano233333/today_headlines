@@ -9,7 +9,7 @@
           登录
         </Button>
       </router-link>
-      <router-link to="signIn">
+      <router-link to="sign/register">
         <Button type="primary">注册</Button>
       </router-link>
     </div>

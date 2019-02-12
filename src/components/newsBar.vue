@@ -6,8 +6,12 @@
     <div class="bar_detail">
       <p>{{data.title}}</p>
       <p class="from">
-        <span :style="{'color':constData['nav_color'][data.type],'border':'1px solid '+constData['nav_color'][data.type]}" v-if="data.type!==undefined">{{constData['nav'][data.type]}}</span>
-        <span class="author" v-if="data.author!==undefined">{{data.author}}</span>
+        <router-link :to="'/'+data.type">
+          <span :style="{'color':constData['nav_color'][data.type],'border':'1px solid '+constData['nav_color'][data.type]}" v-if="data.type!==undefined">{{constData['nav'][data.type]}}</span>
+        </router-link>
+        <router-link :to="'/usercenter'">
+          <span class="author" v-if="data.author!==undefined">{{data.author}}</span>
+        </router-link>
         <span class="recommend" v-if="data.recommendNum!==undefined">·{{data.recommendNum}}评论·</span>
         <span v-if="data.time!==undefined">{{data.time}}</span>
       </p>
@@ -36,6 +40,7 @@
     align-items:center;
     height:100%;
     cursor: default;
+    animation:0.5s Show forwards;
     .bar_img {
       width:20%;
       height:100%;

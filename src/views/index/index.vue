@@ -9,7 +9,7 @@
         <router-view></router-view>
       </div>
       <div class="main_other">
-        <Search></Search>
+        <Search type="0"></Search>
         <sign-card class="sign_margin"></sign-card>
         <hot-news></hot-news>
       </div>
