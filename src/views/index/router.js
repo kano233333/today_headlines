@@ -123,6 +123,7 @@ export default [
   },
   {
     path:'/article/:id',
-    component:Article
+    component:Article,
+    name:'article'
   }
 ]

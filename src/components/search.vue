@@ -79,6 +79,19 @@
     mounted(){
       this.value = this.searchVal;
       this.loadingShow = true;
+      if(this.searchVal!==''){
+        this.list = [
+          {
+            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
+            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
+            id:1,
+            author:'中国科技协会',
+            time:'2018',
+            recommendNum:5
+          }
+        ];
+        this.$store.state.searchList = this.list;
+      }
     }
   }
 </script>

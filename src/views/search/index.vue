@@ -62,6 +62,9 @@
           this.loadingShow = false;
         }
       }
+    },
+    mounted(){
+      //axios
     }
   }
 </script>
