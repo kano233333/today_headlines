@@ -2,7 +2,7 @@
   <div class="hot_news">
     <h3>24小时热闻</h3>
     <div class="news_list">
-      <router-link :to="'/article/'+item.id" class="list" v-for="item in list">
+      <router-link :to="'/article/'+item.id" class="list" v-for="item in list" :key="item.id">
         <news-bar :data="item"></news-bar>
         <hr />
       </router-link>

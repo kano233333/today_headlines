@@ -15,7 +15,7 @@
         <p @click="searchOne(1)" :class="{'active':active(1)}">用户</p>
       </div>
       <div class="list_wrap" v-show="!loadingShow">
-        <router-link :to="'/article/'+item.id" class="list" v-for="item in this.$store.state.searchList">
+        <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in this.$store.state.searchList" :key="item.id">
           <news-bar :data="item"></news-bar>
           <hr />
         </router-link>

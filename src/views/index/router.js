@@ -105,17 +105,26 @@ export default [
     children:[
       {
         path:'/sign/in',
-        component:Login
+        component:Login,
+        meta: {
+          keepAlive: true
+        }
       },
       {
         path:'/sign/register',
-        component:Register
+        component:Register,
+        meta: {
+          keepAlive: true
+        }
       }
     ]
   },
   {
     path:'/usercenter',
-    component:Center
+    component:Center,
+    meta: {
+      keepAlive: true
+    }
   },
   {
     path:'/search',
@@ -124,6 +133,9 @@ export default [
   {
     path:'/article/:id',
     component:Article,
-    name:'article'
+    name:'article',
+    meta: {
+      keepAlive: true
+    }
   }
 ]

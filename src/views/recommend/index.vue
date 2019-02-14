@@ -2,7 +2,7 @@
   <div id="recommend">
     <img-play></img-play>
     <div class="news_list">
-      <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list">
+      <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list" :key="item.id">
         <news-bar :data="item"></news-bar>
         <hr />
       </router-link>

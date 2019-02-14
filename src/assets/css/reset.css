@@ -113,6 +113,12 @@ hr {
   color:#fff;
 }
 
+.art .art_main img {
+	display: block;
+	margin:20px auto;
+  max-width:100%;
+}
+
 
 
 
