@@ -11,7 +11,7 @@
       </div>
       <div class="main_center">
         <h1 class="title">{{proData.title}}</h1>
-        <div class="f_title">{{artData.publishMan}} · {{artData.publishTime}}</div>
+        <div class="f_title">{{proData.author}} · {{proData.time}}</div>
         <hr />
         <p v-html="artData.content" ref="article"></p>
         <div class="star_jb">
@@ -19,13 +19,13 @@
             <i :class="{'i_active':isStar}">⚝</i>收藏
           </div>
         </div>
-        <comment></comment>
+        <comment :data="proData"></comment>
       </div>
       <div class="main_right">
         <div class="user">
           <div class="user_head">
             <!--<img src="" alt="">-->
-            <router-link to="/usercenter">{{artData.publishMan}}</router-link>
+            <router-link to="/usercenter">{{proData.author}}</router-link>
             <div class="follow">
               <follow :uid="2" :id="proData.id" :isfollow="1"></follow>
             </div>
@@ -33,7 +33,6 @@
         </div>
       </div>
     </div>
-    <div id="none" v-show="false"></div>
   </div>
 </template>
 
