@@ -1,23 +1,19 @@
 <template>
-  <div id="recommend">
-    <img-play v-if="false"></img-play>
-    <write></write>
-    <div class="news_list">
-      <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list" :key="item.id">
-        <news-bar :data="item"></news-bar>
-        <hr />
-      </router-link>
-    </div>
+  <div class="star">
+    <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list" :key="item.id">
+      <news-bar :data="item"></news-bar>
+      <hr />
+    </router-link>
   </div>
 </template>
 
 <script>
-  import imgPlay from '../../components/imgPlay'
-  import newsBar from '../../components/newsBar'
-  import Write from '../../components/write'
-
+  import NewsBar from '../../components/newsBar'
   export default {
-    name: "index",
+    name: "star",
+    components:{
+      NewsBar
+    },
     data(){
       return {
         list:[
@@ -60,17 +56,12 @@
         ]
       }
     },
-    components:{
-      imgPlay,
-      newsBar,
-      Write
-    }
   }
 </script>
 
 <style scoped lang="less">
-  .news_list {
-    margin-top:20px;
+  .star {
+    margin:20px;
     .list {
       display: block;
       margin:15px 0;

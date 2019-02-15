@@ -37,5 +37,13 @@
     "essay":"#bf8195",
     "discovery":"DEB20A",
     "baby":"#a2bfb1"
+  },
+  "userArt":{
+    "wei":"微头条",
+    "comment":"评论",
+    "star":"收藏",
+    "follow":"关注",
+    "fans":"粉丝",
+    "set":"个人设置"
   }
 }

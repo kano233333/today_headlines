@@ -10,7 +10,8 @@
       </div>
       <div class="main_other">
         <Search type="0"></Search>
-        <sign-card class="sign_margin"></sign-card>
+        <sign-card class="sign_margin" v-if="false"></sign-card>
+        <in-card></in-card>
         <hot-news></hot-news>
       </div>
     </div>
@@ -24,6 +25,7 @@
   import Search from '../../components/search'
   import SignCard from '../../components/signCard'
   import HotNews from '../../components/hotNews'
+  import InCard from '../../components/in_card'
 
   export default {
     name: 'index',
@@ -33,7 +35,8 @@
       FooterPart,
       Search,
       SignCard,
-      HotNews
+      HotNews,
+      InCard
     }
   }
 </script>

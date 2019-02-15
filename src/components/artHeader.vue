@@ -4,7 +4,7 @@
       <router-link to="/">
         <img src="../assets/img/logo.png">
       </router-link>
-      <Breadcrumb>
+      <Breadcrumb v-if="type!==''">
         <BreadcrumbItem to="/">首页</BreadcrumbItem>
         <BreadcrumbItem :to="'/search?keyWord='+constData['nav'][type]">{{constData['nav'][type]}}</BreadcrumbItem>
         <BreadcrumbItem>正文</BreadcrumbItem>
@@ -22,7 +22,11 @@
 
   export default {
     name: "artHeader",
-    props:['type'],
+    props:{
+      'type':{
+        default:''
+      }
+      },
     data(){
       return {
         constData:constData

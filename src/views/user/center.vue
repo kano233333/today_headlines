@@ -1,14 +1,239 @@
 <template>
-  <div></div>
+  <div class="user_center">
+    <header-part></header-part>
+    <art-header></art-header>
+    <div class="user_main">
+      <div class="user_head">
+        <img :src="userData.imgUrl" alt="" @click="modal1=true">
+        <p>{{username}}
+          <router-link :to="{'name':'userset'}">设置</router-link>
+        </p>
+        <button v-if="true" @click="modal2=true">+发表微头条</button>
+        <div v-if="false">
+          <follow></follow>
+        </div>
+      </div>
+      <div class="user_lower">
+        <div class="user_art">
+          <ul>
+            <li v-for="(value,key,index) in constData['userArt']">
+              <router-link :to="{'name':'user'+key,'params':{'username':username,'imgUrl':userData.imgUrl}}">{{value}}</router-link>
+            </li>
+          </ul>
+          <hr />
+          <router-view></router-view>
+        </div>
+        <div class="user_num">
+          <div>
+            <p><router-link :to="{'name':'userfollow'}">{{userData.follow}}</router-link></p>
+            <p>关注</p>
+          </div>
+          <div>
+            <p><router-link :to="{'name':'userfans'}">{{userData.fans}}</router-link></p>
+            <p>粉丝</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <Modal v-model="modal1" title="更改头像" class="file">
+      <div class="file_wrap">
+        <Button type="primary" class="input_out">上传头像</Button>
+        <input type="file" @change="change()" id="file" ref="img">
+        <img :src="imgSrc" v-show="imgSrc!==''">
+      </div>
+    </Modal>
+
+    <Modal v-model="modal2" title="发表">
+      <write></write>
+      <div slot="footer"></div>
+    </Modal>
+  </div>
 </template>
 
 <script>
+  import HeaderPart from '../../components/headerPart'
+  import ArtHeader from '../../components/artHeader'
+  import constData from '../../json/const.json'
+  import Follow from '../../components/follow'
+  import Write from '../../components/write'
 
   export default {
-    name: "center"
+    name: "center",
+    data(){
+      return {
+        constData:constData,
+        userData:{
+          imgUrl:'https://b-ssl.duitang.com/uploads/item/201402/13/20140213053743_NjTUQ.thumb.700_0.jpeg',
+          follow:'12',
+          fans:'454'
+        },
+        modal1:false,
+        imgSrc:'',
+        modal2:false
+      }
+    },
+    props:{
+      username:{
+        default:'123'
+      }
+    },
+    components:{
+      HeaderPart,
+      ArtHeader,
+      Follow,
+      Write
+    },
+    created(){
+      //axios
+    },
+    methods:{
+      change(){
+        let file = this.$refs.img.files[0];
+        let reader = new FileReader();
+        let _this = this;
+        reader.onload = function(evt) {
+          _this.imgSrc = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+  .user_center {
+    background-color: #F4F5F6;
+    min-height:100vh;
+    .user_main {
+      width:80%;
+      margin:0 auto;
+    }
+    .user_head {
+      background-color: #fff;
+      margin-top:80px;
+      height:60px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      >img{
+        width:100px;
+        height:100px;
+        border-radius:50%;
+        position: absolute;
+        top:-60px;
+        left:40px;
+      }
+      >p {
+        font-size:25px;
+        font-weight:700;
+        margin-left:140px;
+        a {
+          color:#cecece;
+          font-size:15px;
+          font-weight:200;
+          border:1px solid #d8d9d8;
+          border-radius: 5px;
+        }
+        a:hover {
+          color:#828382;
+          box-shadow: 0 0 3px #828282;
+        }
+      }
+      >button {
+        background-color: #208eda;
+        padding:8px 15px;
+        font-size:16px;
+        letter-spacing: 3px;
+        border-radius:5px;
+        cursor: pointer;
+        margin-right:30px;
+        color:#fff;
+      }
+      >button:hover {
+        background-color: #239bee;
+      }
+      >div {
+        width:10%;
+        margin-right:30px;
+      }
+    }
+    .user_lower {
+      display: flex;
+      justify-content: space-between;
+      margin-top:30px;
+      .user_art {
+        width:70%;
+        background-color: #fff;
+        >ul {
+          display: flex;
+          font-size:18px;
+          li {
+            margin:0 20px;
+            padding: 10px 5px;
+            box-sizing: border-box;
+          }
+          a{
+            height:100%;
+            color:#666;
+            padding: 6px 5px;
+          }
+        }
+      }
+      .user_num {
+        width:25%;
+        height:100px;
+        background-color: #fff;
+        display: flex;
+        align-items:center;
+        >div {
+          flex:1;
+          color:#666;
+          p {
+            font-size:18px;
+            text-align:center;
+            line-height:2;
+          }
+          p:nth-of-type(1){
+            font-weight:700;
+          }
+          a {
+            color:#666;
+            border:none;
+          }
+        }
+      }
+      .link_active {
+        border-top:2px solid #ED4040;
+      }
+    }
+  }
+  .file {
+    .file_wrap{position: relative;}
+    .input_out {
+      font-size:14px;
+    }
+    input[type='file'] {
+      width:90px;
+      height:40px;
+      opacity: 0;
+      position: absolute;
+      top:0;
+      left:-0;
+      cursor: pointer;
+    }
+    img {
+      max-width:200px;
+      max-height:200px;
+      display: block;
+      padding:10px;
+      margin:10px;
+      border:1px solid #c3cacc;
+      box-shadow: 0 0 10px #c3cacc;
+      border-radius:5px;
+      animation: 0.5s Show forwards;
+    }
+  }
 </style>

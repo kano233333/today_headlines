@@ -14,6 +14,12 @@ import Register from '../user/register'
 import Center from '../user/center'
 import Search from '../search/index'
 import Article from '../article/detail'
+import Wei from '../user/wei'
+import UComment from '../user/comment'
+import Star from '../user/star'
+import Follow from '../user/followLits'
+import Fans from '../user/fansList'
+import Set from '../user/set'
 
 export default [
   {
@@ -120,11 +126,43 @@ export default [
     ]
   },
   {
-    path:'/usercenter',
+    path:'/user/:uid',
     component:Center,
     meta: {
       keepAlive: true
-    }
+    },
+    children:[
+      {
+        path:'/user/:uid/wei',
+        name:'userwei',
+        component:Wei
+      },
+      {
+        path:'/user/:uid/comment',
+        name:'usercomment',
+        component:UComment
+      },
+      {
+        path:'/user/:uid/star',
+        name:'userstar',
+        component:Star
+      },
+      {
+        path:'/user/:uid/follow',
+        name:'userfollow',
+        component:Follow
+      },
+      {
+        path:'/user/:uid/fans',
+        name:'userfans',
+        component:Fans
+      },
+      {
+        path:'/user/:uid/set',
+        name:'userset',
+        component:Set
+      }
+    ]
   },
   {
     path:'/search',
