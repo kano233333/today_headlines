@@ -5,58 +5,58 @@
         <li class="weather" @mouseenter="weatherDetail=true" @mouseleave="weatherDetail=false">
           <span>{{city}}</span>
           <span>{{tq}}</span>
-          <span>{{wd}}</span>
+          <span>{{wd[0]}}</span>
           <div class="weather_detail" v-show="weatherDetail">
             <div class="weather_header">
               <span class="city" @click="showWeather=!showWeather">{{city}}</span>
-              <span>东风</span>
-              <span class="weather_air">优</span>
+              <span>{{wind}}</span>
+              <!--<span class="weather_air">优</span>-->
             </div>
             <hr />
             <div class="weather_more" v-show="showWeather">
               <div>
                 <p>今天</p>
                 <img src="../assets/img/weather1.png">
-                <p>{{wd}}</p>
+                <p>{{wd[0]}}</p>
               </div>
               <div>
                 <p>明天</p>
                 <img src="../assets/img/weather2.png">
-                <p>{{wd}}</p>
+                <p>{{wd[1]}}</p>
               </div>
               <div>
                 <p>后天</p>
                 <img src="../assets/img/weather3.png">
-                <p>{{wd}}</p>
+                <p>{{wd[2]}}</p>
               </div>
             </div>
             <div class="choice_city" v-show="!showWeather">
               <div class="choice_city1" @mouseenter="cityShow=true" @mouseleave="cityShow=false">
                 <div class="city_click">
                   <button>
-                    {{citys[cityIndex].city}}
+                    {{constData['citys'][cityIndex].city}}
                     <Icon type="ios-arrow-down"></Icon>
                   </button>
                   <div class="list_wrap" v-show="cityShow">
                     <ul class="city_list">
-                      <li v-for="(value,index) in citys" @click="cityClick(index)">{{value.city}}</li>
+                      <li v-for="(value,index) in constData['citys']" @click="cityClick(index)">{{value.city}}</li>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div class="choice_city2" @mouseenter="countyShow=true" @mouseleave="countyShow=false">
-                <div class="city_click">
-                  <button>
-                    {{citys[cityIndex].county[countyIndex]}}
-                    <Icon type="ios-arrow-down"></Icon>
-                  </button>
-                  <div class="list_wrap" v-show="countyShow">
-                    <ul class="city_list">
-                      <li v-for="(value,index) in citys[cityIndex].county" @click="countyClick(index)">{{value}}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <!--<div class="choice_city2" @mouseenter="countyShow=true" @mouseleave="countyShow=false">-->
+                <!--<div class="city_click">-->
+                  <!--<button>-->
+                    <!--{{citys[cityIndex].county[countyIndex]}}-->
+                    <!--<Icon type="ios-arrow-down"></Icon>-->
+                  <!--</button>-->
+                  <!--<div class="list_wrap" v-show="countyShow">-->
+                    <!--<ul class="city_list">-->
+                      <!--<li v-for="(value,index) in citys[cityIndex].county" @click="countyClick(index)">{{value}}</li>-->
+                    <!--</ul>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
               <Button type="primary" size="default">确定</Button>
               <Button size="default">取消</Button>
             </div>
@@ -64,12 +64,8 @@
         </li>
       </ul>
       <ul class="header-right">
-        <li>
-          <router-link to="/signIn">登录</router-link>
-        </li>
         <li>反馈</li>
         <li>投诉</li>
-        <li>产品</li>
       </ul>
     </div>
   </header>
@@ -80,29 +76,30 @@
     name: "headerPart",
     data(){
       return {
-        wd:'小雨',
-        tq:'-1°/3°',
+        wd:['','',''],
+        tq:'',
+        wind:'',
         showWeather:true,
-        citys:[
-          {
-            'city':'重庆',
-            'county':['重庆']
-          },
-          {
-            'city':'四川',
-            'county':['南充','乐山']
-          }
-        ],
         cityIndex:0,
         countyIndex:0,
-        city:'',
+        city:this.$store.state.constData.citys[0].city,
         weatherDetail:false,
         cityShow:false,
-        countyShow:false
+        countyShow:false,
+        constData:this.$store.state.constData,
+        weather:{}
       }
     },
-    mounted(){
-      this.city = this.citys[0].county[0];
+    created(){
+      // this.$api.sendData('/api/userSignIn',{
+      //   // city:this.city
+      //   'email':'1232@qq.com',
+      //   'passwd':'122'
+      // }).then(function(data){
+      //   console.log(data);
+      //   data = this.weather;
+      //   // this.
+      // })
     },
     methods:{
       cityClick(index){
@@ -192,8 +189,9 @@
       }
     }
     .choice_city1 {
-      float:left;
-      margin:10px 0 0 20px;
+      /*float:left;*/
+      text-align: center;
+      margin:10px 0;
     }
     .choice_city2 {
       float: right;
@@ -246,6 +244,9 @@
       .list_wrap {
         position:absolute;
         top:32px;
+        left:0;
+        right:0;
+        margin:0 auto;
         width:75px;
         border:1px solid #c3c4c3;
         border-radius:5%;

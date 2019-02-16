@@ -29,7 +29,9 @@
         constData:constData,
       }
     },
-    props:['data']
+    props:{
+      'data':{},
+    }
   }
 </script>
 
@@ -40,7 +42,7 @@
     align-items:center;
     height:100%;
     cursor: default;
-    animation:0.5s Show forwards;
+    /*animation:0.5s Show forwards;*/
     .bar_img {
       width:20%;
       height:100%;

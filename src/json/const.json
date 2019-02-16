@@ -45,5 +45,25 @@
     "follow":"关注",
     "fans":"粉丝",
     "set":"个人设置"
-  }
+  },
+  "api":{
+    "weather":"/getWeather"
+  },
+  "citys":[
+    {
+      "city":"重庆"
+    },
+    {
+      "city":"北京"
+    },
+    {
+      "city":"成都"
+    },
+    {
+      "city":"深圳"
+    },
+    {
+      "city":"上海"
+    }
+  ]
 }

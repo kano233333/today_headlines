@@ -3,9 +3,14 @@
     <img src="../assets/img/logo.png">
     <ul class="nav_ul">
       <li v-for="(value,key,index) in constData['nav']" v-show="index<12">
-        <router-link v-show="index<12" :to="key">{{value}}</router-link>
+        <router-link :to="{'name':'other','params':{'type':key}}">{{value}}</router-link>
       </li>
-      <li>
+      <div class="more" ref="more" @mouseenter="showMore()" @mouseleave="hiddenMore()">
+        <li v-for="(value,key,index) in constData['nav']" v-show="index>=12">
+          <router-link :to="{'name':'other','params':{'type':key}}">{{value}}</router-link>
+        </li>
+      </div>
+      <li @mouseenter="showMore()" @mouseleave="hiddenMore()">
         <a>更多</a>
       </li>
     </ul>
@@ -20,6 +25,29 @@
       return {
         constData:constData
       }
+    },
+    methods:{
+      showMore(){
+        this.$refs.more.style.width = '120px';
+        this.$refs.more.style.height = 'auto';
+        this.$refs.more.style.padding = '10px';
+      },
+      hiddenMore(){
+        this.$refs.more.style.width = '0';
+        this.$refs.more.style.height = '0';
+        this.$refs.more.style.padding = '0';
+      },
+      handleScroll(){
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if(scrollTop>50){
+          document.getElementById('nav').style.top = '0';
+        }else{
+          document.getElementById('nav').style.top = '50px';
+        }
+      }
+    },
+    mounted(){
+      window.addEventListener('scroll', this.handleScroll)
     }
   }
 </script>
@@ -45,14 +73,21 @@
   /*在大于1200像素的屏幕*/
   @media (min-width: 1200px) {}
 
+  html .scrollTop {
+    top:0;
+  }
   #nav {
+    position:fixed;
+    top:50px;
     min-width:120px;
+    animation: 0.5s Show forwards;
     >img {
       width:100%;
       max-width:120px;
       max-height: 60px;
     }
     .nav_ul {
+      position:relative;
       display: block;
       li {
         text-align: center;
@@ -74,6 +109,18 @@
           background-color:#ED4040;
           border-radius:5px;
         }
+      }
+      .more {
+        position:absolute;
+        left:120px;
+        bottom:0;
+        background-color: #fff;
+        width:0;
+        height:0;
+        padding:0;
+        border-radius:10px;
+        overflow: hidden;
+        z-index: 222;
       }
     }
   }

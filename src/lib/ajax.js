@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 // 创建一个axios实例
 const ajax = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://localhost:3001' : 'http://localhost:3001',
+  //baseURL: process.env.NODE_ENV === 'production' ? 'http://localhost:8081' : 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json'
   },

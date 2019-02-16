@@ -1,7 +1,7 @@
 <template>
-  <div id="recommend">
-    <img-play v-if="false"></img-play>
-    <write></write>
+  <div id="other">
+    <img-play v-show="this.$route.params.type == 'recommend' && true"></img-play>
+    <write v-show="this.$route.params.type == 'recommend' && false"></write>
     <div class="news_list">
       <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list" :key="item.id">
         <news-bar :data="item"></news-bar>

@@ -23,56 +23,18 @@
     methods:{
       searchClick(){
         if(this.value===''){
-          this.$Notice.warning({
-            title: '警告',
-            desc:'请输入搜索内容'
-          });
+          this.$Message.info('请输入搜索内容')
         }else{
-          //axios
-          // this.$api.getData('').then(function(data){
-          //   this.list = data;
-          //   this.loadingShow = false;
-          // })
-          this.list = [
-            {
-              title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-              imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-              id:0,
-              author:'中国科技协会',
-              time:'2018',
-              recommendNum:12
-            },
-            {
-              title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-              imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-              id:1,
-              author:'中国科技协会',
-              time:'2018',
-              recommendNum:5
-            },
-            {
-              title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-              imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-              id:2,
-              author:'中国科技协会',
-              time:'2018',
-              recommendNum:15
-            },
-            {
-              title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-              imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-              id:3,
-              author:'中国科技协会',
-              time:'2018',
-              recommendNum:18
-            }
-          ];
-          this.$store.state.searchList = this.list;
-          if(this.type == 0){
-            this.$router.push({path:'/search',query:{keyWord:this.value}});
-          }else if(this.type==1){
+          this.$api.getData('/api/searchComprehensiveData?keyWord='+this.value).then(function(data){
+            this.list = data;
+            this.loadingShow = false;
+            this.$store.state.searchList = this.list;
+            if(this.type == 0){
+              this.$router.push({path:'/search',query:{keyWord:this.value}});
+            }else if(this.type==1){
 
-          }
+            }
+          })
         }
       }
     },

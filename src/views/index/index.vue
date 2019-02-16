@@ -14,6 +14,7 @@
         <in-card></in-card>
         <hot-news></hot-news>
       </div>
+      <BackTop></BackTop>
     </div>
   </div>
 </template>
@@ -55,6 +56,9 @@
         width:0;
         overflow: hidden;
       }
+      .main_news {
+        margin-left:0;
+      }
     }
   }
   /*在768和991像素之间的屏幕*/
@@ -82,6 +86,7 @@
     }
     .main_news {
       min-width:55%;
+      margin-left:150px;
     }
     .main_other {
       max-width:25%;

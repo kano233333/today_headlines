@@ -2,7 +2,7 @@
   <div class="hot_news">
     <h3>24小时热闻</h3>
     <div class="news_list">
-      <router-link :to="'/article/'+item.id" class="list" v-for="item in list" :key="item.id">
+      <router-link :to="{'name':'article','params':{'data':item,'id':item.id,'type':'0'}}" type="0" class="list" v-for="item in list" :key="item.id">
         <news-bar :data="item"></news-bar>
         <hr />
       </router-link>
@@ -43,6 +43,12 @@
     },
     components:{
       NewsBar
+    },
+    mounted(){
+      let _this = this;
+      this.$api.getData('/api/hotArticle').then(function(data){
+        _this.list = data;
+      })
     }
   }
 </script>

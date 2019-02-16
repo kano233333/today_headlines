@@ -3,11 +3,11 @@
     <img class="main_bg" src="../../assets/img/sign_in_bg.png">
     <div class="username">
       <sicon name="username" scale="3.0"></sicon>
-      <input type="text" placeholder="用户名">
+      <input v-model="email" type="text" placeholder="邮箱">
     </div>
     <div class="passwd">
       <sicon name="passwd" scale="3.0"></sicon>
-      <input :type="inputType" placeholder="密码">
+      <input v-model="passwd" :type="inputType" placeholder="密码">
       <span @click="isSee=true">
         <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
       </span>
@@ -16,7 +16,7 @@
       </span>
     </div>
     <p class="tip">登录即表示你同意 <a>用户协议</a> 和 <a>隐私条款</a> <a>忘记密码</a></p>
-    <Button class="in">登录</Button>
+    <Button class="in" @click="login()">登录</Button>
     <router-link to="/sign/register">
       <Button type="primary">注册</Button>
     </router-link>
@@ -28,8 +28,18 @@
     name: "in",
     data(){
       return {
-        isSee:false
+        isSee:false,
+        email:'',
+        passwd:''
       }
+    },
+    mounted(){
+      let form = new FormData();
+      form.append("type",'娱乐');
+      form.append("page",'1');
+      this.$api.sendData("/api/getArticle",form).then(function(data){
+        console.log(data)
+      })
     },
     computed:{
       inputType(){
@@ -37,6 +47,33 @@
           return "text";
         }else{
           return "password";
+        }
+      }
+    },
+    methods:{
+      login() {
+        let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+        if (this.email === '') {
+          this.$Message.info('请输入邮箱');
+        } else if (!reg.test(this.email)) {
+          this.$Message.info('请输入正确的邮箱格式');
+        } else if(this.passwd === ''){
+          this.$Message.info('请输入密码');
+        }else{
+          let _this = this;
+          this.$api.sendData('/api/userSignIn', {
+            'email': this.email,
+            'passwd': this.passwd
+          }).then(function (data) {
+            console.log(data);
+            if (data.static === -1) {
+              _this.$Message.info('用户名不存在')
+            } else if (data.static === 0) {
+              _this.$Message.info('密码错误')
+            } else if (data.static === 1) {
+              console.log(data)
+            }
+          })
         }
       }
     }

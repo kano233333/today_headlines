@@ -34,7 +34,7 @@
         </span>
     </div>
 
-    <Button class="bnt" type="primary">注册</Button>
+    <Button class="bnt" type="primary" v-show="otherShow">注册</Button>
   </div>
 </template>
 
@@ -87,6 +87,12 @@
               clearInterval(timer);
             }
           },1000);
+
+          this.$api.sendData('/api/userRegisterSendEmail',{
+            "email":_this.email
+          }).then(function(data){
+            console.log(data)
+          })
         }
       }
     }
