@@ -10,10 +10,10 @@
           <span :style="{'color':constData['nav_color'][data.type],'border':'1px solid '+constData['nav_color'][data.type]}" v-if="data.type!==undefined">{{constData['nav'][data.type]}}</span>
         </router-link>
         <!--<router-link :to="'/user'">-->
-          <span class="author" v-if="data.author!==undefined">{{data.author}}</span>
+          <span class="author" v-if="data.author!==undefined && type">{{data.author}}</span>
         <!--</router-link>-->
-        <span class="recommend" v-if="data.recommendNum!==undefined">·{{data.recommendNum}}评论·</span>
-        <span v-if="data.time!==undefined">{{data.time}}</span>
+        <span class="recommend" v-if="data.recommendNum!==undefined && type">·{{data.recommendNum}}评论·</span>
+        <span v-if="data.time!==undefined && type">{{data.time}}</span>
       </p>
     </div>
   </div>
@@ -31,6 +31,9 @@
     },
     props:{
       'data':{},
+      "type":{
+        default:1
+      }
     }
   }
 </script>

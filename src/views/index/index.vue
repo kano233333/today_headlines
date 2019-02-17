@@ -6,12 +6,13 @@
         <nav-part></nav-part>
       </div>
       <div class="main_news">
-        <router-view></router-view>
+        <!--刷新组件 重载数据-->
+        <router-view v-if="this.$store.state.freshIndex"></router-view>
       </div>
       <div class="main_other">
         <Search type="0"></Search>
-        <sign-card class="sign_margin" v-if="false"></sign-card>
-        <in-card></in-card>
+        <sign-card class="sign_margin" v-if="!this.$store.state.user.isLogin"></sign-card>
+        <in-card v-if="this.$store.state.user.isLogin"></in-card>
         <hot-news></hot-news>
       </div>
       <BackTop></BackTop>
@@ -38,6 +39,18 @@
       SignCard,
       HotNews,
       InCard
+    },
+    methods:{
+      isDL(){
+        let _this = this;
+        this.$api.getData('/api/isLogin').then((data)=>{
+          // _this.$store.state.user.isLogin = data.static;
+          _this.$store.state.user.isLogin = 1;
+        })
+      }
+    },
+    created(){
+      this.isDL();
     }
   }
 </script>

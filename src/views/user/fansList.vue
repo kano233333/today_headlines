@@ -1,8 +1,9 @@
 <template>
   <div class="fans">
-    <div v-for="item in data" class="fans_list">
+    <div v-if="data.length == 0" class="fans_list2">无</div>
+    <div @click="fansCenter(item.uid)" v-for="item in data" v-if="data.length !== 0" class="fans_list">
       <img :src="item.imgUrl" alt="">
-      <span>{{item.username}}</span>
+      <span>{{item.name}}</span>
     </div>
   </div>
 </template>
@@ -12,47 +13,27 @@
     name: "fansLits",
     data(){
       return {
-        data:[
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
-          },
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
-          },
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
-          },
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
-          },
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
-          },
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
-          },
-          {
-            username:'晒衣服',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201510/12/20151012184806_MCtvX.thumb.700_0.jpeg',
-            uid:'2'
+        data:[]
+      }
+    },
+    methods:{
+      fansCenter(uid){
+        this.$router.push({
+          'name':'userwei',
+          "params":{
+            uid:uid
           }
-        ]
+        })
       }
     },
     created(){
-      //this.$route.params.uid
+      let _this = this;
+      this.$api.sendData('/api/getfans',{
+        uid:this.$route.params.uid,
+        page:1
+      }).then((data)=>{
+        _this.data = data.data;
+      })
     }
   }
 </script>

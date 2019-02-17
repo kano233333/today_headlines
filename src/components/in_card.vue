@@ -2,8 +2,8 @@
   <div class="inCard">
     <div class="main">
       <div>
-      <img :src="data.imgUrl">
-      <p>{{data.name}}</p>
+        <img :src="data.imgUrl" @click="imgClick()">
+        <p>{{data.username}}</p>
       </div>
       <div>{{data.follow}}关注</div>
       <div>{{data.fans}}粉丝</div>
@@ -16,15 +16,18 @@
     name: "inCard",
     data(){
       return {
-        data: {
-            static:1,
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201206/17/20120617113024_wHZWY.thumb.700_0.png', //头像图片url
-            follow:'34', //关注数
-            fans:'12', //粉丝数
-            uid:'2',
-            name:'123'
-          }
+        data: this.$store.state.user
 
+      }
+    },
+    methods:{
+      imgClick(){
+        this.$router.push({
+          'name':'userwei',
+          "params":{
+            uid:this.data.uid
+          }
+        })
       }
     }
   }
@@ -54,6 +57,7 @@
         margin:0 auto;
         width:50px;
         height:50px;
+        cursor: pointer;
         border-radius:50%;
       }
       p {

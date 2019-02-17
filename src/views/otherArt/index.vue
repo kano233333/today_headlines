@@ -1,9 +1,9 @@
 <template>
   <div id="other">
-    <img-play v-show="this.$route.params.type == 'recommend' && true"></img-play>
-    <write v-show="this.$route.params.type == 'recommend' && false"></write>
+    <img-play v-if="this.$route.params.type == 'recommend' && !this.$store.state.user.isLogin"></img-play>
+    <write v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"  :url="'/api/userPublishArticle'" :me_type="3"></write>
     <div class="news_list">
-      <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list" :key="item.id">
+      <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="item.id">
         <news-bar :data="item"></news-bar>
         <hr />
       </router-link>
@@ -20,50 +20,29 @@
     name: "index",
     data(){
       return {
-        list:[
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:0,
-            author:'中国科技协会',
-            time:'2018',
-            type:'finance',
-            commentNum:12
-          },
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:1,
-            author:'中国科技协会',
-            time:'2018',
-            type:'baby',
-            commentNum:5
-          },
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:2,
-            author:'中国科技协会',
-            time:'2018',
-            type:'history',
-            commentNum:15
-          },
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:3,
-            author:'中国科技协会',
-            time:'2018',
-            type:'tech',
-            commentNum:18
-          }
-        ]
+        list:[]
       }
     },
     components:{
       imgPlay,
       newsBar,
       Write
+    },
+    methods:{
+    },
+    mounted(){
+      let _this = this;
+      let type = this.$store.state.constData['nav'][this.$route.params.type];
+
+      this.$api.sendData('/api/getArticle',{
+        'type':type,
+        'page':'1'
+      }).then(function(data){
+        for(let i=0;i<data.length; i++){
+          data[i].time = _this.$store.state.GMTToStr(data[i].time);
+        }
+        _this.list = data;
+      })
     }
   }
 </script>

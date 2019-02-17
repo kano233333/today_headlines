@@ -3,7 +3,7 @@
     <h3>24小时热闻</h3>
     <div class="news_list">
       <router-link :to="{'name':'article','params':{'data':item,'id':item.id,'type':'0'}}" type="0" class="list" v-for="item in list" :key="item.id">
-        <news-bar :data="item"></news-bar>
+        <news-bar :type="0" :data="item"></news-bar>
         <hr />
       </router-link>
     </div>
@@ -17,36 +17,22 @@
     name: "hotNews",
     data(){
       return {
-        list:[
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:0
-          },
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:1
-          },
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:2
-          },
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:3
-          }
-        ]
+        list:[]
       }
     },
     components:{
       NewsBar
     },
+    methods:{
+
+    },
     mounted(){
       let _this = this;
       this.$api.getData('/api/hotArticle').then(function(data){
+        console.log(data)
+        for(let i=0;i<data.length; i++){
+          data[i].time = _this.$store.state.GMTToStr(data[i].time);
+        }
         _this.list = data;
       })
     }

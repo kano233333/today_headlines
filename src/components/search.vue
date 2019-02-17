@@ -22,38 +22,17 @@
       },
     methods:{
       searchClick(){
+        let _this = this;
         if(this.value===''){
           this.$Message.info('请输入搜索内容')
         }else{
-          this.$api.getData('/api/searchComprehensiveData?keyWord='+this.value).then(function(data){
-            this.list = data;
-            this.loadingShow = false;
-            this.$store.state.searchList = this.list;
-            if(this.type == 0){
-              this.$router.push({path:'/search',query:{keyWord:this.value}});
-            }else if(this.type==1){
-
-            }
-          })
+          this.$router.push("/search/key?keyWord="+this.value);
+          this.$emit('getData');
         }
       }
     },
     mounted(){
-      this.value = this.searchVal;
       this.loadingShow = true;
-      if(this.searchVal!==''){
-        this.list = [
-          {
-            title:'洱海边洗车的刚走，烧烤的又来了！官方处罚结果通报',
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',
-            id:1,
-            author:'中国科技协会',
-            time:'2018',
-            recommendNum:5
-          }
-        ];
-        this.$store.state.searchList = this.list;
-      }
     }
   }
 </script>

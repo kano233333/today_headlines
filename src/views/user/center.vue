@@ -1,15 +1,22 @@
 <template>
-  <div class="user_center">
+  <div class="user_center" v-if="this.$store.state.freshIndex2">
     <header-part></header-part>
     <art-header></art-header>
     <div class="user_main">
       <div class="user_head">
-        <img :src="userData.imgUrl" alt="" @click="modal1=true">
-        <p>{{username}}
+        <img :src="userData.imgUrl" alt="" v-show="!isSelf">
+        <p v-show="!isSelf">
+          {{userData.username}}
+        </p>
+
+        <img style="cursor: pointer;" :src="this.$store.state.user.imgUrl" alt="" @click="modal1=true" v-show="isSelf">
+        <p v-show="isSelf">
+          {{this.$store.state.user.username}}
           <router-link :to="{'name':'userset'}">设置</router-link>
         </p>
-        <button v-if="true" @click="modal2=true">+发表微头条</button>
-        <div v-if="false">
+
+        <button @click="modal2=true" v-if="isSelf">+发表微头条</button>
+        <div v-if="!isSelf">
           <follow></follow>
         </div>
       </div>
@@ -37,7 +44,7 @@
     </div>
 
 
-    <Modal v-model="modal1" title="更改头像" class="file">
+    <Modal v-model="modal1" title="更改头像" class="file" @on-ok="ok">
       <div class="file_wrap">
         <Button type="primary" class="input_out">上传头像</Button>
         <input type="file" @change="change()" id="file" ref="img">
@@ -46,9 +53,11 @@
     </Modal>
 
     <Modal v-model="modal2" title="发表">
-      <write></write>
+      <write :url="'/api/userPublishArticle'" :me_type="3"></write>
       <div slot="footer"></div>
     </Modal>
+
+    <BackTop></BackTop>
   </div>
 </template>
 
@@ -64,19 +73,17 @@
     data(){
       return {
         constData:constData,
-        userData:{
-          imgUrl:'https://b-ssl.duitang.com/uploads/item/201402/13/20140213053743_NjTUQ.thumb.700_0.jpeg',
-          follow:'12',
-          fans:'454'
-        },
+        userData:{},
         modal1:false,
         imgSrc:'',
-        modal2:false
+        modal2:false,
+        file:'',
+        isSelf:false
       }
     },
     props:{
       username:{
-        default:'123'
+        default:''
       }
     },
     components:{
@@ -86,7 +93,17 @@
       Write
     },
     created(){
-      //axios
+      let _this = this;
+      window.onscroll = function(){}
+      this.$api.sendData('/api/getUserInfo',{
+        uid:this.$route.params.uid
+      }).then((data)=>{
+        _this.userData = data;
+      })
+
+      if(this.$store.state.user.uid == this.$route.params.uid){
+        this.isSelf = true;
+      }
     },
     methods:{
       change(){
@@ -97,6 +114,14 @@
           _this.imgSrc = evt.target.result;
         };
         reader.readAsDataURL(file);
+      },
+      ok(){
+        this.$api.sendData('/api/customeAvatar',{
+          'pic':this.$refs.img.files[0],
+          'uid':this.$store.state.user.uid
+        }).then(function(data){
+          console.log(data)
+        })
       }
     }
   }

@@ -33,14 +33,6 @@
         passwd:''
       }
     },
-    mounted(){
-      let form = new FormData();
-      form.append("type",'娱乐');
-      form.append("page",'1');
-      this.$api.sendData("/api/getArticle",form).then(function(data){
-        console.log(data)
-      })
-    },
     computed:{
       inputType(){
         if(this.isSee){
@@ -62,8 +54,8 @@
         }else{
           let _this = this;
           this.$api.sendData('/api/userSignIn', {
-            'email': this.email,
-            'passwd': this.passwd
+            "email":this.email,
+            "passwd":this.passwd
           }).then(function (data) {
             console.log(data);
             if (data.static === -1) {
@@ -71,7 +63,13 @@
             } else if (data.static === 0) {
               _this.$Message.info('密码错误')
             } else if (data.static === 1) {
-              console.log(data)
+              _this.$store.state.user.imgUrl = data.imgUrl;
+              _this.$store.state.user.follow = data.follow;
+              _this.$store.state.user.fans = data.fans;
+              _this.$store.state.user.username = data.name;
+              _this.$store.state.user.uid = data.uid;
+              _this.$store.state.user.isLogin = 1;
+              _this.$router.push('/');
             }
           })
         }

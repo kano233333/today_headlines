@@ -2,9 +2,9 @@
   <div class="set">
     <div class="username">
       <sicon name="username" scale="3.0"></sicon>
-      <input type="text" placeholder="更改用户名">
+      <input type="text" placeholder="更改用户名" v-model="name">
     </div>
-    <Button type="primary">确定</Button>
+    <Button type="primary" @click="changeName()">确定</Button>
   </div>
 </template>
 
@@ -13,10 +13,39 @@
     name: "set",
     data(){
       return {
+        name:''
       }
     },
     methods:{
+      flushCom(){
+        this.$store.state.freshIndex2 = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex2 = true))
+      },
+      changeName(){
+        if(this.name===''){
+          this.$Message.info('请填写新的用户名')
+        }
 
+        let _this = this;
+        this.$api.sendData("/api/changeUsername",{
+          uid:this.$store.state.user.uid,
+          rename:this.name
+        }).then((data)=>{
+          if(data.static===1){
+            _this.$Message.info('更改成功');
+            _this.flushCom();
+            let __this = _this;
+            this.$api.sendData('/api/getUserInfo',{
+              uid:_this.$route.params.uid
+            }).then((data)=>{
+              for(let index in data){
+                __this.$store.state.user[index] = data[index]
+              }
+            })
+          }
+        })
+      }
     }
   }
 </script>

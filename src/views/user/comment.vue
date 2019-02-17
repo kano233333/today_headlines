@@ -1,5 +1,6 @@
 <template>
   <div class="user_comment_list">
+    <div v-if="data.length === 0" class="fans_list2">无</div>
     <div v-for="item in data">
       {{item.content}}
       <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" :key="item.id">
@@ -19,42 +20,17 @@
     },
     data(){
       return {
-        data:[
-          {
-            id:'1',
-            cid:'1',
-            title:'sdasfa',//文章标题
-            readNum:'23',//阅读数
-            zanNum:'213',//点赞数
-            commentNum:'23',//评论数
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',//图片的url
-            time:'2018',//评论时间
-            content:'打发士大夫大师傅士大夫方法都是粉色我认为亘古不变的地方大师傅大师傅十分士大夫'//评论的内容
-          },
-          {
-            id:'1',
-            cid:'1',
-            title:'sdasfa',//文章标题
-            readNum:'23',//阅读数
-            zanNum:'213',//点赞数
-            commentNum:'23',//评论数
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',//图片的url
-            time:'2018',//评论时间
-            content:'打发士大夫大师傅士大夫方法都是粉色我认为亘古不变的地方大师傅大师傅十分士大夫'//评论的内容
-          },
-          {
-            id:'1',
-            cid:'1',
-            title:'sdasfa',//文章标题
-            readNum:'23',//阅读数
-            zanNum:'213',//点赞数
-            commentNum:'23',//评论数
-            imgUrl:'https://p9.pstatp.com/list/240x240/pgc-image/fec2187d2c6b47e4b67dd2ea9700a777',//图片的url
-            time:'2018',//评论时间
-            content:'打发士大夫大师傅士大夫方法都是粉色我认为亘古不变的地方大师傅大师傅十分士大夫'//评论的内容
-          }
-        ]
+        data:[]
       }
+    },
+    created(){
+      let _this = this;
+      this.$api.sendData('/api/getCommentList',{
+        uid:this.$route.params.uid,
+        page:1
+      }).then((data)=>{
+        _this.data = data;
+      })
     }
   }
 </script>

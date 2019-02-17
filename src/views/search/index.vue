@@ -6,7 +6,7 @@
         <img src="../../assets/img/logo.png">
       </router-link>
       <div class="search_wrap">
-        <search :searchVal="this.$route.query.keyWord" type="1"></search>
+        <search @getData="getData" :searchVal="this.$route.query.keyWord" type="1"></search>
       </div>
     </div>
     <div class="search_list">
@@ -14,14 +14,22 @@
         <p @click="searchOne(0)" :class="{'active':active(0)}">文章</p>
         <p @click="searchOne(1)" :class="{'active':active(1)}">用户</p>
       </div>
-      <div class="list_wrap" v-show="!loadingShow">
-        <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in this.$store.state.searchList" :key="item.id">
+      <div class="list_wrap" v-if="!loadingShow && !searchType">
+        <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list.arts" :key="item.id">
           <news-bar :data="item"></news-bar>
           <hr />
         </router-link>
       </div>
+
+      <div class="list_wrap" v-if="!loadingShow && searchType">
+        <div @click="fansCenter(item.uid)" v-for="item in list.users" class="fans_list">
+          <img :src="item.imgUrl" alt="">
+          <span>{{item.username}}</span>
+        </div>
+      </div>
       <loading class="loading" v-show="loadingShow"></loading>
     </div>
+    <BackTop></BackTop>
   </div>
 </template>
 
@@ -37,6 +45,7 @@
       return {
         loadingShow: false,
         searchType:0,
+        list:{'arts':[],'users':[]}
       }
     },
     components:{
@@ -46,6 +55,14 @@
       NewsBar
     },
     methods:{
+      fansCenter(uid){
+        this.$router.push({
+          'name':'userwei',
+          "params":{
+            uid:uid
+          }
+        })
+      },
       active(type){
         if(type===this.searchType){
           return true;
@@ -55,16 +72,32 @@
       },
       searchOne(type){
         if(this.searchType!==type){
-          this.loadingShow = true;
           this.searchType=type;
         }
-        if(type === 0){
-          this.loadingShow = false;
-        }
+      },
+      getData(){
+        let _this = this;
+        this.$api.getData('/api/searchComprehensiveData?keyWord='+this.$route.query.keyWord+"&page=1").then(function(data){
+          console.log(data)
+          for(let i=0;i<data.length;i++){
+            data[i].time = _this.$store.state.GMTToStr(data[i].time);
+          }
+          _this.loadingShow = false;
+          _this.list.arts = data;
+        })
+
+        this.$api.getData('/api/searchUserData?keyWord='+this.$route.query.keyWord+"&page=1").then(function(data){
+          console.log(data)
+          _this.loadingShow = false;
+          _this.list.users = data;
+
+        })
       }
     },
     mounted(){
       //axios
+      this.getData();
+
     }
   }
 </script>
@@ -116,6 +149,19 @@
       width:60%;
       background-color: #fff;
       padding:5px 25px;
+      .fans_list {
+        display: flex;
+        align-items:center;
+        animation:0.5s Show forwards;
+        margin:10px;
+      }
+      .fans_list >img {
+        width:120px;
+        height:120px;
+        border-radius:50%;
+        margin:10px;
+        border:1px solid cadetblue;
+      }
     }
     .loading {
       margin:150px 0 0 300px;

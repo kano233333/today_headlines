@@ -118,8 +118,14 @@ hr {
 	margin:20px auto;
   max-width:100%;
 }
-
-
+.user_head img,.user_art img {
+	border:1px solid #c3cacc;
+}
+.fans_list2 {
+  margin:40px;
+  font-size:18px;
+  text-align: center;
+}
 
 
 

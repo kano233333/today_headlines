@@ -1,7 +1,7 @@
 <template>
   <div id="img_play" @mouseenter="clear()" @mouseleave="play()">
     <div class="img_show" ref="imgs">
-      <img v-for="(value,index) in imgs" :src="value.src" :style="{'opacity':imgOpacity(index)}">
+      <img v-for="(value,index) in imgs" :src="value.imgUrl" :style="{'opacity':imgOpacity(index)}">
       <p class="img_title">{{imgs[imgIndex].title}}</p>
     </div>
     <div class="img_nav">
@@ -18,38 +18,7 @@
     data(){
       return {
         imgIndex:0,
-        imgs:[
-          {
-            src:'https://b-ssl.duitang.com/uploads/item/201902/04/20190204085521_hzMkB.jpeg',
-            title:'利物浦1-1客平西汉姆，马内连场破门',
-            type:'要闻'
-          },
-          {
-            src:'https://b-ssl.duitang.com/uploads/item/201602/13/20160213125545_Rikrf.thumb.700_0.jpeg',
-            title:'为什么以前的春节这么有意思？',
-            type:'社会'
-          },
-          {
-            src:'https://b-ssl.duitang.com/uploads/item/201611/19/20161119092213_Jrzye.thumb.700_0.jpeg',
-            title:'利物浦1-1客平西汉姆，马内连场破门',
-            type:'娱乐'
-          },
-          {
-            src:'https://b-ssl.duitang.com/uploads/item/201705/25/20170525232242_vU3cT.thumb.700_0.jpeg',
-            title:'为什么以前的春节这么有意思？',
-            type:'体育'
-          },
-          {
-            src:require('../assets/img/logo.png'),
-            title:'利物浦1-1客平西汉姆，马内连场破门',
-            type:'军事'
-          },
-          {
-            src:require('../assets/logo.png'),
-            title:'为什么以前的春节这么有意思？',
-            type:'明星'
-          }
-        ]
+        imgs:[]
       }
     },
     methods:{
@@ -79,6 +48,10 @@
     },
     created(){
       this.play();
+      let _this = this;
+      this.$api.getData('/api/slideArticle').then(function(data){
+        _this.imgs = data;
+      })
     }
   }
 </script>

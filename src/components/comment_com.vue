@@ -1,7 +1,7 @@
 <template>
   <div class="com_com">
     <div class="com_img">
-      <img :src="data.imgUrl" alt="">
+      <img :src="data.imgUrl" alt="#">
     </div>
     <div class="content">
       <a>{{data.username}}</a>
@@ -13,8 +13,8 @@
         <span @click="replyShow=!replyShow">回复</span>
         <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
-      <write v-show="replyShow"></write>
-      <div v-if="replyContent && type==0" v-for="item in replyData">
+      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
+      <div v-if="replyContent && type==0" v-for="item in this.$store.state.replyData">
         <comment_com :data="item" v-if="type==0"></comment_com>
       </div>
     </div>
@@ -31,7 +31,6 @@
       return {
         replyShow:false,
         replyContent:false,
-        replyData:[],
         zan:0
       }
     },
@@ -47,47 +46,15 @@
     },
     methods:{
       getReply(){
-        this.replyContent = !this.replyContent;
-        if(this.replyContent) {
-          this.replyData = [
-            {
-              username:'24241412',
-              imgUrl:'https://b-ssl.duitang.com/uploads/item/201610/01/20161001123044_GH2NJ.thumb.700_0.jpeg',
-              content:'我突然就额看来感觉',
-              time:'',
-              zan:'23',
-              from:'',
-              rid:'0'
-            },
-            {
-              username:'24241412',
-              imgUrl:'https://b-ssl.duitang.com/uploads/item/201610/01/20161001123044_GH2NJ.thumb.700_0.jpeg',
-              content:'我突然就额看来感觉',
-              time:'',
-              zan:'23',
-              from:'',
-              rid:'0'
-            },
-            {
-              username:'24241412',
-              imgUrl:'https://b-ssl.duitang.com/uploads/item/201610/01/20161001123044_GH2NJ.thumb.700_0.jpeg',
-              content:'我突然就额看来感觉',
-              time:'',
-              zan:'23',
-              from:'',
-              rid:'0'
-            },
-            {
-              username:'24241412',
-              imgUrl:'https://b-ssl.duitang.com/uploads/item/201610/01/20161001123044_GH2NJ.thumb.700_0.jpeg',
-              content:'我突然就额看来感觉',
-              time:'',
-              zan:'23',
-              from:'',
-              rid:'0'
-            }
-          ]
-        }
+        let _this = this;
+        this.$api.sendData('/api/replyDetail',{
+          id:this.id,
+          cid:this.cid,
+          page:1
+        }).then((data)=>{
+          _this.$store.state.replyData = data;
+          this.replyContent = !this.replyContent;
+        })
       }
     }
   }

@@ -3,11 +3,11 @@
     <img src="../assets/img/logo.png">
     <ul class="nav_ul">
       <li v-for="(value,key,index) in constData['nav']" v-show="index<12">
-        <router-link :to="{'name':'other','params':{'type':key}}">{{value}}</router-link>
+        <router-link @click.native="flushCom" :to="{'name':'other','params':{'type':key}}">{{value}}</router-link>
       </li>
       <div class="more" ref="more" @mouseenter="showMore()" @mouseleave="hiddenMore()">
         <li v-for="(value,key,index) in constData['nav']" v-show="index>=12">
-          <router-link :to="{'name':'other','params':{'type':key}}">{{value}}</router-link>
+          <router-link @click.native="flushCom" :to="{'name':'other','params':{'type':key}}">{{value}}</router-link>
         </li>
       </div>
       <li @mouseenter="showMore()" @mouseleave="hiddenMore()">
@@ -27,6 +27,11 @@
       }
     },
     methods:{
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+      },
       showMore(){
         this.$refs.more.style.width = '120px';
         this.$refs.more.style.height = 'auto';
@@ -37,17 +42,20 @@
         this.$refs.more.style.height = '0';
         this.$refs.more.style.padding = '0';
       },
-      handleScroll(){
+      handleScroll(el){
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-        if(scrollTop>50){
-          document.getElementById('nav').style.top = '0';
+        if(scrollTop>30){
+          document.querySelector(el).style.top = '0';
         }else{
-          document.getElementById('nav').style.top = '50px';
+          document.querySelector(el).style.top = '50px';
         }
       }
     },
     mounted(){
-      window.addEventListener('scroll', this.handleScroll)
+      let _this = this;
+      window.onscroll = function(){
+        _this.$store.state.handleScroll('#nav')
+      }
     }
   }
 </script>

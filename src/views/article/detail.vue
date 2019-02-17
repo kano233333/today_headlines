@@ -1,38 +1,39 @@
 <template>
   <div class="art">
     <header-part></header-part>
-    <art-header :type="proData.type"></art-header>
+    <art-header :type="artData.type"></art-header>
     <div class="art_main">
       <div class="main_left">
         <a href="#comment">
           <sicon name="comment_num" scale="5.5"></sicon>
-          <p>{{proData.commentNum}}</p>
+          <p>{{artData.commentNum}}</p>
         </a>
       </div>
       <div class="main_center">
-        <h1 class="title" v-if="proData.title">{{proData.title}}</h1>
-        <div v-if="proData.title" class="f_title">{{proData.author}} · {{proData.time}}</div>
+        <h1 class="title" v-if="artData.title">{{artData.title}}</h1>
+        <div v-if="artData.title" class="f_title">{{artData.author}} · {{artData.time}}</div>
         <hr />
         <p v-html="artData.content" ref="article"></p>
-        <div class="star_jb" v-if="proData.title">
+        <div class="star_jb" v-if="artData.title">
           <div @click="star">
             <i :class="{'i_active':isStar}">⚝</i>收藏
           </div>
         </div>
-        <comment :data="proData"></comment>
+        <comment :artData="artData"></comment>
       </div>
       <div class="main_right" v-show="this.$route.params.type==1">
         <div class="user">
           <div class="user_head">
             <img src="this.$route.params.imgUrl" alt="">
-            <router-link to="/usercenter">{{proData.author}}</router-link>
+            <router-link to="/usercenter">{{artData.author}}</router-link>
             <div class="follow">
-              <follow :uid="2" :id="proData.id" :isfollow="1"></follow>
+              <follow :uid="2" :id="artData.id" :isfollow="1"></follow>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <BackTop></BackTop>
   </div>
 </template>
 
@@ -47,8 +48,7 @@
     data(){
         return {
           type:this.$route.params.type,
-          proData:this.$route.params.data,
-          artData:'',
+          artData:{},
           isStar:''
         }
     },
@@ -60,78 +60,45 @@
     },
     methods:{
       star(){
-        this.isStar = !this.isStar;
+        let _this = this;
         if(this.isStar){
-          //收藏
+          this.$api.sendData('/api/removeStartArticle',{
+            uid:this.$store.state.user.uid,
+            id:this.$route.params.id
+          }).then((data)=>{
+            if(data.static===1){
+              _this.isStar = !_this.isStar;
+            }
+          })
         }else{
-          //取消收藏
+          this.$api.sendData('/api/startArticle',{
+            uid:this.$store.state.user.uid,
+            id:this.$route.params.id
+          }).then((data)=>{
+            if(data.static===1){
+              _this.isStar = !_this.isStar;
+            }
+          })
         }
       }
     },
     mounted(){
-      // this.$api.sendData('api/articleDetail',{
-      //   'id':this.proData.id,
-      //   'type':0
-      // }).then((data)=>{
-      //   console.log(data)
-      //   _this.artData = data;
-      // })
-      // if(this.$route.params.type==1){
-      //   this.artData['content'] = this.proData.content;
-      // }
-      //
-      // this.$refs.article.innerHTML = this.artData['content'];
-      // this.artData['content'] = this.$refs.article.innerText;
-      // this.isStar = this.artData['isStar']==1 ? true : false;
+      let _this = this;
 
-      ajax({
-        method:'POST',
-        data:{
-          id:'256',
-          type:0
-        },
-        url:'/api/articleDetail',
-        success:function(data){
-          console.log(data)
+      window.onscroll = function(){}
+      this.$api.sendData('/api/articleDetail',{
+        'id':this.$route.params.id,
+        'type':this.$route.params.type
+      }).then((data)=>{
+        data[0].time = _this.$store.state.GMTToStr(data[0].time);
+        _this.artData = data[0];
+        if(_this.$route.params.type==0){
+          _this.$refs.article.innerHTML = _this.artData['content'];
+          _this.artData['content'] = _this.$refs.article.innerText;
         }
+        _this.isStar = _this.artData['isStar']==1 ? true : false;
       })
-    }
-  }
 
-  function ajax(obj) {
-    var ajaxRequest = new XMLHttpRequest();
-    var method = obj.method.toUpperCase();
-    var url = obj.url;
-    var data = obj.data;
-
-    if (method === "GET") {
-      if (data) {
-        url = url + "?";
-        for (var i in data) {
-          url = url + i + "=" + data[i] + "&";
-        }
-        url = url.substring(0, url.length - 1);
-      }
-      ajaxRequest.open(method, url);
-      ajaxRequest.send();
-    } else if (method === "POST") {
-      ajaxRequest.open(method, url);
-      ajaxRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajaxRequest.send(data);
-    }
-
-    ajaxRequest.onreadystatechange = function () {
-      if (ajaxRequest.readyState === 4) {
-        if (ajaxRequest.status === 200) {
-          if (obj.success !== undefined) {
-            obj.success(ajaxRequest.responseText);
-          }
-        } else {
-          if (obj.fail !== undefined) {
-            obj.fail(ajaxRequest.status);
-          }
-        }
-      }
     }
   }
 </script>
@@ -144,6 +111,9 @@
       margin:30px 0;
       .main_left {
         >a:nth-of-type(1){
+          position:fixed;
+          top:120px;
+          left:200px;
           p {
             text-align:center;
             font-size:20px;
@@ -209,8 +179,6 @@
         cursor: pointer;
       }
       >div:hover {
-        box-shadow: 1px 1px 5px #7c7d7d;
-        color: #a5a6a6;
         i {
           color:#575858;
         }

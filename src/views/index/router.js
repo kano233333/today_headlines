@@ -3,7 +3,7 @@ import index from './index'
 import Login from '../user/in'
 import Register from '../user/register'
 import Center from '../user/center'
-import Search from '../search/index'
+import Search from '../search'
 import Article from '../article/detail'
 import Wei from '../user/wei'
 import UComment from '../user/comment'
@@ -53,6 +53,7 @@ export default [
   {
     path:'/user/:uid',
     component:Center,
+    redirect:'/user/:uid/wei',
     meta: {
       keepAlive: true
     },
@@ -90,11 +91,11 @@ export default [
     ]
   },
   {
-    path:'/search',
-    component:Search
+    path:'/search/key',
+    component:Search,
   },
   {
-    path:'/article/:id',
+    path:'/article/:type/:id',
     component:Article,
     name:'article',
     meta: {

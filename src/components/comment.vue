@@ -1,16 +1,16 @@
 <template>
   <div id="comment">
     <div>
-      <span>{{data.recommendNum}}</span>条评论
+      <span>{{artData.commentNum || 0}}</span>条评论
     </div>
     <div class="user_write">
-      <img src="../assets/img/logo.png">
+      <img :src="this.$store.state.user.imgUrl">
       <div>
-        <write></write>
+        <write :url="'/api/publishComment'" :me_type="'1'"></write>
       </div>
     </div>
     <hr />
-    <div class="comment_content" v-for="item in commentData">
+    <div class="comment_content" v-for="item in this.$store.state.commentData">
       <comment-com :data="item" type="0"></comment-com>
       <hr />
     </div>
@@ -27,66 +27,16 @@
       Write,
       CommentCom
     },
-    data(){
-      return {
-        commentData:[
-          {
-            mid:'78',
-            username:'jkljkkl',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201801/20/20180120202739_HrWlK.thumb.700_0.jpg',
-            content:'的归属感非官方苟富贵',
-            replyNum:'0',
-            time:'2018.9.21',
-            zan:'22',
-            cid:'0'
-          },
-          {
-            mid:'78',
-            username:'jkljkkl',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201801/20/20180120202739_HrWlK.thumb.700_0.jpg',
-            content:'的归属感非官方苟富贵',
-            replyNum:'54',
-            time:'2018.9.21',
-            zan:'22',
-            cid:'0'
-          },
-          {
-            mid:'78',
-            username:'jkljkkl',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201801/20/20180120202739_HrWlK.thumb.700_0.jpg',
-            content:'的归属感非官方苟富贵',
-            replyNum:'54',
-            time:'2018.9.21',
-            zan:'22',
-            cid:'0'
-          },
-          {
-            mid:'78',
-            username:'jkljkkl',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201801/20/20180120202739_HrWlK.thumb.700_0.jpg',
-            content:'的归属感非官方苟富贵',
-            replyNum:'54',
-            time:'2018.9.21',
-            zan:'22',
-            cid:'0'
-          },
-          {
-            mid:'78',
-            username:'jkljkkl',
-            imgUrl:'https://b-ssl.duitang.com/uploads/item/201801/20/20180120202739_HrWlK.thumb.700_0.jpg',
-            content:'的归属感非官方苟富贵',
-            replyNum:'54',
-            time:'2018.9.21',
-            zan:'22',
-            cid:'0'
-          }
-        ]
-      }
-    },
-    props:['data'],
-    created(){
-      //axios
-
+    props:['artData'],
+    mounted(){
+      let _this = this;
+      this.$api.sendData('/api/getComments',{
+        id:this.artData.id,
+        page:1
+      }).then((data)=>{
+        _this.$store.state.commentData = data;
+        console.log(data)
+      })
     }
   }
 </script>
