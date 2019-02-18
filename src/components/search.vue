@@ -15,7 +15,6 @@
       }
     },
     props:{
-        'type':{},
         'searchVal':{
           default:''
         }
@@ -26,13 +25,17 @@
         if(this.value===''){
           this.$Message.info('请输入搜索内容')
         }else{
-          this.$router.push("/search/key?keyWord="+this.value);
-          this.$emit('getData');
+          this.$router.push("/search/article?keyWord="+this.value);
+          this.flushCom();
         }
-      }
+      },
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+      },
     },
     mounted(){
-      this.loadingShow = true;
     }
   }
 </script>

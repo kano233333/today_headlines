@@ -12,6 +12,9 @@ import Follow from '../user/followLits'
 import Fans from '../user/fansList'
 import Set from '../user/set'
 import Other from '../otherArt'
+import searchArt from '../search/art'
+import searchUser from '../search/user'
+
 
 export default [
   {
@@ -91,8 +94,21 @@ export default [
     ]
   },
   {
-    path:'/search/key',
+    path:'/search',
+    name:'search',
     component:Search,
+    children:[
+      {
+        path:'/search/article',
+        name:'searchArt',
+        component:searchArt
+      },
+      {
+        path:'/search/user',
+        name:'searchUser',
+        component:searchUser
+      },
+    ]
   },
   {
     path:'/article/:type/:id',

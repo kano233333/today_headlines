@@ -6,28 +6,16 @@
         <img src="../../assets/img/logo.png">
       </router-link>
       <div class="search_wrap">
-        <search @getData="getData" :searchVal="this.$route.query.keyWord" type="1"></search>
+        <search :searchVal="this.$route.query.keyWord" type="1"></search>
       </div>
     </div>
     <div class="search_list">
       <div class="search_nav">
-        <p @click="searchOne(0)" :class="{'active':active(0)}">文章</p>
-        <p @click="searchOne(1)" :class="{'active':active(1)}">用户</p>
-      </div>
-      <div class="list_wrap" v-if="!loadingShow && !searchType">
-        <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list.arts" :key="item.id">
-          <news-bar :data="item"></news-bar>
-          <hr />
-        </router-link>
+        <router-link v-for="(value,key) in list" :to="xxx(key)" :key="value">{{value}}</router-link>
       </div>
 
-      <div class="list_wrap" v-if="!loadingShow && searchType">
-        <div @click="fansCenter(item.uid)" v-for="item in list.users" class="fans_list">
-          <img :src="item.imgUrl" alt="">
-          <span>{{item.username}}</span>
-        </div>
-      </div>
-      <loading class="loading" v-show="loadingShow"></loading>
+      <router-view ref="searchArt" v-if="this.$store.state.freshIndex"></router-view>
+
     </div>
     <BackTop></BackTop>
   </div>
@@ -36,73 +24,38 @@
 <script>
   import HeaderPart from '../../components/headerPart'
   import Search from '../../components/search'
-  import Loading from '../loading'
-  import NewsBar from '../../components/newsBar'
 
   export default {
     name: "index",
     data(){
       return {
-        loadingShow: false,
-        searchType:0,
-        list:{'arts':[],'users':[]}
+        list:{
+          'article':'文章',
+          'user':'用户'
+        },
       }
     },
     components:{
       HeaderPart,
-      Search,
-      Loading,
-      NewsBar
+      Search
     },
     methods:{
-      fansCenter(uid){
-        this.$router.push({
-          'name':'userwei',
-          "params":{
-            uid:uid
+      xxx(key){
+        return {
+          path:'/search/'+key+'?keyWord=',
+          query:{
+            keyWord:this.$route.query.keyWord
           }
-        })
-      },
-      active(type){
-        if(type===this.searchType){
-          return true;
-        }else{
-          return false;
         }
-      },
-      searchOne(type){
-        if(this.searchType!==type){
-          this.searchType=type;
-        }
-      },
-      getData(){
-        let _this = this;
-        this.$api.getData('/api/searchComprehensiveData?keyWord='+this.$route.query.keyWord+"&page=1").then(function(data){
-          console.log(data)
-          for(let i=0;i<data.length;i++){
-            data[i].time = _this.$store.state.GMTToStr(data[i].time);
-          }
-          _this.loadingShow = false;
-          _this.list.arts = data;
-        })
-
-        this.$api.getData('/api/searchUserData?keyWord='+this.$route.query.keyWord+"&page=1").then(function(data){
-          console.log(data)
-          _this.loadingShow = false;
-          _this.list.users = data;
-
-        })
       }
     },
     mounted(){
       //axios
-      this.getData();
-
     }
   }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
   .after_search {
     background-color: #F1F2F3;
     min-height:100vh;
@@ -122,12 +75,9 @@
     .search_nav {
       display: flex;
       font-size:18px;
-      >p {
+      >a {
         margin:20px 20px;
         cursor: pointer;
-      }
-      .active{
-        color:#ED4040;
       }
     }
     .list {
@@ -166,6 +116,9 @@
     .loading {
       margin:150px 0 0 300px;
       transform: scale(0.7);
+    }
+    .link_active{
+      color:#ED4040;
     }
   }
 </style>

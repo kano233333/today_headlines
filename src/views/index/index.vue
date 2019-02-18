@@ -10,7 +10,7 @@
         <router-view v-if="this.$store.state.freshIndex"></router-view>
       </div>
       <div class="main_other">
-        <Search type="0"></Search>
+        <Search></Search>
         <sign-card class="sign_margin" v-if="!this.$store.state.user.isLogin"></sign-card>
         <in-card v-if="this.$store.state.user.isLogin"></in-card>
         <hot-news></hot-news>
@@ -44,8 +44,21 @@
       isDL(){
         let _this = this;
         this.$api.getData('/api/isLogin').then((data)=>{
-          // _this.$store.state.user.isLogin = data.static;
-          _this.$store.state.user.isLogin = 1;
+          _this.$store.state.user.isLogin = data.static;
+          if(data.static==1){
+            _this.$store.state.user.uid = data.uid;
+            _this.getUserData(_this);
+          }
+        })
+      },
+      getUserData(_this){
+        let __this = _this;
+        this.$api.sendData("/api/getUserInfo",{
+          uid:_this.$store.state.user.uid
+        }).then((data)=>{
+          for(let i in data){
+            __this.$store.state.user[i] = data[i]
+          }
         })
       }
     },

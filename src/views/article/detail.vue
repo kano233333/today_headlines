@@ -59,6 +59,26 @@
       Comment
     },
     methods:{
+      isDL(){
+        let _this = this;
+        this.$api.getData('/api/isLogin').then((data)=>{
+          _this.$store.state.user.isLogin = data.static;
+          if(data.static==1){
+            _this.$store.state.user.uid = data.uid;
+            _this.getUserData(_this);
+          }
+        })
+      },
+      getUserData(_this){
+        let __this = _this;
+        this.$api.sendData("/api/getUserInfo",{
+          uid:_this.$store.state.user.uid
+        }).then((data)=>{
+          for(let i in data){
+            __this.$store.state.user[i] = data[i]
+          }
+        })
+      },
       star(){
         let _this = this;
         if(this.isStar){
@@ -84,7 +104,7 @@
     },
     mounted(){
       let _this = this;
-
+      this.isDL();
       window.onscroll = function(){}
       this.$api.sendData('/api/articleDetail',{
         'id':this.$route.params.id,

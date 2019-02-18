@@ -126,7 +126,13 @@ hr {
   font-size:18px;
   text-align: center;
 }
-
+.end {
+	text-align: center;
+	color: #e95f01;
+	text-shadow: 0 0 1px #e95f01;
+	letter-spacing: 3px;
+	margin:50px 0 10px 0;
+}
 
 
 /*------------------------------------------*/

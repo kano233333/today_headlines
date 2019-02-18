@@ -7,7 +7,7 @@
       <a>{{data.username}}</a>
       <p>{{data.content}}</p>
       <div class="dian_zan" @click="zan = zan==0 ? 1 : 0;">
-        <sicon :name="'zan'+zan" scale="2"></sicon><span>{{data.zan}}</span>
+        <sicon :name="'zan'+isZan()" scale="2"></sicon><span>{{data.zan}}</span>
       </div>
       <div>
         <span @click="replyShow=!replyShow">回复</span>
@@ -54,6 +54,23 @@
         }).then((data)=>{
           _this.$store.state.replyData = data;
           this.replyContent = !this.replyContent;
+        })
+      },
+      isZan(){
+        let type = 0;
+        if(this.$store.state.user.isLogin==0){
+          return 0;
+        }
+        this.$api.sendData('/api/zan',{
+          uid:this.$store.state.user.uid,
+          id:this.$route.params.id,
+          type:type
+        }).then((data)=>{
+          if(data.zan){
+            return 1;
+          }else{
+            return 0;
+          }
         })
       }
     }

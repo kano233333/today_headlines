@@ -11,7 +11,7 @@
       </Breadcrumb>
     </div>
     <div class="search_wrap">
-      <search type="0"></search>
+      <search></search>
     </div>
   </div>
 </template>

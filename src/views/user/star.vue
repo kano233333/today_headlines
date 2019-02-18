@@ -5,29 +5,57 @@
       <news-bar :data="item"></news-bar>
       <hr />
     </router-link>
+
+    <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">
+      <Loading v-if="flag && data.length !== 0" style="margin:0 auto; transform: scale(0.3)"></Loading>
+    </div>
   </div>
 </template>
 
 <script>
   import NewsBar from '../../components/newsBar'
+  import Loading from '../loading'
   export default {
     name: "star",
     components:{
-      NewsBar
+      NewsBar,
+      Loading
     },
     data(){
       return {
-        list:[]
+        list:[],
+        busy:false,
+        page:1,
+        flag:true
+      }
+    },
+    methods:{
+      loadMore:function(){
+        this.busy = true;
+        let _this = this;
+        setTimeout(()=> {
+          _this.flag && _this.getData();
+          _this.busy = false;
+        },500)
+      },
+      getData(){
+        let _this = this;
+        this.$api.sendData('/api/getStartList',{
+          uid:this.$route.params.uid,
+          page:this.page
+        }).then((data)=>{
+          if((data.static && data.static==0) || data.length==0){
+            _this.flag = false;
+            _this.busy = true;
+            return;
+          }
+          _this.data.push(...data);
+          this.page++;
+        })
       }
     },
     created(){
-      let _this = this;
-      this.$api.sendData('/api/getStartList',{
-        uid:this.$route.params.uid,
-        page:1
-      }).then((data)=>{
-        _this.list = data;
-      })
+      this.getData();
     }
   }
 </script>

@@ -17,6 +17,13 @@
       postComment(){
         let _this = this;
 
+        if(this.$store.state.user.isLogin==0){
+          this.$Message.info('请先登录');
+          setTimeout(function(){
+            _this.$router.push('/sign/in')
+          },2000)
+          return;
+        }
         if(this.content===''){
           this.$Message.info('请填写内容');
           return;
@@ -30,12 +37,16 @@
           }).then((data)=>{
             if(data.static==1){
               let __this = _this;
+              __this.content = '';
+              this.$Message.info('发表成功');
               this.$api.sendData('/api/getComments',{
                 id:_this.$route.params.id,
                 page:1
               }).then((data)=>{
                 __this.$store.state.commentData = data;
               })
+            }else{
+              this.$Message.info('失败');
             }
           })
         }else if(this.me_type==2){
@@ -48,6 +59,8 @@
           }).then((data)=>{
             if(data.static==1){
               console.log(data)
+              this.$Message.info('回复成功');
+              _this.content = '';
               let __this = _this;
               // this.$api.sendData('/api/getComments',{
               //   id:_this.proData.id,
@@ -55,6 +68,8 @@
               // }).then((data)=>{
               //   __this.$store.state.commentData = data;
               // })
+            }else{
+              this.$Message.info('失败');
             }
           })
         }else if(this.me_type==3){

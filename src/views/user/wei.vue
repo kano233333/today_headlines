@@ -5,36 +5,61 @@
       <p>{{item.content}}</p>
       <p>{{item.readNum}}阅读数 · {{item.zanNum}}点赞数 · {{item.time}}</p>
     </div>
+
+    <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">
+      <Loading v-if="flag && data.length !== 0" style="margin:0 auto; transform: scale(0.3)"></Loading>
+    </div>
   </div>
 </template>
 
 <script>
   import Article from '../article/detail'
+  import Loading from '../loading'
 
   export default {
     name: "wei",
     data(){
       return {
-        data:[]
+        data:[],
+        busy:false,
+        page:1,
+        flag:true
       }
     },
     components:{
-      Article
+      Article,
+      Loading
     },
     methods:{
+      loadMore:function(){
+        this.busy = true;
+        let _this = this;
+        setTimeout(()=> {
+          _this.flag && _this.getData();
+          _this.busy = false;
+        },500)
+      },
       detail(item){
         this.$router.push({'name':'article','params':{'id':item.id,'data':item,'type':'1','imgUrl':this.$route.params.imgUrl}})
+      },
+      getData(){
+        let _this = this;
+        this.$api.sendData('/api/getPublishList',{
+          uid:this.$route.params.uid,
+          page:this.page
+        }).then((data)=>{
+          if((data.static && data.static==0) || data.length==0){
+            _this.flag = false;
+            _this.busy = true;
+            return;
+          }
+          _this.data.push(...data);
+          this.page++;
+        })
       }
     },
     created(){
-      let _this = this;
-      this.$api.sendData('/api/getPublishList',{
-        uid:this.$route.params.uid,
-        page:1
-      }).then((data)=>{
-        console.log(data)
-        _this.data = data;
-      })
+      this.getData();
     }
   }
 </script>

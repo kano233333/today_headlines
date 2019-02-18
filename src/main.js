@@ -22,6 +22,9 @@ Vue.use(lib)
 import api from './api'
 Vue.use(api)
 
+import infiniteScroll from 'vue-infinite-scroll';
+Vue.use(infiniteScroll)
+
 //自定义css
 import './assets/css/reset.css'
 

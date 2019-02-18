@@ -5,6 +5,7 @@
         <img :src="data.imgUrl" @click="imgClick()">
         <p>{{data.username}}</p>
       </div>
+      <span class="tuichu" @click="logout()">退出登录</span>
       <div>{{data.follow}}关注</div>
       <div>{{data.fans}}粉丝</div>
     </div>
@@ -21,6 +22,16 @@
       }
     },
     methods:{
+      logout(){
+        let _this = this;
+        this.$api.getData('/api/userLogout').then((data)=>{
+          if(data.static==1){
+            _this.$store.state.user.isLogin = 0;
+          }else{
+            _this.$Message.info('失败');
+          }
+        })
+      },
       imgClick(){
         this.$router.push({
           'name':'userwei',
@@ -38,6 +49,18 @@
     padding:5px;
     max-width:350px;
     background-color: #f4f5f6;
+    position: relative;
+    .tuichu {
+      position: absolute;
+      right:22px;
+      top:22px;
+      font-size:14px;
+      cursor: pointer;
+      color: #454f92;
+    }
+    .tuichu:hover {
+      color:#7277aa;
+    }
     .main {
       border:1px solid #e9e5e3;
       height:200px;

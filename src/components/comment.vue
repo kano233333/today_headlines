@@ -31,11 +31,10 @@
     mounted(){
       let _this = this;
       this.$api.sendData('/api/getComments',{
-        id:this.artData.id,
+        id:this.$route.params.id,
         page:1
       }).then((data)=>{
         _this.$store.state.commentData = data;
-        console.log(data)
       })
     }
   }
@@ -44,7 +43,6 @@
 <style scoped lang="less">
   #comment {
     margin:40px auto;
-    height:1000px;
     /*background-color: #edeeee;*/
     >div:nth-of-type(1){
       font-size:16px;

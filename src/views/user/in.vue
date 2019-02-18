@@ -63,12 +63,6 @@
             } else if (data.static === 0) {
               _this.$Message.info('密码错误')
             } else if (data.static === 1) {
-              _this.$store.state.user.imgUrl = data.imgUrl;
-              _this.$store.state.user.follow = data.follow;
-              _this.$store.state.user.fans = data.fans;
-              _this.$store.state.user.username = data.name;
-              _this.$store.state.user.uid = data.uid;
-              _this.$store.state.user.isLogin = 1;
               _this.$router.push('/');
             }
           })

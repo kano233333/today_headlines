@@ -1,7 +1,7 @@
 <template>
   <div id="img_play" @mouseenter="clear()" @mouseleave="play()">
     <div class="img_show" ref="imgs">
-      <img v-for="(value,index) in imgs" :src="value.imgUrl" :style="{'opacity':imgOpacity(index)}">
+      <img @click="artDetail(value)" v-for="(value,index) in imgs" :src="value.imgUrl" :style="{'opacity':imgOpacity(index)}">
       <p class="img_title">{{imgs[imgIndex].title}}</p>
     </div>
     <div class="img_nav">
@@ -22,6 +22,9 @@
       }
     },
     methods:{
+      artDetail(value){
+        this.$router.push({'name':'article','params':{'id':value.id,'type':'0'}})
+      },
       play(){
         this.timer = setInterval(this.move,3000)
       },
@@ -86,6 +89,7 @@
     }
     .img_nav {
       width:10%;
+      cursor: pointer;
       max-width:10%;
       >ul {
         width:100%;
