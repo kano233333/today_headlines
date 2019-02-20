@@ -4,8 +4,8 @@
     <write v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"  :url="'/api/userPublishArticle'" :me_type="3"></write>
     <div class="news_list">
       <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="item.title">
-        <news-bar :data="item"></news-bar>
-        <hr />
+          <news-bar :data="item"></news-bar>
+          <hr />
       </router-link>
     </div>
 
@@ -56,7 +56,6 @@
           'type':type,
           'page':this.page
         }).then(function(data){
-          console.log(data)
           if((data.static && data.static==0) || data.length==0){
             _this.flag = false;
             return;

@@ -22,6 +22,11 @@
       }
     },
     methods:{
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+      },
       follow(){
         let _this = this;
         if(this.isfollow){
@@ -31,6 +36,7 @@
           }).then((data)=>{
             if(data.static==1){
               _this.$Message.info('取消成功');
+              _this.flushCom();
               _this.isfollowClass = 'not_follow';
               _this.isfollow =0;
             }else{
@@ -44,6 +50,7 @@
           }).then((data)=>{
             if(data.static==1){
               _this.$Message.info('关注成功');
+              _this.flushCom();
               _this.isfollowClass = 'followed';
               _this.isfollow =1;
             }else{
@@ -55,6 +62,9 @@
     },
     created(){
       this.isfollow = this.is_follow;
+      if(this.isfollow==1){
+        this.isfollowClass = 'followed'
+      }
     }
   }
 </script>

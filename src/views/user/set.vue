@@ -18,9 +18,9 @@
     },
     methods:{
       flushCom(){
-        this.$store.state.freshIndex2 = false;
+        this.$store.state.freshIndex = false;
         let _this = this;
-        this.$nextTick(() => (_this.$store.state.freshIndex2 = true))
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
       },
       changeName(){
         if(this.name===''){

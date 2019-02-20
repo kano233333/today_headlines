@@ -7,7 +7,7 @@
       </div>
       <div class="main_news">
         <!--刷新组件 重载数据-->
-        <router-view v-if="this.$store.state.freshIndex"></router-view>
+        <router-view v-if="this.$store.state.freshIndex2"></router-view>
       </div>
       <div class="main_other">
         <Search></Search>
@@ -98,20 +98,19 @@
     flex-direction:column;
   }
   .main {
-    /*z-index:-1;*/
+    padding:0 80px;
     display: flex;
-    justify-content: center;
-    /*min-height: calc(100vh - 150px);*/
+    justify-content: space-between;
     >div {
       padding-top:15px;
       margin:0 5px;
-      /*border:1px solid chartreuse;*/
     }
     .main_nav {
       max-width:20%;
     }
     .main_news {
-      min-width:55%;
+      width:55%;
+      /*display: none;*/
       margin-left:150px;
     }
     .main_other {

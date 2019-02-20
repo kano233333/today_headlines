@@ -13,69 +13,51 @@
         <span @click="replyShow=!replyShow">回复</span>
         <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
-      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
-      <div v-if="replyContent && type==0" v-for="item in this.$store.state.replyData.cidStr">
-        <comment_com2 :data="item" v-if="replyContent && type==0"></comment_com2>
-      </div>
-      <Button v-if="replyContent && type==0 && more" type="primary" @click="getMore()">加载更多</Button>
+      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.from_id" :me_type="2" :cid="data.rid" :to_name="data.from_name"></write>
     </div>
   </div>
 </template>
 
 <script>
   import Write from './write'
-  import Comment_com2 from './comment_com2'
 
   export default {
-    name: "comment_com",
+    name: "comment_com2",
     data(){
       return {
         replyShow:false,
         replyContent:false,
-        zan:0,
-        page:1,
-        more:true
+        zan:0
       }
     },
     props:{
-        'data':{},
-        'type':{
-          default:1
-        }
-      },
+      data:{},
+      type:{
+        default:1
+      }
+    },
     components:{
-      Write,
-      Comment_com2
+      Write
     },
     methods:{
-      getMore(){
-        this.page++;
-        this.getReply();
-      },
       getReply(){
         let _this = this;
-        let cidStr = this.data.cid+'';
         this.$api.sendData('/api/replyDetail',{
           id:this.$route.params.id,
           cid:this.data.cid,
-          page:this.page
+          page:1
         }).then((data)=>{
-          if(data.length==0 || (data.static && data.static==0)) {
-            _this.more = false;
-            return;
-          }
-          _this.$store.state.replyData.cidStr = [];
-          _this.$store.state.replyData.cidStr.push(...data);
+          _this.$store.state.replyData = data;
           this.replyContent = !this.replyContent;
         })
       },
       zanClick(){
-        let type = 0;
+        let type = -1;
         let _this = this;
         if(this.zan == 0){
           this.$api.sendData('/api/dianZanComment',{
             uid:this.$store.state.user.uid,
-            id:this.data.cid,
+            id:this.data.rid,
             type:type
           }).then((data)=>{
             if(data.static==1){
@@ -88,7 +70,7 @@
         }else if(this.zan==1){
           this.$api.sendData('/api/removeZanComment',{
             uid:this.$store.state.user.uid,
-            id:this.data.cid,
+            id:this.data.rid,
             type:type
           }).then((data)=>{
             if(data.static==1){
@@ -101,7 +83,7 @@
         }
       },
       isZan(){
-        let type = 0;
+        let type = -1;
         let _this = this;
         if(this.$store.state.user.isLogin==0){
           this.$Message.info('请先登录')
@@ -111,7 +93,7 @@
         }
         this.$api.sendData('/api/isZan',{
           uid:this.$store.state.user.uid,
-          id:this.data.cid,
+          id:this.data.rid,
           type:type
         }).then((data)=>{
           if(data.zan=='true'){
@@ -120,10 +102,11 @@
             _this.zan = 0;
           }
         })
-      },
+      }
     },
-    created(){
+    mounted(){
       this.isZan();
+      console.log(this.data)
     }
   }
 </script>
@@ -174,11 +157,6 @@
           color: #849bce;
         }
       }
-    }
-    button {
-      width:200px;
-      margin:20px auto;
-      display: block;
     }
   }
 </style>

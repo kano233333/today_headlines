@@ -2,8 +2,9 @@
   <div class="user_comment_list">
     <div v-if="data.length === 0" class="fans_list2">无</div>
     <div v-for="item in data">
+      <Delete v-if="isSelf" :obj="{id:item.id,type:0,cid:item.cid}" class="del"></Delete>
       {{item.content}}
-      <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" :key="item.id">
+      <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" :key="item.id">
         <news-bar :data="item"></news-bar>
       </router-link>
       <hr />
@@ -18,18 +19,21 @@
 <script>
   import NewsBar from '../../components/newsBar'
   import Loading from '../loading'
+  import Delete from '../../components/delete'
 
   export default {
     components:{
       NewsBar,
-      Loading
+      Loading,
+      Delete
     },
     data(){
       return {
         data:[],
         busy:false,
         page:1,
-        flag:true
+        flag:true,
+        isSelf:this.$store.state.uid == this.$route.params.uid
       }
     },
     methods:{
@@ -68,6 +72,7 @@
     margin:20px;
     >div {
       padding:20px;
+      animation: 0.5s Show forwards;
     }
     .list {
       display: block;
@@ -85,6 +90,16 @@
       height:1px;
       border:none;
       background-color: #dddedd
+    }
+    .del {
+      position:absolute;
+      right:10px;
+      top:10px;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    .del:hover {
+      opacity: 0.8;
     }
   }
 </style>

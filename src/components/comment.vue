@@ -11,9 +11,11 @@
     </div>
     <hr />
     <div class="comment_content" v-for="item in this.$store.state.commentData">
-      <comment-com :data="item" type="0"></comment-com>
+      <comment-com :data="item" :type="0"></comment-com>
       <hr />
     </div>
+
+    <Button type="primary" @click="getMore()" v-if="more">加载更多</Button>
   </div>
 </template>
 
@@ -23,19 +25,44 @@
 
   export default {
     name: "comment",
+    data(){
+      return {
+        page:1,
+        more:true
+      }
+    },
     components:{
       Write,
       CommentCom
     },
+    methods:{
+      add(){
+        this.artData.commentNum++;
+      },
+      getMore(){
+        this.page++;
+        this.getData();
+      },
+      getData(){
+        let _this = this;
+        this.$api.sendData('/api/getComments',{
+          id:this.$route.params.id,
+          page:this.page
+        }).then((data)=>{
+          if(data.length==0 || (data.static && data.static==0)){
+            _this.more = false;
+            if(_this.page==1){
+              _this.$store.state.commentData = [];
+            }
+            return;
+          }
+          _this.$store.state.commentData.push(...data);
+        })
+      }
+    },
     props:['artData'],
     mounted(){
-      let _this = this;
-      this.$api.sendData('/api/getComments',{
-        id:this.$route.params.id,
-        page:1
-      }).then((data)=>{
-        _this.$store.state.commentData = data;
-      })
+      this.getData();
     }
   }
 </script>
@@ -69,6 +96,11 @@
     }
     .comment_content {
       padding:20px;
+    }
+    button {
+      width:200px;
+      margin:0 auto;
+      display: block;
     }
   }
 </style>

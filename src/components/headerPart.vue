@@ -91,15 +91,7 @@
       }
     },
     created(){
-      // this.$api.sendData('/api/userSignIn',{
-      //   // city:this.city
-      //   'email':'1232@qq.com',
-      //   'passwd':'122'
-      // }).then(function(data){
-      //   console.log(data);
-      //   data = this.weather;
-      //   // this.
-      // })
+      this.getWeather();
     },
     methods:{
       cityClick(index){
@@ -110,6 +102,15 @@
       countyClick(index){
         this.countyIndex = index;
         this.countyShow = false;
+      },
+      getWeather(){
+        let _this = this;
+        console.log(this.constData['citys'][this.cityIndex].city)
+        this.$api.sendData('/api/getWeather',{
+          city:this.constData['citys'][this.cityIndex].city
+        }).then((data)=>{
+          console.log(data)
+        })
       }
     }
   }
@@ -144,6 +145,8 @@
     }
     .weather{
       cursor: pointer;
+      display: flex;
+      align-items: center;
       .city {
         cursor: pointer;
       }

@@ -1,13 +1,13 @@
 <template>
   <div class="star">
-    <div v-if="list.length == 0" class="fans_list2">无</div>
-    <router-link :to="{'name':'article','params':{'id':item.id,'data':item}}" class="list" v-for="item in list" :key="item.id" v-if="list.length !== 0">
+    <div v-show="list.length == 0" class="fans_list2">无</div>
+    <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="item.id" v-if="list.length !== 0">
       <news-bar :data="item"></news-bar>
       <hr />
     </router-link>
 
     <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">
-      <Loading v-if="flag && data.length !== 0" style="margin:0 auto; transform: scale(0.3)"></Loading>
+      <Loading v-if="flag && list.length !== 0" style="margin:0 auto; transform: scale(0.3)"></Loading>
     </div>
   </div>
 </template>
@@ -49,7 +49,10 @@
             _this.busy = true;
             return;
           }
-          _this.data.push(...data);
+          for (let i in data) {
+            data[i].time = _this.$store.state.GMTToStr(data[i].time)
+          }
+          _this.list.push(...data);
           this.page++;
         })
       }
@@ -68,6 +71,7 @@
       margin:15px 0;
       height:100/1499*100vw;
       font-size:18px;
+      animation: 0.5s Show forwards;
     }
     a {
       color:#666;

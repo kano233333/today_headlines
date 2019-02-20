@@ -2,12 +2,16 @@
   <div class="inCard">
     <div class="main">
       <div>
-        <img :src="data.imgUrl" @click="imgClick()">
+        <img :src="data.imgUrl" @click="clickPush('userwei')">
         <p>{{data.username}}</p>
       </div>
       <span class="tuichu" @click="logout()">退出登录</span>
-      <div>{{data.follow}}关注</div>
-      <div>{{data.fans}}粉丝</div>
+      <div style="cursor: pointer" @click="clickPush('userfollow')">
+        <span>{{data.follow}}</span>
+        关注</div>
+      <div style="cursor: pointer" @click="clickPush('userfans')">
+        <span>{{data.fans}}</span>
+        粉丝</div>
     </div>
   </div>
 </template>
@@ -18,7 +22,6 @@
     data(){
       return {
         data: this.$store.state.user
-
       }
     },
     methods:{
@@ -32,9 +35,9 @@
           }
         })
       },
-      imgClick(){
+      clickPush(name){
         this.$router.push({
-          'name':'userwei',
+          'name':name,
           "params":{
             uid:this.data.uid
           }
@@ -91,6 +94,9 @@
       }
       a {
         width:100%;
+      }
+      >div>span{
+        font-weight:700;
       }
     }
   }

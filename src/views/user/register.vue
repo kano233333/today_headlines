@@ -7,7 +7,7 @@
     </div>
     <div v-show="otherShow" class="yzm">
       <sicon name="yz" scale="3.0"></sicon>
-      <input type="text" placeholder="验证码">
+      <input type="text" placeholder="验证码" v-model="yzm">
     </div>
     <button class="send_btn" @click="flag && yzmClick()">
       <sicon name="send" scale="2"></sicon>
@@ -15,7 +15,7 @@
     </button>
     <div v-show="otherShow" class="passwd">
       <sicon name="passwd" scale="3.0"></sicon>
-      <input :type="inputType" placeholder="密码">
+      <input :type="inputType" placeholder="密码" v-model="passwd1">
       <span @click="isSee=true">
           <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
         </span>
@@ -25,7 +25,7 @@
     </div>
     <div v-show="otherShow" class="passwd">
       <sicon name="passwd" scale="3.0"></sicon>
-      <input :type="inputType" placeholder="重新输入密码">
+      <input :type="inputType" placeholder="重新输入密码" v-model="passwd2">
       <span @click="isSee=true">
           <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
         </span>
@@ -34,7 +34,7 @@
         </span>
     </div>
 
-    <Button class="bnt" type="primary" v-show="otherShow">注册</Button>
+    <Button @click="registerSend()" class="bnt" type="primary" v-show="otherShow">注册</Button>
   </div>
 </template>
 
@@ -47,7 +47,10 @@
         yzmSend:'发送验证码',
         otherShow:false,
         email:'',
-        flag:true
+        flag:true,
+        yzm:'',
+        passwd1:'',
+        passwd2:''
       }
     },
     computed:{
@@ -60,18 +63,49 @@
       }
     },
     methods:{
+      registerSend(){
+        let _this = this;
+
+        if(this.auth_code==''){
+          this.$Message.info('请输入验证码');
+          return;
+        }else if(this.passwd1==''){
+          this.$Message.info('请输入密码');
+          return;
+        }else if(this.passwd2==''){
+          this.$Message.info('请再次输入密码');
+          return;
+        }else if(this.email==''){
+          this.$Message.info('请输入邮箱');
+          return;
+        }else if(this.passwd1!=this.passwd2){
+          this.$Message.info('请核实两次输入的密码');
+          return;
+        }
+
+        this.$api.sendData('/api/userRegisterTest',{
+          auth_code:this.yzm,
+          email:this.email,
+          passwd:this.passwd1
+        }).then((data)=>{
+          if(data.static==-1){
+            _this.$Message.info('验证码不对');
+          }else if(data.static==0){
+            _this.$Message.info('验证码失效');
+          }else if(data.static==1){
+            _this.$Message.info('注册成功');
+            _this.$route.push('/sign/in')
+          }else{
+            _this.$Message.info('失败');
+          }
+        })
+      },
       yzmClick(){
         let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
         if(this.email===''){
-          this.$Notice.warning({
-            title: '警告',
-            desc:'请输入邮箱'
-          });
+          this.$Message.info('请输入邮箱');
         }else if(!reg.test(this.email)){
-          this.$Notice.warning({
-            title: '警告',
-            desc:'请输入正确的邮箱格式'
-          });
+          this.$Message.info('请输入正确的邮箱格式');
         }else{
           this.flag = false;
           this.otherShow = true;
@@ -91,7 +125,7 @@
           this.$api.sendData('/api/userRegisterSendEmail',{
             "email":_this.email
           }).then(function(data){
-            console.log(data)
+
           })
         }
       }

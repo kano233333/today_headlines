@@ -28,9 +28,9 @@
     },
     methods:{
       flushCom(){
-        this.$store.state.freshIndex = false;
+        this.$store.state.freshIndex2 = false;
         let _this = this;
-        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+        this.$nextTick(() => (_this.$store.state.freshIndex2 = true))
       },
       showMore(){
         this.$refs.more.style.width = '120px';

@@ -26,6 +26,11 @@
       }
     },
     methods:{
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+      },
       loadMore:function(){
         this.busy = true;
         let _this = this;
@@ -35,12 +40,21 @@
         },500)
       },
       fansCenter(uid){
-        this.$router.push({
-          'name':'userwei',
-          "params":{
-            uid:uid
-          }
-        });
+        let _this = this;
+        let pto = new Promise((resolve, reject)=>{
+          _this.$router.push({
+            'name':'userwei',
+            "params":{
+              uid:uid
+            }
+          });
+          resolve('200 OK');
+        }).then(function(){
+          _this.flushCom();
+        }).catch(function(){
+          _this.$Message.info('错误')
+        })
+
       },
       getData(){
         let _this = this;

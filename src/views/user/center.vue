@@ -1,5 +1,5 @@
 <template>
-  <div class="user_center" v-if="this.$store.state.freshIndex">
+  <div class="user_center">
     <header-part></header-part>
     <art-header></art-header>
     <div class="user_main">
@@ -16,15 +16,15 @@
         </p>
 
         <button @click="modal2=true" v-if="isSelf">+发表微头条</button>
-        <div v-if="!isSelf">
-          <follow :uid="this.$store.state.user.uid" :follow_id="this.$route.params.uid" :isfollow="isSelf ? 0 :1"></follow>
+        <div v-if="!isSelf && isFollowNum!==''">
+          <follow :uid="this.$store.state.user.uid" :follow_id="this.$route.params.uid" :is_follow="isFollowNum"></follow>
         </div>
       </div>
       <div class="user_lower">
         <div class="user_art">
           <ul>
-            <li v-for="(value,key,index) in constData['userArt']">
-              <router-link :to="{'name':'user'+key,'params':{'username':username,'imgUrl':userData.imgUrl}}">{{value}}</router-link>
+            <li v-for="(value,key,index) in constData['userArt']" v-show="index>=arr[0] && index<=arr[1]">
+              <router-link :to="{'name':'user'+key,'params':{'username':username,'imgUrl':userData.imgUrl}}">{{value}}{{localStr()}}</router-link>
             </li>
           </ul>
           <hr />
@@ -78,7 +78,10 @@
         imgSrc:'',
         modal2:false,
         file:'',
-        isSelf:false
+        isSelf:false,
+        isFollowNum:'',
+        str:'',
+        arr:[0,2]
       }
     },
     props:{
@@ -104,6 +107,25 @@
       })
     },
     methods:{
+      localStr(){
+        let url = location.href;
+        let arr = url.split('/');
+        this.str=arr[arr.length-1]
+      },
+      isFollow(){
+        let _this = this;
+        this.$api.sendData('/api/isFollow',{
+          uid:this.$store.state.user.uid,
+          follow_id:this.$route.params.uid
+        }).then((data)=>{
+          if(data.follow == 'true'){
+            _this.isFollowNum = 1;
+          }else{
+            _this.isFollowNum = 0;
+          }
+          console.log(_this.isFollowNum)
+        })
+      },
       isDL(){
         let _this = this;
         this.$api.getData('/api/isLogin').then((data)=>{
@@ -112,6 +134,8 @@
             _this.$store.state.user.uid = data.uid;
             _this.getUserData(_this);
             _this.isSelf = _this.$store.state.user.uid==_this.$route.params.uid ? true : false;
+            _this.isFollow();
+            // console.log(_this.isFollow())
           }
         })
       },
@@ -135,12 +159,28 @@
         reader.readAsDataURL(file);
       },
       ok(){
+        let _this = this;
         this.$api.sendData('/api/customeAvatar',{
           'pic':this.$refs.img.files[0],
           'uid':this.$store.state.user.uid
         }).then(function(data){
-          console.log(data)
+          if(data.static==1){
+            _this.$Message.info('更改成功')
+            _this.flushCom();
+          }else {
+            _this.$Message.info('失败')
+          }
         })
+      },
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+      }
+    },
+    watch:{
+      str(val){
+        this.arr = this.constData.userShowLi[val]
       }
     }
   }

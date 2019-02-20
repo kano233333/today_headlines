@@ -14,6 +14,11 @@
       }
     },
     methods:{
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+      },
       postComment(){
         let _this = this;
 
@@ -36,20 +41,22 @@
             content:this.content
           }).then((data)=>{
             if(data.static==1){
-              let __this = _this;
-              __this.content = '';
-              this.$Message.info('发表成功');
-              this.$api.sendData('/api/getComments',{
+              // let __this = _this;
+              _this.content = '';
+              _this.$Message.info('发表成功');
+              _this.$parent.add();
+              _this.$api.sendData('/api/getComments',{
                 id:_this.$route.params.id,
                 page:1
               }).then((data)=>{
-                __this.$store.state.commentData = data;
+                _this.$store.state.commentData = data;
               })
             }else{
-              this.$Message.info('失败');
+              _this.$Message.info('失败');
             }
           })
         }else if(this.me_type==2){
+          let cidStr = this.cid+'';
           this.$api.sendData(this.url,{
             from_id:this.$store.state.user.uid,
             to_id:this.to_id,
@@ -58,30 +65,28 @@
             cid:this.cid
           }).then((data)=>{
             if(data.static==1){
-              console.log(data)
-              this.$Message.info('回复成功');
+              _this.$Message.info('回复成功');
               _this.content = '';
-              let __this = _this;
-              // this.$api.sendData('/api/getComments',{
-              //   id:_this.proData.id,
-              //   page:1
-              // }).then((data)=>{
-              //   __this.$store.state.commentData = data;
-              // })
+              _this.$api.sendData('/api/replyDetail',{
+                id:_this.$route.params.id,
+                cid:_this.cid,
+                page:1
+              }).then((data)=>{
+                _this.$store.state.replyData.cidStr = data;
+              })
             }else{
               this.$Message.info('失败');
             }
           })
         }else if(this.me_type==3){
           let _this = this;
-          console.log(this.$store.state.user.uid)
           this.$api.sendData(this.url,{
             'content':this.content,
             'uid':this.$store.state.user.uid
           }).then((data)=>{
-            console.log(data)
             if(data.static==1){
               _this.content = '';
+              _this.flushCom();
               _this.$Message.info('发表成功');
             }else{
               _this.$Message.info('发表失败');
