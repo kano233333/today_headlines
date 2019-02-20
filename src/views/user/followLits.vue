@@ -1,6 +1,6 @@
 <template>
   <div class="follow">
-    <div v-if="data.length === 0" class="fans_list2">无</div>
+    <div v-show="data.length === 0" class="fans_list2">无</div>
     <div @click="fansCenter(item.uid)" v-for="item in data" v-if="data.length !== 0" class="follow_list">
       <img :src="item.imgUrl" alt="">
       <span>{{item.name}}</span>
@@ -38,9 +38,9 @@
         this.$router.push({
           'name':'userwei',
           "params":{
-            uid:1
+            uid:uid
           }
-        })
+        });
       },
       getData(){
         let _this = this;

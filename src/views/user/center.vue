@@ -1,5 +1,5 @@
 <template>
-  <div class="user_center" v-if="this.$store.state.freshIndex2">
+  <div class="user_center" v-if="this.$store.state.freshIndex">
     <header-part></header-part>
     <art-header></art-header>
     <div class="user_main">
@@ -17,7 +17,7 @@
 
         <button @click="modal2=true" v-if="isSelf">+发表微头条</button>
         <div v-if="!isSelf">
-          <follow></follow>
+          <follow :uid="this.$store.state.user.uid" :follow_id="this.$route.params.uid" :isfollow="isSelf ? 0 :1"></follow>
         </div>
       </div>
       <div class="user_lower">
@@ -102,10 +102,6 @@
       }).then((data)=>{
         _this.userData = data;
       })
-
-      if(this.$store.state.user.uid == this.$route.params.uid){
-        this.isSelf = true;
-      }
     },
     methods:{
       isDL(){
@@ -115,12 +111,12 @@
           if(data.static==1){
             _this.$store.state.user.uid = data.uid;
             _this.getUserData(_this);
+            _this.isSelf = _this.$store.state.user.uid==_this.$route.params.uid ? true : false;
           }
         })
       },
       getUserData(_this){
         let __this = _this;
-        console.log(_this.$store.state.user.uid);
         this.$api.sendData("/api/getUserInfo",{
           uid:_this.$store.state.user.uid
         }).then((data)=>{

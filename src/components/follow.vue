@@ -1,5 +1,5 @@
 <template>
-  <button :class="isfollowClass" @click="follow">{{msg[isfollow]}}</button>
+  <button :class="isfollowClass" @click="follow()">{{msg[isfollow]}}</button>
 </template>
 
 <script>
@@ -7,7 +7,9 @@
     name: "follow",
     props:{
         'uid':{},
-        'id':{},
+        'follow_id':{
+          default:''
+        },
         'is_follow':{
           default:0
         }
@@ -21,18 +23,38 @@
     },
     methods:{
       follow(){
+        let _this = this;
         if(this.isfollow){
-          this.isfollowClass = 'not_follow';
-          this.isfollow =0;
+          this.$api.sendData('/api/userRemoveFollow',{
+            uid:this.uid,
+            follow_id:this.follow_id
+          }).then((data)=>{
+            if(data.static==1){
+              _this.$Message.info('取消成功');
+              _this.isfollowClass = 'not_follow';
+              _this.isfollow =0;
+            }else{
+              _this.$Message.info('错误');
+            }
+          })
         }else{
-          this.isfollowClass = 'followed';
-          this.isfollow =1;
+          this.$api.sendData('/api/userFollow',{
+            uid:this.uid,
+            follow_id:this.follow_id
+          }).then((data)=>{
+            if(data.static==1){
+              _this.$Message.info('关注成功');
+              _this.isfollowClass = 'followed';
+              _this.isfollow =1;
+            }else{
+              _this.$Message.info('错误');
+            }
+          })
         }
       }
     },
     created(){
       this.isfollow = this.is_follow;
-      this.follow();
     }
   }
 </script>

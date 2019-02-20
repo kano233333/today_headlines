@@ -3,7 +3,7 @@
     <header-part></header-part>
     <art-header :type="artData.type"></art-header>
     <div class="art_main">
-      <div class="main_left">
+      <div class="main_left" v-if="type==0">
         <a href="#comment">
           <sicon name="comment_num" scale="5.5"></sicon>
           <p>{{artData.commentNum}}</p>
@@ -14,21 +14,21 @@
         <div v-if="artData.title" class="f_title">{{artData.author}} · {{artData.time}}</div>
         <hr />
         <p v-html="artData.content" ref="article"></p>
-        <div class="star_jb" v-if="artData.title">
-          <div @click="star">
+        <div class="star_jb">
+          <div @click="star" v-if="followIsShow()">
             <i :class="{'i_active':isStar}">⚝</i>收藏
           </div>
         </div>
-        <comment :artData="artData"></comment>
+        <comment v-if="type==0" :artData="artData"></comment>
       </div>
-      <div class="main_right" v-show="this.$route.params.type==1">
+      <div class="main_right" v-show="type==1">
         <div class="user">
-          <div class="user_head">
-            <img src="this.$route.params.imgUrl" alt="">
-            <router-link to="/usercenter">{{artData.author}}</router-link>
-            <div class="follow">
-              <follow :uid="2" :id="artData.id" :isfollow="1"></follow>
-            </div>
+          <router-link :to="{name:'userwei',params:{uid:artData.uid}}" class="user_head">
+            <img src="authorData.imgUrl" alt="">
+          <span>{{authorData.username}}</span>
+          </router-link>
+          <div class="follow" v-if="followIsShow()">
+            <follow :uid="this.$store.state.user.uid" :follow_id="this.$route.params.uid" :isfollow="isFollow()"></follow>
           </div>
         </div>
       </div>
@@ -49,7 +49,8 @@
         return {
           type:this.$route.params.type,
           artData:{},
-          isStar:''
+          isStar:'',
+          authorData:{},
         }
     },
     components:{
@@ -59,6 +60,25 @@
       Comment
     },
     methods:{
+      isFollow(){
+        if(this.$store.state.user.isLogin==0){
+          return 0;
+        }else{
+          this.$api.sendData('/api/isFollow',{
+            uid:this.$store.state.user.uid,
+            follow_id:this.artData.uid
+          }).then((data)=>{
+            if(data.follow){
+              return 1;
+            }else{
+              return 0;
+            }
+          })
+        }
+      },
+      followIsShow(){
+        return this.$store.state.user.uid==this.artData.uid ? false :true;
+      },
       isDL(){
         let _this = this;
         this.$api.getData('/api/isLogin').then((data)=>{
@@ -100,25 +120,41 @@
             }
           })
         }
+      },
+      getContent(url){
+        let _this = this;
+        this.$api.sendData('/api/'+url,{
+          'id':this.$route.params.id,
+        }).then((data)=>{
+          data[0].time = _this.$store.state.GMTToStr(data[0].time);
+          _this.artData = data[0];
+          // if(_this.$route.params.type==0){
+          _this.$refs.article.innerHTML = _this.artData['content'];
+          _this.artData['content'] = _this.$refs.article.innerText;
+          // }
+          _this.isStar = _this.artData['isStart']==1 ? true : false;
+          if(_this.type==1){
+            _this.getAuthor(_this.artData.uid,_this);
+          }
+        })
+      },
+      getAuthor(uid,_this){
+        let __this = _this;
+        this.$api.sendData("/api/getUserInfo",{
+          uid:uid
+        }).then((data)=>{
+          __this.authorData = data;
+        })
       }
     },
     mounted(){
-      let _this = this;
-      this.isDL();
       window.onscroll = function(){}
-      this.$api.sendData('/api/articleDetail',{
-        'id':this.$route.params.id,
-        'type':this.$route.params.type
-      }).then((data)=>{
-        data[0].time = _this.$store.state.GMTToStr(data[0].time);
-        _this.artData = data[0];
-        if(_this.$route.params.type==0){
-          _this.$refs.article.innerHTML = _this.artData['content'];
-          _this.artData['content'] = _this.$refs.article.innerText;
-        }
-        _this.isStar = _this.artData['isStar']==1 ? true : false;
-      })
-
+      this.isDL();
+      if(this.type==0){
+        this.getContent('articleDetail');
+      }else if(this.type==1){
+        this.getContent('weiDetail')
+      }
     }
   }
 </script>
@@ -133,7 +169,7 @@
         >a:nth-of-type(1){
           position:fixed;
           top:120px;
-          left:200px;
+          left:70px;
           p {
             text-align:center;
             font-size:20px;
@@ -160,17 +196,29 @@
       }
       .main_right {
         width:20%;
+        .user_head:hover span{
+          color: #9096aa;
+        }
+        .user_head {
+          display: flex;
+          align-items: center;
+          span {
+            color:#666;
+          }
+          img {
+            width:50px;
+            height:50px;
+            border-radius:50%;
+            border:1px solid cadetblue;
+            margin-right:20px;
+          }
+        }
+
         .user {
           border-top:3px solid #ED4040;
           background-color: #F4F5F6;
           padding:20px;
           font-size:15px;
-          a {
-            color:#666;
-          }
-          a:hover {
-            color: #9096aa
-          }
         }
       }
     }

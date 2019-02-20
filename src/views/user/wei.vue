@@ -53,13 +53,22 @@
             _this.busy = true;
             return;
           }
+          for(let i in data){
+            data[i].time = _this.$store.state.GMTToStr(data[i].time)
+          }
           _this.data.push(...data);
           this.page++;
         })
+      },
+      flushCom(){
+        this.$store.state.freshIndex = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex = true))
       }
     },
     created(){
       this.getData();
+      this.flushCom();
     }
   }
 </script>
