@@ -52,7 +52,7 @@
     created(){
       this.play();
       let _this = this;
-      this.$api.getData('/api/slideArticle').then(function(data){
+      this.$api.getData('/slideArticle').then(function(data){
         _this.imgs = data;
       })
     }

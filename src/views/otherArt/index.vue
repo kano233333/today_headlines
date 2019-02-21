@@ -1,7 +1,7 @@
 <template>
   <div id="other">
     <img-play v-if="this.$route.params.type == 'recommend' && !this.$store.state.user.isLogin"></img-play>
-    <write v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"  :url="'/api/userPublishArticle'" :me_type="3"></write>
+    <write v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"  :url="'/userPublishArticle'" :me_type="3"></write>
     <div class="news_list">
       <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="item.title">
           <news-bar :data="item"></news-bar>
@@ -52,7 +52,7 @@
       getData(){
         let _this = this;
         let type = this.$store.state.constData['nav'][this.$route.params.type];
-        this.$api.sendData('/api/getArticle',{
+        this.$api.sendData('/getArticle',{
           'type':type,
           'page':this.page
         }).then(function(data){

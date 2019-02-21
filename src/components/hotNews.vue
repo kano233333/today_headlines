@@ -28,7 +28,7 @@
     },
     mounted(){
       let _this = this;
-      this.$api.getData('/api/hotArticle').then(function(data){
+      this.$api.getData('/hotArticle').then(function(data){
         console.log(data)
         for(let i=0;i<data.length; i++){
           data[i].time = _this.$store.state.GMTToStr(data[i].time);

@@ -106,7 +106,7 @@
       getWeather(){
         let _this = this;
         console.log(this.constData['citys'][this.cityIndex].city)
-        this.$api.sendData('/api/getWeather',{
+        this.$api.sendData('/getWeather',{
           city:this.constData['citys'][this.cityIndex].city
         }).then((data)=>{
           console.log(data)

@@ -28,7 +28,7 @@
         }
 
         let _this = this;
-        this.$api.sendData("/api/changeUsername",{
+        this.$api.sendData("/changeUsername",{
           uid:this.$store.state.user.uid,
           rename:this.name
         }).then((data)=>{
@@ -36,7 +36,7 @@
             _this.$Message.info('更改成功');
             _this.flushCom();
             let __this = _this;
-            this.$api.sendData('/api/getUserInfo',{
+            this.$api.sendData('/getUserInfo',{
               uid:_this.$route.params.uid
             }).then((data)=>{
               for(let index in data){

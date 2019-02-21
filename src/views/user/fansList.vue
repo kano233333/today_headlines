@@ -40,7 +40,7 @@
       },
       getData(){
         let _this = this;
-        this.$api.sendData('/api/getfans',{
+        this.$api.sendData('/getfans',{
           uid:this.$route.params.uid,
           page:this.page
         }).then((data)=>{

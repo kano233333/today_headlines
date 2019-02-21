@@ -6,7 +6,7 @@
     <div class="user_write">
      <img @click="routePush()" :src="this.$store.state.user.imgUrl">
       <div>
-        <write :url="'/api/publishComment'" :me_type="'1'"></write>
+        <write :url="'/publishComment'" :me_type="'1'"></write>
       </div>
     </div>
     <hr />
@@ -48,7 +48,7 @@
       },
       getData(){
         let _this = this;
-        this.$api.sendData('/api/getComments',{
+        this.$api.sendData('/getComments',{
           id:this.$route.params.id,
           page:this.page
         }).then((data)=>{

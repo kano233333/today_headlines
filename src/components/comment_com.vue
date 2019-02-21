@@ -13,7 +13,7 @@
         <span @click="replyClick()">回复</span>
         <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
-      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
+      <write v-show="replyShow" :url="'/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
       <div v-if="replyContent && type==0" v-for="item in this.$store.state.replyData.cidStr">
         <comment_com2 :cid="data.cid" :data="item" v-if="replyContent && type==0"></comment_com2>
       </div>
@@ -82,7 +82,7 @@
         }
         let _this = this;
         let cidStr = this.data.cid+'';
-        this.$api.sendData('/api/replyDetail',{
+        this.$api.sendData('/replyDetail',{
           id:this.$route.params.id,
           cid:this.data.cid,
           page:this.page
@@ -116,7 +116,7 @@
         }
         let type = 0;
         if(this.zan == 0){
-          this.$api.sendData('/api/dianZanComment',{
+          this.$api.sendData('/dianZanComment',{
             uid:this.$store.state.user.uid,
             id:this.data.cid,
             type:type
@@ -129,7 +129,7 @@
             }
           })
         }else if(this.zan==1){
-          this.$api.sendData('/api/removeZanComment',{
+          this.$api.sendData('/removeZanComment',{
             uid:this.$store.state.user.uid,
             id:this.data.cid,
             type:type
@@ -146,7 +146,7 @@
       isZan(){
         let type = 0;
         let _this = this;
-        this.$api.sendData('/api/isZan',{
+        this.$api.sendData('/isZan',{
           uid:this.$store.state.user.uid,
           id:this.data.cid,
           type:type

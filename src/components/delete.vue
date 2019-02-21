@@ -28,7 +28,7 @@
       ok(){
         let _this = this;
         this.obj['uid'] = this.$store.state.user.uid;
-        this.$api.sendData('/api/deletePulished',this.obj).then((data)=>{
+        this.$api.sendData('/deletePulished',this.obj).then((data)=>{
           if(data.static==1){
             _this.flushCom();
           }else{

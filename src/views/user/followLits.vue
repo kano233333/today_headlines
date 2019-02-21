@@ -58,7 +58,7 @@
       },
       getData(){
         let _this = this;
-        this.$api.sendData('/api/getFollows',{
+        this.$api.sendData('/getFollows',{
           uid:this.$route.params.uid,
           page:this.page
         }).then((data)=>{

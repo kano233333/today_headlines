@@ -43,7 +43,7 @@
     methods:{
       isDL(){
         let _this = this;
-        this.$api.getData('/api/isLogin').then((data)=>{
+        this.$api.getData('/isLogin').then((data)=>{
           _this.$store.state.user.isLogin = data.static;
           if(data.static==1){
             _this.$store.state.user.uid = data.uid;
@@ -53,7 +53,7 @@
       },
       getUserData(_this){
         let __this = _this;
-        this.$api.sendData("/api/getUserInfo",{
+        this.$api.sendData("/getUserInfo",{
           uid:_this.$store.state.user.uid
         }).then((data)=>{
           for(let i in data){

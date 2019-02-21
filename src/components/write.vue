@@ -45,7 +45,7 @@
               _this.content = '';
               _this.$Message.info('发表成功');
               _this.$parent.add();
-              _this.$api.sendData('/api/getComments',{
+              _this.$api.sendData('/getComments',{
                 id:_this.$route.params.id,
                 page:1
               }).then((data)=>{

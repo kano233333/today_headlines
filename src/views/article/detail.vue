@@ -64,7 +64,7 @@
         if(this.$store.state.user.isLogin==0){
           return 0;
         }else{
-          this.$api.sendData('/api/isFollow',{
+          this.$api.sendData('/isFollow',{
             uid:this.$store.state.user.uid,
             follow_id:this.artData.uid
           }).then((data)=>{
@@ -81,7 +81,7 @@
       },
       isDL(){
         let _this = this;
-        this.$api.getData('/api/isLogin').then((data)=>{
+        this.$api.getData('/isLogin').then((data)=>{
           _this.$store.state.user.isLogin = data.static;
           if(data.static==1){
             _this.$store.state.user.uid = data.uid;
@@ -91,7 +91,7 @@
       },
       getUserData(_this){
         let __this = _this;
-        this.$api.sendData("/api/getUserInfo",{
+        this.$api.sendData("/getUserInfo",{
           uid:_this.$store.state.user.uid
         }).then((data)=>{
           for(let i in data){
@@ -109,7 +109,7 @@
           return;
         }
         if(this.isStar){
-          this.$api.sendData('/api/removeStartArticle',{
+          this.$api.sendData('/removeStartArticle',{
             uid:this.$store.state.user.uid,
             id:this.$route.params.id
           }).then((data)=>{
@@ -118,7 +118,7 @@
             }
           })
         }else{
-          this.$api.sendData('/api/startArticle',{
+          this.$api.sendData('/startArticle',{
             uid:this.$store.state.user.uid,
             id:this.$route.params.id
           }).then((data)=>{
@@ -130,7 +130,7 @@
       },
       getContent(url){
         let _this = this;
-        this.$api.sendData('/api/'+url,{
+        this.$api.sendData('/'+url,{
           'id':this.$route.params.id,
         }).then((data)=>{
           data[0].time = _this.$store.state.GMTToStr(data[0].time);
@@ -147,7 +147,7 @@
       },
       getAuthor(uid,_this){
         let __this = _this;
-        this.$api.sendData("/api/getUserInfo",{
+        this.$api.sendData("/getUserInfo",{
           uid:uid
         }).then((data)=>{
           __this.authorData = data;

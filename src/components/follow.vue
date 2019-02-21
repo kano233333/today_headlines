@@ -30,7 +30,7 @@
       follow(){
         let _this = this;
         if(this.isfollow){
-          this.$api.sendData('/api/userRemoveFollow',{
+          this.$api.sendData('/userRemoveFollow',{
             uid:this.uid,
             follow_id:this.follow_id
           }).then((data)=>{
@@ -44,7 +44,7 @@
             }
           })
         }else{
-          this.$api.sendData('/api/userFollow',{
+          this.$api.sendData('/userFollow',{
             uid:this.uid,
             follow_id:this.follow_id
           }).then((data)=>{

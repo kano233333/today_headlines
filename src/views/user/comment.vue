@@ -47,7 +47,7 @@
       },
       getData(){
         let _this = this;
-        this.$api.sendData('/api/getCommentList',{
+        this.$api.sendData('/getCommentList',{
           uid:this.$route.params.uid,
           page:this.page
         }).then((data)=>{

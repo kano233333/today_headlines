@@ -27,7 +27,7 @@
     methods:{
       logout(){
         let _this = this;
-        this.$api.getData('/api/userLogout').then((data)=>{
+        this.$api.getData('/userLogout').then((data)=>{
           if(data.static==1){
             _this.$store.state.user.isLogin = 0;
           }else{

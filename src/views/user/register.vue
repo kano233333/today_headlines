@@ -74,7 +74,7 @@
           return;
         }
 
-        this.$api.sendData('/api/userRegisterTest',{
+        this.$api.sendData('/userRegisterTest',{
           auth_code:this.yzm,
           email:this.email,
           username:this.username,
@@ -114,7 +114,7 @@
             }
           },1000);
 
-          this.$api.sendData('/api/userRegisterSendEmail',{
+          this.$api.sendData('/userRegisterSendEmail',{
             "email":_this.email
           }).then(function(data){
 

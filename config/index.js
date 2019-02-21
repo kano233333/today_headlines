@@ -9,16 +9,16 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     proxyTable: {
-      '/api': {
-        target: 'http://47.107.129.3:5050',
-        secure: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '/api': '/'
-        }
-      }
+      // '/': {
+      //   target: 'http://47.107.129.3:5050',
+      //   secure: false,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '/': '/'
+      //   }
+      // }
     },
 
 
@@ -50,12 +50,12 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../dist/template/index.html'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '../',
 
     /**
      * Source Maps

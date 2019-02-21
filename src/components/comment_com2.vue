@@ -12,7 +12,7 @@
       <div>
         <span @click="replyShow=!replyShow">回复</span>
       </div>
-      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.from_id" :me_type="2" :cid="cid" :to_name="data.from_name"></write>
+      <write v-show="replyShow" :url="'/replyComment'" :to_id="data.from_id" :me_type="2" :cid="cid" :to_name="data.from_name"></write>
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@
         let type = -1;
         let _this = this;
         if(this.zan == 0){
-          this.$api.sendData('/api/dianZanComment',{
+          this.$api.sendData('/dianZanComment',{
             uid:this.$store.state.user.uid,
             id:this.data.rid,
             type:type
@@ -65,7 +65,7 @@
             }
           })
         }else if(this.zan==1){
-          this.$api.sendData('/api/removeZanComment',{
+          this.$api.sendData('/removeZanComment',{
             uid:this.$store.state.user.uid,
             id:this.data.rid,
             type:type
@@ -88,7 +88,7 @@
             _this.$route.push('/sign/in')
           },2000)
         }
-        this.$api.sendData('/api/isZan',{
+        this.$api.sendData('/isZan',{
           uid:this.$store.state.user.uid,
           id:this.data.rid,
           type:type

@@ -48,7 +48,7 @@
       },
       getData(sp) {
         let _this = this;
-        this.$api.sendData('/api/getPublishList', {
+        this.$api.sendData('/getPublishList', {
           uid: this.$route.params.uid,
           page: this.page
         }).then((data) => {

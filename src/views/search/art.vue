@@ -43,7 +43,7 @@
       getData(){
         let _this = this;
         let wd = this.$route.query.keyWord;
-        this.$api.getData('/api/searchComprehensiveData?keyWord='+wd+"&page="+this.page).then(function(data){
+        this.$api.getData('/searchComprehensiveData?keyWord='+wd+"&page="+this.page).then(function(data){
           if((data.static && data.static==0) || data.length==0){
             _this.flag = false;
             return;

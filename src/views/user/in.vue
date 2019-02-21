@@ -53,7 +53,7 @@
           this.$Message.info('请输入密码');
         }else{
           let _this = this;
-          this.$api.sendData('/api/userSignIn', {
+          this.$api.sendData('/userSignIn', {
             "email":this.email,
             "passwd":this.passwd
           }).then(function (data) {

@@ -53,7 +53,7 @@
     </Modal>
 
     <Modal v-model="modal2" title="发表">
-      <write :url="'/api/userPublishArticle'" :me_type="3"></write>
+      <write :url="'/userPublishArticle'" :me_type="3"></write>
       <div slot="footer"></div>
     </Modal>
 
@@ -100,7 +100,7 @@
       this.isDL();
 
       window.onscroll = function(){}
-      this.$api.sendData('/api/getUserInfo',{
+      this.$api.sendData('/getUserInfo',{
         uid:this.$route.params.uid
       }).then((data)=>{
         _this.userData = data;
@@ -114,7 +114,7 @@
       },
       isFollow(){
         let _this = this;
-        this.$api.sendData('/api/isFollow',{
+        this.$api.sendData('/isFollow',{
           uid:this.$store.state.user.uid,
           follow_id:this.$route.params.uid
         }).then((data)=>{
@@ -128,7 +128,7 @@
       },
       isDL(){
         let _this = this;
-        this.$api.getData('/api/isLogin').then((data)=>{
+        this.$api.getData('/isLogin').then((data)=>{
           _this.$store.state.user.isLogin = data.static;
           if(data.static==1){
             _this.$store.state.user.uid = data.uid;
@@ -141,7 +141,7 @@
       },
       getUserData(_this){
         let __this = _this;
-        this.$api.sendData("/api/getUserInfo",{
+        this.$api.sendData("/getUserInfo",{
           uid:_this.$store.state.user.uid
         }).then((data)=>{
           for(let i in data){
@@ -160,7 +160,7 @@
       },
       ok(){
         let _this = this;
-        this.$api.sendData('/api/customeAvatar',{
+        this.$api.sendData('/customeAvatar',{
           'pic':this.$refs.img.files[0],
           'uid':this.$store.state.user.uid
         }).then(function(data){
