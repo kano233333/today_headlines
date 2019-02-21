@@ -4,7 +4,7 @@
       <span>{{artData.commentNum || 0}}</span>条评论
     </div>
     <div class="user_write">
-      <img :src="this.$store.state.user.imgUrl">
+     <img @click="routePush()" :src="this.$store.state.user.imgUrl">
       <div>
         <write :url="'/api/publishComment'" :me_type="'1'"></write>
       </div>
@@ -15,7 +15,7 @@
       <hr />
     </div>
 
-    <Button type="primary" @click="getMore()" v-if="more">加载更多</Button>
+    <Button type="primary" @click="getMore()" v-if="this.$store.state.commentData.length<artData.commentNum">加载更多</Button>
   </div>
 </template>
 
@@ -36,6 +36,9 @@
       CommentCom
     },
     methods:{
+      routePush(){
+        this.$router.push('/user/'+this.$store.state.user.uid+'/wei')
+      },
       add(){
         this.artData.commentNum++;
       },
@@ -51,9 +54,6 @@
         }).then((data)=>{
           if(data.length==0 || (data.static && data.static==0)){
             _this.more = false;
-            if(_this.page==1){
-              _this.$store.state.commentData = [];
-            }
             return;
           }
           _this.$store.state.commentData.push(...data);
@@ -62,6 +62,7 @@
     },
     props:['artData'],
     mounted(){
+      this.$store.state.commentData = [];
       this.getData();
     }
   }

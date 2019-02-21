@@ -36,13 +36,6 @@
         },500)
       },
       fansCenter(uid){
-        console.log(uid)
-        // this.$router.push({
-        //   'name':'userwei',
-        //   "params":{
-        //     uid:uid
-        //   }
-        // })
         this.$router.push('/user/'+uid+'/wei')
       },
       getData(){

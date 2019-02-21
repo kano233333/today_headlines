@@ -19,7 +19,7 @@
             <i :class="{'i_active':isStar}">⚝</i>收藏
           </div>
         </div>
-        <comment v-if="type==0" :artData="artData"></comment>
+        <comment v-if="type==0 && this.$store.state.freshComment" :artData="artData"></comment>
       </div>
       <div class="main_right" v-show="type==1">
         <div class="user">
@@ -27,9 +27,9 @@
             <img src="authorData.imgUrl" alt="">
           <span>{{authorData.username}}</span>
           </router-link>
-          <div class="follow" v-if="followIsShow()">
-            <follow :uid="this.$store.state.user.uid" :follow_id="this.$route.params.uid" :isfollow="isFollow()"></follow>
-          </div>
+          <!--<div class="follow" v-if="followIsShow()">-->
+            <!--<follow :uid="this.$store.state.user.uid" :follow_id="this.$route.params.uid" :isfollow="isFollow()"></follow>-->
+          <!--</div>-->
         </div>
       </div>
     </div>
@@ -101,6 +101,13 @@
       },
       star(){
         let _this = this;
+        if(this.$store.state.user.isLogin==0){
+          this.$Message.info('请先登录');
+          setTimeout(function(){
+            _this.$router.push('/sign/in')
+          },2000)
+          return;
+        }
         if(this.isStar){
           this.$api.sendData('/api/removeStartArticle',{
             uid:this.$store.state.user.uid,

@@ -46,6 +46,15 @@
           }
         })
       }
+    },
+    mounted(){
+      let _this = this;
+      if(this.$store.state.user.isLogin==0){
+        this.$Message.info('请先登录');
+        setTimeout(function(){
+          _this.$router.push('/sign/in')
+        },2000)
+      }
     }
   }
 </script>

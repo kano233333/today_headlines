@@ -4,7 +4,7 @@
       <img :src="data.imgUrl" alt="">
     </div>
     <div class="bar_detail">
-      <p>{{data.title}}</p>
+      <p v-html="data.title"></p>
       <p class="from">
         <router-link :to="'/'+data.type">
           <span :style="{'color':constData['nav_color'][data.type],'border':'1px solid '+constData['nav_color'][data.type]}" v-if="data.type!==undefined">{{constData['nav'][data.type]}}</span>

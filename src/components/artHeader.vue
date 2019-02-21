@@ -6,7 +6,7 @@
       </router-link>
       <Breadcrumb v-if="type!==''">
         <BreadcrumbItem to="/">首页</BreadcrumbItem>
-        <BreadcrumbItem :to="'/search/key?keyWord='+type">{{type}}</BreadcrumbItem>
+        <BreadcrumbItem :to="'/search/article?keyWord='+type">{{type}}</BreadcrumbItem>
         <BreadcrumbItem>正文</BreadcrumbItem>
       </Breadcrumb>
     </div>

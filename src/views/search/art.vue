@@ -42,12 +42,15 @@
       },
       getData(){
         let _this = this;
-        this.$api.getData('/api/searchComprehensiveData?keyWord='+this.$route.query.keyWord+"&page="+this.page).then(function(data){
+        let wd = this.$route.query.keyWord;
+        this.$api.getData('/api/searchComprehensiveData?keyWord='+wd+"&page="+this.page).then(function(data){
           if((data.static && data.static==0) || data.length==0){
             _this.flag = false;
             return;
           }
           for(let i=0;i<data.length;i++){
+            let dataArr = data[i].title.split(wd);
+            data[i].title = dataArr[0]+'<span style="color:#e36b57;">'+wd+'</span>'+dataArr[1];
             data[i].time = _this.$store.state.GMTToStr(data[i].time);
           }
           _this.list.push(...data);

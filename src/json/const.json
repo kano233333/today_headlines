@@ -18,6 +18,25 @@
     "discovery":"探索",
     "baby":"育儿"
   },
+  "navF":{
+    "推荐":"recommend",
+    "热点":"hot",
+    "科技":"tech",
+    "娱乐":"entertainment",
+    "游戏":"game",
+    "体育":"sports",
+    "汽车":"car",
+    "财经":"finance",
+    "搞笑":"funny",
+    "军事":"military",
+    "国际":"world",
+    "旅游":"travel",
+    "历史":"hFtory",
+    "养生":"regimen",
+    "美文":"essay",
+    "探索":"discovery",
+    "育儿":"baby"
+  },
   "nav_arr":["recommend","hot","tech","entertainment","game","sports","car","finance","funny","military","world","travel","history","regimen","essay","discovery","baby"],
   "nav_color":{
     "recommend":"#0E0092",

@@ -1,7 +1,7 @@
 <template>
   <div class="user_comment_list">
     <div v-if="data.length === 0" class="fans_list2">无</div>
-    <div v-for="item in data">
+    <div v-for="item in data" class="list_pad">
       <Delete v-if="isSelf" :obj="{id:item.id,type:0,cid:item.cid}" class="del"></Delete>
       {{item.content}}
       <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" :key="item.id">
@@ -56,6 +56,9 @@
             _this.busy = true;
             return;
           }
+          for (let i in data) {
+            data[i].time = _this.$store.state.GMTToStr(data[i].time)
+          }
           _this.data.push(...data);
           this.page++;
         })
@@ -71,8 +74,10 @@
   .user_comment_list {
     margin:20px;
     >div {
-      padding:20px;
       animation: 0.5s Show forwards;
+    }
+    .list_pad {
+      padding:20px;
     }
     .list {
       display: block;

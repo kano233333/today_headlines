@@ -114,7 +114,7 @@
       margin-left:150px;
     }
     .main_other {
-      max-width:25%;
+      max-width:26.5%;
       .sign_margin {
         margin:20px 0;
       }

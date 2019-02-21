@@ -1,8 +1,8 @@
 <template>
   <div class="list_wrap">
-    <div @click="fansCenter(item.uid)" v-for="item in list.users" class="fans_list">
+    <div @click="fansCenter(item.uid)" v-for="item in list" class="fans_list">
       <img :src="item.imgUrl" alt="">
-      <span>{{item.username}}</span>
+      <span v-html="item.username"></span>
     </div>
     <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">
       <Loading v-show="flag" style="margin:0 auto; transform: scale(0.3)"></Loading>
@@ -49,10 +49,15 @@
       },
       getData(){
         let _this = this;
-        this.$api.getData('/api/searchUserData?keyWord='+this.$route.query.keyWord+"&page="+this.page).then(function(data){
+        let wd = this.$route.query.keyWord;
+        this.$api.getData('/api/searchUserData?keyWord='+wd+"&page="+this.page).then(function(data){
           if((data.static && data.static==0) || data.length==0){
             _this.flag = false;
             return;
+          }
+          for(let i=0;i<data.length;i++){
+            let dataArr = data[i].username.split(wd);
+            data[i].username = dataArr[0]+'<span style="color:#e36b57;">'+wd+'</span>'+dataArr[1];
           }
           _this.list.push(...data);
           _this.page++;

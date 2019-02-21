@@ -4,16 +4,15 @@
       <img :src="data.imgUrl" alt="#">
     </div>
     <div class="content">
-      <a>{{data.username}}</a>
-      <p>{{data.content}}</p>
+      <a>{{data.from_name}}</a>
+      <p><span  @click="routePush()" v-if="data.to_name">@{{data.to_name}}//:</span>{{data.content}}</p>
       <div class="dian_zan" @click="zanClick()">
         <sicon :name="'zan'+zan" scale="2"></sicon><span>{{data.zan}}</span>
       </div>
       <div>
         <span @click="replyShow=!replyShow">回复</span>
-        <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
-      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.from_id" :me_type="2" :cid="data.rid" :to_name="data.from_name"></write>
+      <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.from_id" :me_type="2" :cid="cid" :to_name="data.from_name"></write>
     </div>
   </div>
 </template>
@@ -26,11 +25,11 @@
     data(){
       return {
         replyShow:false,
-        replyContent:false,
         zan:0
       }
     },
     props:{
+      cid:{},
       data:{},
       type:{
         default:1
@@ -40,16 +39,14 @@
       Write
     },
     methods:{
-      getReply(){
-        let _this = this;
-        this.$api.sendData('/api/replyDetail',{
-          id:this.$route.params.id,
-          cid:this.data.cid,
-          page:1
-        }).then((data)=>{
-          _this.$store.state.replyData = data;
-          this.replyContent = !this.replyContent;
-        })
+      routePush(){
+        this.$router.push('/user/'+this.data.to_id+'/wei')
+      },
+      add(){
+        this.$parent.add();
+      },
+      reget(){
+        this.$parent.reget();
       },
       zanClick(){
         let type = -1;
@@ -106,7 +103,6 @@
     },
     mounted(){
       this.isZan();
-      console.log(this.data)
     }
   }
 </script>

@@ -1,23 +1,23 @@
 <template>
   <div class="com_com">
     <div class="com_img">
-      <img :src="data.imgUrl" alt="#">
+      <img @click="routePush()" :src="data.imgUrl" alt="#">
     </div>
     <div class="content">
-      <a>{{data.username}}</a>
+      <a @click="routePush()">{{data.username}}</a>
       <p>{{data.content}}</p>
       <div class="dian_zan" @click="zanClick()">
         <sicon :name="'zan'+zan" scale="2"></sicon><span>{{data.zan}}</span>
       </div>
       <div>
-        <span @click="replyShow=!replyShow">回复</span>
+        <span @click="replyClick()">回复</span>
         <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
       <write v-show="replyShow" :url="'/api/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
       <div v-if="replyContent && type==0" v-for="item in this.$store.state.replyData.cidStr">
-        <comment_com2 :data="item" v-if="replyContent && type==0"></comment_com2>
+        <comment_com2 :cid="data.cid" :data="item" v-if="replyContent && type==0"></comment_com2>
       </div>
-      <Button v-if="replyContent && type==0 && more" type="primary" @click="getMore()">加载更多</Button>
+      <Button type="primary" v-if="replyContent && type==0 && more" @click="getMore()">加载更多</Button>
     </div>
   </div>
 </template>
@@ -48,11 +48,38 @@
       Comment_com2
     },
     methods:{
+      replyClick(){
+        let _this = this;
+        if(this.$store.state.user.isLogin==0){
+          this.$Message.info('请先登录');
+          setTimeout(function(){
+            _this.$router.push('/sign/in')
+          },2000)
+          return;
+        }
+        this.replyShow=!this.replyShow;
+      },
+      routePush(){
+        this.$router.push('/user/'+this.data.uid+'/wei')
+      },
+      add(){
+        this.data.replyNum++;
+      },
       getMore(){
         this.page++;
+        this.getReply(1);
+      },
+      reget(){
+        this.page = 1;
+        this.more = true;
+        this.$store.state.replyData.cidStr = [];
         this.getReply();
       },
-      getReply(){
+      getReply(type){
+        if(!type && this.replyContent){
+          this.replyContent = false;
+          return;
+        }
         let _this = this;
         let cidStr = this.data.cid+'';
         this.$api.sendData('/api/replyDetail',{
@@ -60,18 +87,34 @@
           cid:this.data.cid,
           page:this.page
         }).then((data)=>{
-          if(data.length==0 || (data.static && data.static==0)) {
+          if(data.length<5 || (data.static && data.static==0)) {
             _this.more = false;
+            if(!type){
+              _this.replyContent = true;
+            }else{
+              _this.$store.state.replyData.cidStr.push(...data);
+            }
             return;
           }
-          _this.$store.state.replyData.cidStr = [];
+          if(!_this.$store.state.replyData.cidStr){
+            _this.$store.state.replyData.cidStr = [];
+          }
+          if(!type){
+            _this.replyContent = true;
+          }
           _this.$store.state.replyData.cidStr.push(...data);
-          this.replyContent = !this.replyContent;
         })
       },
       zanClick(){
-        let type = 0;
         let _this = this;
+        if(this.$store.state.user.isLogin==0){
+          this.$Message.info('请先登录');
+          setTimeout(function(){
+            _this.$router.push('/sign/in')
+          },2000)
+          return;
+        }
+        let type = 0;
         if(this.zan == 0){
           this.$api.sendData('/api/dianZanComment',{
             uid:this.$store.state.user.uid,
@@ -103,12 +146,6 @@
       isZan(){
         let type = 0;
         let _this = this;
-        if(this.$store.state.user.isLogin==0){
-          this.$Message.info('请先登录')
-          setTimeout(()=>{
-            _this.$route.push('/sign/in')
-          },2000)
-        }
         this.$api.sendData('/api/isZan',{
           uid:this.$store.state.user.uid,
           id:this.data.cid,

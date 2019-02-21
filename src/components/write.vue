@@ -14,10 +14,10 @@
       }
     },
     methods:{
-      flushCom(){
-        this.$store.state.freshIndex = false;
+      flushCom(x){
+        this.$store.state[x] = false;
         let _this = this;
-        this.$nextTick(() => (_this.$store.state.freshIndex = true))
+        this.$nextTick(() => (_this.$store.state[x] = true))
       },
       postComment(){
         let _this = this;
@@ -67,13 +67,8 @@
             if(data.static==1){
               _this.$Message.info('回复成功');
               _this.content = '';
-              _this.$api.sendData('/api/replyDetail',{
-                id:_this.$route.params.id,
-                cid:_this.cid,
-                page:1
-              }).then((data)=>{
-                _this.$store.state.replyData.cidStr = data;
-              })
+              _this.$parent.reget();
+              _this.$parent.add();
             }else{
               this.$Message.info('失败');
             }
@@ -86,7 +81,7 @@
           }).then((data)=>{
             if(data.static==1){
               _this.content = '';
-              _this.flushCom();
+              _this.flushCom('freshIndex');
               _this.$Message.info('发表成功');
             }else{
               _this.$Message.info('发表失败');

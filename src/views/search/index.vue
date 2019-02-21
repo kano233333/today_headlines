@@ -104,12 +104,15 @@
         align-items:center;
         animation:0.5s Show forwards;
         margin:10px;
+        cursor: pointer;
+      }
+      .fans_list:hover {
+        color:cadetblue;
       }
       .fans_list >img {
-        width:120px;
-        height:120px;
+        width:100px;
+        height:100px;
         border-radius:50%;
-        margin:10px;
         border:1px solid cadetblue;
       }
     }

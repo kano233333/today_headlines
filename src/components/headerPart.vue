@@ -2,66 +2,66 @@
   <header>
     <div class="header_row">
       <ul class="header_left">
-        <li class="weather" @mouseenter="weatherDetail=true" @mouseleave="weatherDetail=false">
-          <span>{{city}}</span>
-          <span>{{tq}}</span>
-          <span>{{wd[0]}}</span>
-          <div class="weather_detail" v-show="weatherDetail">
-            <div class="weather_header">
-              <span class="city" @click="showWeather=!showWeather">{{city}}</span>
-              <span>{{wind}}</span>
-              <!--<span class="weather_air">优</span>-->
-            </div>
-            <hr />
-            <div class="weather_more" v-show="showWeather">
-              <div>
-                <p>今天</p>
-                <img src="../assets/img/weather1.png">
-                <p>{{wd[0]}}</p>
-              </div>
-              <div>
-                <p>明天</p>
-                <img src="../assets/img/weather2.png">
-                <p>{{wd[1]}}</p>
-              </div>
-              <div>
-                <p>后天</p>
-                <img src="../assets/img/weather3.png">
-                <p>{{wd[2]}}</p>
-              </div>
-            </div>
-            <div class="choice_city" v-show="!showWeather">
-              <div class="choice_city1" @mouseenter="cityShow=true" @mouseleave="cityShow=false">
-                <div class="city_click">
-                  <button>
-                    {{constData['citys'][cityIndex].city}}
-                    <Icon type="ios-arrow-down"></Icon>
-                  </button>
-                  <div class="list_wrap" v-show="cityShow">
-                    <ul class="city_list">
-                      <li v-for="(value,index) in constData['citys']" @click="cityClick(index)">{{value.city}}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <!--<div class="choice_city2" @mouseenter="countyShow=true" @mouseleave="countyShow=false">-->
+        <!--<li class="weather" @mouseenter="weatherDetail=true" @mouseleave="weatherDetail=false">-->
+          <!--<span>{{city}}</span>-->
+          <!--<span>{{tq}}</span>-->
+          <!--<span>{{wd[0]}}</span>-->
+          <!--<div class="weather_detail" v-show="weatherDetail">-->
+            <!--<div class="weather_header">-->
+              <!--<span class="city" @click="showWeather=!showWeather">{{city}}</span>-->
+              <!--<span>{{wind}}</span>-->
+              <!--&lt;!&ndash;<span class="weather_air">优</span>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<hr />-->
+            <!--<div class="weather_more" v-show="showWeather">-->
+              <!--<div>-->
+                <!--<p>今天</p>-->
+                <!--<img src="../assets/img/weather1.png">-->
+                <!--<p>{{wd[0]}}</p>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<p>明天</p>-->
+                <!--<img src="../assets/img/weather2.png">-->
+                <!--<p>{{wd[1]}}</p>-->
+              <!--</div>-->
+              <!--<div>-->
+                <!--<p>后天</p>-->
+                <!--<img src="../assets/img/weather3.png">-->
+                <!--<p>{{wd[2]}}</p>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="choice_city" v-show="!showWeather">-->
+              <!--<div class="choice_city1" @mouseenter="cityShow=true" @mouseleave="cityShow=false">-->
                 <!--<div class="city_click">-->
                   <!--<button>-->
-                    <!--{{citys[cityIndex].county[countyIndex]}}-->
+                    <!--{{constData['citys'][cityIndex].city}}-->
                     <!--<Icon type="ios-arrow-down"></Icon>-->
                   <!--</button>-->
-                  <!--<div class="list_wrap" v-show="countyShow">-->
+                  <!--<div class="list_wrap" v-show="cityShow">-->
                     <!--<ul class="city_list">-->
-                      <!--<li v-for="(value,index) in citys[cityIndex].county" @click="countyClick(index)">{{value}}</li>-->
+                      <!--<li v-for="(value,index) in constData['citys']" @click="cityClick(index)">{{value.city}}</li>-->
                     <!--</ul>-->
                   <!--</div>-->
                 <!--</div>-->
               <!--</div>-->
-              <Button type="primary" size="default">确定</Button>
-              <Button size="default">取消</Button>
-            </div>
-          </div>
-        </li>
+              <!--&lt;!&ndash;<div class="choice_city2" @mouseenter="countyShow=true" @mouseleave="countyShow=false">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="city_click">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;{{citys[cityIndex].county[countyIndex]}}&ndash;&gt;-->
+                    <!--&lt;!&ndash;<Icon type="ios-arrow-down"></Icon>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="list_wrap" v-show="countyShow">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<ul class="city_list">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li v-for="(value,index) in citys[cityIndex].county" @click="countyClick(index)">{{value}}</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--<Button type="primary" size="default">确定</Button>-->
+              <!--<Button size="default">取消</Button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</li>-->
       </ul>
       <ul class="header-right">
         <li>反馈</li>
@@ -91,7 +91,7 @@
       }
     },
     created(){
-      this.getWeather();
+      // this.getWeather();
     },
     methods:{
       cityClick(index){

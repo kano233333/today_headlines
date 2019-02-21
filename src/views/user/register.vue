@@ -14,18 +14,12 @@
       {{yzmSend}}
     </button>
     <div v-show="otherShow" class="passwd">
-      <sicon name="passwd" scale="3.0"></sicon>
-      <input :type="inputType" placeholder="密码" v-model="passwd1">
-      <span @click="isSee=true">
-          <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
-        </span>
-      <span @click="isSee=false">
-          <sicon class="eye" name="not_see" scale="3.0" v-show="isSee"></sicon>
-        </span>
+      <sicon name="username" scale="3.0"></sicon>
+      <input type="text" placeholder="自定义用户名" v-model="username">
     </div>
     <div v-show="otherShow" class="passwd">
       <sicon name="passwd" scale="3.0"></sicon>
-      <input :type="inputType" placeholder="重新输入密码" v-model="passwd2">
+      <input :type="inputType" placeholder="密码" v-model="passwd">
       <span @click="isSee=true">
           <sicon class="eye" name="see" scale="3.0" v-show="!isSee"></sicon>
         </span>
@@ -49,8 +43,8 @@
         email:'',
         flag:true,
         yzm:'',
-        passwd1:'',
-        passwd2:''
+        passwd:'',
+        username:''
       }
     },
     computed:{
@@ -69,24 +63,22 @@
         if(this.auth_code==''){
           this.$Message.info('请输入验证码');
           return;
-        }else if(this.passwd1==''){
+        }else if(this.passwd==''){
           this.$Message.info('请输入密码');
           return;
-        }else if(this.passwd2==''){
-          this.$Message.info('请再次输入密码');
+        }else if(this.username==''){
+          this.$Message.info('请输入用户名');
           return;
         }else if(this.email==''){
           this.$Message.info('请输入邮箱');
-          return;
-        }else if(this.passwd1!=this.passwd2){
-          this.$Message.info('请核实两次输入的密码');
           return;
         }
 
         this.$api.sendData('/api/userRegisterTest',{
           auth_code:this.yzm,
           email:this.email,
-          passwd:this.passwd1
+          username:this.username,
+          passwd:this.passwd
         }).then((data)=>{
           if(data.static==-1){
             _this.$Message.info('验证码不对');
@@ -94,7 +86,7 @@
             _this.$Message.info('验证码失效');
           }else if(data.static==1){
             _this.$Message.info('注册成功');
-            _this.$route.push('/sign/in')
+            _this.$router.push('/sign/in')
           }else{
             _this.$Message.info('失败');
           }
