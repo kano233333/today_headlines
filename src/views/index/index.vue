@@ -74,6 +74,7 @@
     html .main {
       flex-direction: column;
       justify-content: flex-start;
+      padding:0 2%;
       .main_nav {
         max-width:100%;
       }
@@ -83,7 +84,9 @@
         overflow: hidden;
       }
       .main_news {
+        width:100%;
         margin-left:0;
+        padding-top:40px;
       }
     }
   }

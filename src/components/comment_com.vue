@@ -14,7 +14,7 @@
         <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
       <write v-show="replyShow" :url="'/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
-      <div v-if="replyContent && type==0" v-for="item in this.$store.state.replyData.cidStr">
+      <div v-if="replyContent && type==0" v-for="item in replyData">
         <comment_com2 :cid="data.cid" :data="item" v-if="replyContent && type==0"></comment_com2>
       </div>
       <Button type="primary" v-if="replyContent && type==0 && more" @click="getMore()">加载更多</Button>
@@ -34,7 +34,8 @@
         replyContent:false,
         zan:0,
         page:1,
-        more:true
+        more:true,
+        replyData:this.$store.state.cidStr || []
       }
     },
     props:{
@@ -72,7 +73,8 @@
       reget(){
         this.page = 1;
         this.more = true;
-        this.$store.state.replyData.cidStr = [];
+        this.$store.state.cidStr = [];
+        this.replyData = this.$store.state.cidStr;
         this.getReply();
       },
       getReply(type){
@@ -81,7 +83,7 @@
           return;
         }
         let _this = this;
-        let cidStr = this.data.cid+'';
+        let cidStr = 'reply'+this.data.cid;
         this.$api.sendData('/replyDetail',{
           id:this.$route.params.id,
           cid:this.data.cid,
@@ -92,17 +94,22 @@
             if(!type){
               _this.replyContent = true;
             }else{
-              _this.$store.state.replyData.cidStr.push(...data);
+              _this.$store.state.cidStr.push(...data);
+              _this.replyData = _this.$store.state.cidStr;
+
             }
             return;
           }
-          if(!_this.$store.state.replyData.cidStr){
-            _this.$store.state.replyData.cidStr = [];
+          if(!_this.$store.state.cidStr){
+            _this.$store.state.cidStr = [];
+            _this.replyData = _this.$store.state.cidStr;
+
           }
           if(!type){
             _this.replyContent = true;
           }
-          _this.$store.state.replyData.cidStr.push(...data);
+          _this.$store.state.cidStr.push(...data);
+          _this.replyData = _this.$store.state.cidStr;
         })
       },
       zanClick(){

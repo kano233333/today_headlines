@@ -39,6 +39,27 @@
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 767px) {
+    html .news_bar {
+      .bar_img {
+        img {
+        }
+      }
+      .bar_detail {
+        .from {
+          margin-top:2%;
+          color:#666;
+          font-size:14px;
+          cursor: pointer;
+        }
+        .author:hover,.recommend:hover {
+          color: #1b009e;
+        }
+      }
+    }
+  }
+
+
   .news_bar {
     display: flex;
     justify-content: space-between;

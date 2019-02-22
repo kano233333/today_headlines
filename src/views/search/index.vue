@@ -3,7 +3,7 @@
     <header-part></header-part>
     <div class="wrap">
       <router-link to="/">
-        <img src="../../assets/img/logo.png">
+        <img class="aaa" src="../../assets/img/logo.png">
       </router-link>
       <div class="search_wrap">
         <search :searchVal="this.$route.query.keyWord" type="1"></search>
@@ -56,7 +56,40 @@
 </script>
 
 <style lang="less">
-  .after_search {
+  @media (max-width: 800px) {
+    html .after_search{
+      .list {
+        height:auto;
+      }
+      img {
+        transform: scale(1);
+      }
+      .wrap .aaa {
+        width:0;
+        height:0;
+        overflow: hidden;
+        align-items:center;
+      }
+      .search_wrap {
+        width:80%;
+        margin:0 auto;
+      }
+      .search_list {
+        width:80%;
+        margin:0 auto;
+        .list_wrap {
+          width:100%;
+        }
+        .fans_list img {
+          width:50px;
+          height:50px;
+          margin-right:20px;
+        }
+      }
+    }
+  }
+
+    .after_search {
     background-color: #F1F2F3;
     min-height:100vh;
     .wrap {

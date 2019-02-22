@@ -2,6 +2,9 @@
   <header>
     <div class="header_row">
       <ul class="header_left">
+        <li class="left_img">
+          <img @click="clickIndex('/')" src="../assets/img/logo.png" alt="">
+        </li>
         <!--<li class="weather" @mouseenter="weatherDetail=true" @mouseleave="weatherDetail=false">-->
           <!--<span>{{city}}</span>-->
           <!--<span>{{tq}}</span>-->
@@ -66,6 +69,12 @@
       <ul class="header-right">
         <li>反馈</li>
         <li>投诉</li>
+        <li class="user_head" @click="clickIndex('/search/article?keyWord=')">
+          <sicon name="search" scale="3.0"></sicon>
+        </li>
+        <li class="user_head" @click="clickPush()">
+          <sicon name="username" scale="3.0"></sicon>
+        </li>
       </ul>
     </div>
   </header>
@@ -94,6 +103,21 @@
       // this.getWeather();
     },
     methods:{
+      clickIndex(str){
+        this.$router.push(str);
+      },
+      clickPush(){
+        if(this.$store.state.user.isLogin==1){
+          this.$router.push({
+            'name':'userwei',
+            "params":{
+              uid:this.$store.state.user.uid
+            }
+          })
+        }else{
+          this.$router.push('/sign/in');
+        }
+      },
       cityClick(index){
         this.cityIndex=index;
         this.countyIndex=0;
@@ -117,6 +141,31 @@
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 800px) {
+    html header {
+      .header_row {
+        padding: 10px 20px;
+      }
+      .left_img {
+        height:25px;
+        width:auto;
+        cursor: pointer;
+      }
+      .header-right {
+        >li {
+          padding:2px;
+          display: none;
+        }
+        .user_head {
+          display: block;
+        }
+        >li:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
   header {
     background-color:#000;
     color: #fff;
@@ -206,6 +255,10 @@
         padding:8px 15px;
         margin:0 5px;
         cursor: pointer;
+        overflow: hidden;
+      }
+      .user_head{
+        display: none;
       }
       >li:hover {
         background-color: #ED4A4A;
@@ -256,6 +309,15 @@
         overflow: hidden;
         max-height:200px;
         z-index:333;
+      }
+    }
+    .left_img {
+      width:0;
+      height:0;
+      overflow: hidden;
+      >img {
+        /*width:100%;*/
+        height:100%;
       }
     }
   }

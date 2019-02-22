@@ -64,6 +64,13 @@
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 767px) {
+    html .star {
+      .list {
+        height:auto;
+      }
+    }
+  }
   .star {
     margin:20px;
     .list {

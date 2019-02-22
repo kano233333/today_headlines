@@ -24,7 +24,7 @@
       <div class="main_right" v-show="type==1">
         <div class="user">
           <router-link :to="{name:'userwei',params:{uid:artData.uid}}" class="user_head">
-            <img src="authorData.imgUrl" alt="">
+            <img :src="authorData.imgUrl" alt="">
           <span>{{authorData.username}}</span>
           </router-link>
           <!--<div class="follow" v-if="followIsShow()">-->
@@ -167,6 +167,22 @@
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 800px) {
+    html .art {
+      .art_main {
+        .main_center{
+          width:90%;
+        }
+        .main_left,.main_right,.main_left>a {
+          width:0;
+          height:0;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+
   .art {
     .art_main {
       display: flex;

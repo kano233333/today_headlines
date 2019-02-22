@@ -57,7 +57,6 @@
             "email":this.email,
             "passwd":this.passwd
           }).then(function (data) {
-            console.log(data);
             if (data.static === -1) {
               _this.$Message.info('用户名不存在')
             } else if (data.static === 0) {

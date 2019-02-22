@@ -39,7 +39,15 @@
 </script>
 
 <style scoped lang="less">
-  .art_header {
+  @media (max-width: 800px) {
+    html .art_header {
+      height:0;
+      width:0;
+      overflow: hidden;
+    }
+  }
+
+    .art_header {
     padding:0 20px;
     height:60px;
     box-shadow: 0 0 8px #898a8b;

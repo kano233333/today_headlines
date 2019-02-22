@@ -31,7 +31,9 @@
         list:[],
         busy:false,
         page:1,
-        flag:true
+        flag:true,
+        url:'/getArticle',
+        obj:{}
       }
     },
     components:{
@@ -45,17 +47,14 @@
         this.busy = true;
         let _this = this;
         setTimeout(()=> {
-          _this.flag && _this.getData();
+          _this.flag && this.getData(_this.url,_this.obj);;
           _this.busy = false;
         },500)
      },
-      getData(){
+      getData(url,obj){
         let _this = this;
         let type = this.$store.state.constData['nav'][this.$route.params.type];
-        this.$api.sendData('/getArticle',{
-          'type':type,
-          'page':this.page
-        }).then(function(data){
+        this.$api.sendData(url,obj).then(function(data){
           if((data.static && data.static==0) || data.length==0){
             _this.flag = false;
             return;
@@ -69,13 +68,31 @@
       }
     },
     mounted(){
-      this.getData();
+      this.obj = {
+        'type':type,
+        'page':this.page
+      };
+      if(this.$route.params.type == 'recommend'){
+        this.url = '/getReommendArticle';
+        this.obj = {
+          'page':this.page
+        }
+      }
+      this.getData(this.url,this.obj);
       window.scrollTo(0,0);
     }
   }
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 767px) {
+    html .news_list {
+      margin-top:20px;
+      .list {
+        height:auto;
+      }
+    }
+  }
   .news_list {
     margin-top:20px;
     .list {

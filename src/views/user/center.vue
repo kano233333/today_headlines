@@ -187,6 +187,108 @@
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 800px) {
+    html .user_center {
+      background-color: #F4F5F6;
+      min-height:100vh;
+      .user_main {
+        width:80%;
+        margin:0 auto;
+      }
+      .user_head {
+        background-color: #fff;
+        margin-top:80px;
+        height:60px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        >img{
+          width:80px;
+          height:80px;
+          border-radius:50%;
+          position: absolute;
+          top:-60px;
+          left:40px;
+        }
+        >button {
+          background-color: #208eda;
+          padding:8px 15px;
+          font-size:16px;
+          letter-spacing: 3px;
+          border-radius:5px;
+          cursor: pointer;
+          margin-right:30px;
+          color:#fff;
+        }
+        >button:hover {
+          background-color: #239bee;
+        }
+        >div {
+          width:10%;
+          margin-right:30px;
+        }
+      }
+      .user_lower {
+        display: flex;
+        justify-content: space-between;
+        margin-top:30px;
+        .user_art {
+          width:100%;
+          background-color: #fff;
+          >ul {
+            display: flex;
+            font-size:18px;
+            li {
+              margin:0 20px;
+              padding: 10px 5px;
+              box-sizing: border-box;
+            }
+            a{
+              height:100%;
+              color:#666;
+              padding: 6px 5px;
+            }
+          }
+        }
+        .user_num {
+          width:0;
+          height:0;
+          overflow: hidden;
+        }
+        .link_active {
+          border-top:2px solid #ED4040;
+        }
+      }
+    }
+    .file {
+      .file_wrap{position: relative;}
+      .input_out {
+        font-size:14px;
+      }
+      input[type='file'] {
+        width:90px;
+        height:40px;
+        opacity: 0;
+        position: absolute;
+        top:0;
+        left:-0;
+        cursor: pointer;
+      }
+      img {
+        max-width:200px;
+        max-height:200px;
+        display: block;
+        padding:10px;
+        margin:10px;
+        border:1px solid #c3cacc;
+        box-shadow: 0 0 10px #c3cacc;
+        border-radius:5px;
+        animation: 0.5s Show forwards;
+      }
+    }
+  }
+
   .user_center {
     background-color: #F4F5F6;
     min-height:100vh;

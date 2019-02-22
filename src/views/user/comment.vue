@@ -71,6 +71,14 @@
 </script>
 
 <style scoped lang="less">
+  @media (max-width: 767px) {
+    html .user_comment_list {
+      .list {
+        height:auto;
+      }
+    }
+  }
+
   .user_comment_list {
     margin:20px;
     >div {

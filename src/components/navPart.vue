@@ -64,6 +64,10 @@
   /*在小于768像素的屏幕*/
   @media (max-width: 767px) {
     html #nav {
+      width:100%;
+      padding:0;
+      background-color: #cecece;
+      left:0;
       >img {
         width:0;
         height:0;
@@ -71,6 +75,19 @@
       }
       .nav_ul {
         display: flex;
+      }
+      .more {
+        position:absolute;
+        left:calc(100vw - 250px);
+        bottom:auto;
+        top:40px;
+        background-color: #fff;
+        width:0;
+        height:0;
+        padding:0;
+        border-radius:10px;
+        overflow: hidden;
+        z-index: 222;
       }
     }
   }
@@ -118,18 +135,19 @@
           border-radius:5px;
         }
       }
-      .more {
-        position:absolute;
-        left:120px;
-        bottom:0;
-        background-color: #fff;
-        width:0;
-        height:0;
-        padding:0;
-        border-radius:10px;
-        overflow: hidden;
-        z-index: 222;
-      }
+    }
+    .more {
+      position:absolute;
+      left:120px;
+      bottom:0;
+      background-color: #fff;
+      width:0;
+      height:0;
+      padding:0;
+      border-radius:10px;
+      overflow: hidden;
+      z-index: 222;
     }
   }
+
 </style>

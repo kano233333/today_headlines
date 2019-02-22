@@ -18,6 +18,10 @@
 <style scoped lang="less">
   @media (max-width: 767px) {
     html #sign_in {
+      min-height:100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 50px;
       .sign_main {
         width:80vw;
         .main_bg {
