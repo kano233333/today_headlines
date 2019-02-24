@@ -1,6 +1,6 @@
 <template>
   <div class="list_wrap">
-    <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="'artX'+item.title">
+    <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list">
       <news-bar :data="item"></news-bar>
       <hr />
     </router-link>

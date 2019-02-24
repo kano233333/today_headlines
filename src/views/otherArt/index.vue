@@ -3,7 +3,7 @@
     <img-play v-if="this.$route.params.type == 'recommend' && !this.$store.state.user.isLogin"></img-play>
     <write v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"  :url="'/userPublishArticle'" :me_type="3"></write>
     <div class="news_list">
-      <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="item.title">
+      <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list">
           <news-bar :data="item"></news-bar>
           <hr />
       </router-link>
@@ -53,7 +53,6 @@
      },
       getData(url,obj){
         let _this = this;
-        let type = this.$store.state.constData['nav'][this.$route.params.type];
         this.$api.sendData(url,obj).then(function(data){
           if((data.static && data.static==0) || data.length==0){
             _this.flag = false;
@@ -68,6 +67,7 @@
       }
     },
     mounted(){
+      let type = this.$store.state.constData['nav'][this.$route.params.type];
       this.obj = {
         'type':type,
         'page':this.page

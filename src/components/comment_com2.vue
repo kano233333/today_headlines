@@ -5,14 +5,19 @@
     </div>
     <div class="content">
       <a>{{data.from_name}}</a>
-      <p><span  @click="routePush()" v-if="data.to_name">@{{data.to_name}}//:</span>{{data.content}}</p>
+      <p>
+        {{data.content}}
+        <span v-if="data.rcontent">
+          <span  @click="routePush()">@{{data.to_name}}</span>//:{{data.rcontent}}
+        </span>
+      </p>
       <div class="dian_zan" @click="zanClick()">
         <sicon :name="'zan'+zan" scale="2"></sicon><span>{{data.zan}}</span>
       </div>
       <div>
         <span @click="replyShow=!replyShow">回复</span>
       </div>
-      <write v-show="replyShow" :url="'/replyComment'" :to_id="data.from_id" :me_type="2" :cid="cid" :to_name="data.from_name"></write>
+      <write v-show="replyShow" :url="'/replyComment'" :me_type="2" :obj="{to_id:data.from_id,cid:cid,to_name:data.from_name,rid:data.rid,type:1}"></write>
     </div>
   </div>
 </template>
@@ -145,13 +150,19 @@
       >div {
         margin:10px 0;
         font-size:15px;
-        span {
+        span:nth-of-type(1){
           cursor: pointer;
+        }
+        span {
+          span{
+            cursor: pointer;
+          }
+          span:hover {
+            color: #849bce;
+          }
           color:#a0a1a6;
         }
-        span:hover {
-          color: #849bce;
-        }
+
       }
     }
   }

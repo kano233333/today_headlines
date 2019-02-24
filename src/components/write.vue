@@ -41,7 +41,6 @@
             content:this.content
           }).then((data)=>{
             if(data.static==1){
-              // let __this = _this;
               _this.content = '';
               _this.$Message.info('发表成功');
               _this.$parent.add();
@@ -56,14 +55,9 @@
             }
           })
         }else if(this.me_type==2){
-          let cidStr = this.cid+'';
-          this.$api.sendData(this.url,{
-            from_id:this.$store.state.user.uid,
-            to_id:this.to_id,
-            content:this.content,
-            to_name:this.to_name,
-            cid:this.cid
-          }).then((data)=>{
+          this.obj.content = this.content;
+          this.obj.from_id = this.$store.state.user.uid;
+          this.$api.sendData(this.url,this.obj).then((data)=>{
             if(data.static==1){
               _this.$Message.info('回复成功');
               _this.content = '';
@@ -90,7 +84,7 @@
         }
       }
     },
-    props:{'url':{},'me_type':{default:1},'cid':{},"to_name":{},'to_id':{}}
+    props:{'url':{},'me_type':{default:1},'cid':{},"obj":{}}
   }
 </script>
 

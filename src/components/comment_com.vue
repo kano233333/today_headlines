@@ -11,10 +11,10 @@
       </div>
       <div>
         <span @click="replyClick()">回复</span>
-        <span @click="getReply()" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
+        <span @click="getReply(1)" v-show="data.replyNum>0 && type==0"> · {{data.replyNum}}条回复</span>
       </div>
-      <write v-show="replyShow" :url="'/replyComment'" :to_id="data.uid" :me_type="2" :cid="data.cid" :to_name="data.username"></write>
-      <div v-if="replyContent && type==0" v-for="item in replyData">
+      <write v-show="replyShow" :url="'/replyComment'" :me_type="2" :obj="{to_id:data.uid,cid:data.cid,to_name:data.username,type:0}"></write>
+      <div v-if="replyContent && type==0" v-for="item in data.replyData">
         <comment_com2 :cid="data.cid" :data="item" v-if="replyContent && type==0"></comment_com2>
       </div>
       <Button type="primary" v-if="replyContent && type==0 && more" @click="getMore()">加载更多</Button>
@@ -34,8 +34,7 @@
         replyContent:false,
         zan:0,
         page:1,
-        more:true,
-        replyData:this.$store.state.cidStr || []
+        more:true
       }
     },
     props:{
@@ -68,48 +67,45 @@
       },
       getMore(){
         this.page++;
-        this.getReply(1);
+        this.getReply();
       },
       reget(){
         this.page = 1;
         this.more = true;
-        this.$store.state.cidStr = [];
-        this.replyData = this.$store.state.cidStr;
+        this.replyContent = false;
+        this.data.replyData = [];
         this.getReply();
       },
       getReply(type){
-        if(!type && this.replyContent){
+        if(type && this.replyContent==true){
           this.replyContent = false;
           return;
         }
+
+        if(this.more === 0){
+          this.replyContent = !this.replyContent;;
+          return;
+        }
+
         let _this = this;
-        let cidStr = 'reply'+this.data.cid;
         this.$api.sendData('/replyDetail',{
           id:this.$route.params.id,
           cid:this.data.cid,
           page:this.page
         }).then((data)=>{
+          if(!_this.data.replyData){
+            _this.data.replyData = [];
+          }
           if(data.length<5 || (data.static && data.static==0)) {
-            _this.more = false;
-            if(!type){
-              _this.replyContent = true;
-            }else{
-              _this.$store.state.cidStr.push(...data);
-              _this.replyData = _this.$store.state.cidStr;
-
-            }
+            _this.more = 0;
+            _this.data.replyData.push(...data);
+            _this.page++;
             return;
           }
-          if(!_this.$store.state.cidStr){
-            _this.$store.state.cidStr = [];
-            _this.replyData = _this.$store.state.cidStr;
-
-          }
-          if(!type){
-            _this.replyContent = true;
-          }
-          _this.$store.state.cidStr.push(...data);
-          _this.replyData = _this.$store.state.cidStr;
+          _this.replyContent = true;
+          _this.data.replyData.push(...data);
+          _this.more = false;
+          _this.more = true;
         })
       },
       zanClick(){

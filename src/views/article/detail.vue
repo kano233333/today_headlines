@@ -111,7 +111,8 @@
         if(this.isStar){
           this.$api.sendData('/removeStartArticle',{
             uid:this.$store.state.user.uid,
-            id:this.$route.params.id
+            id:this.$route.params.id,
+            type:this.$route.params.type
           }).then((data)=>{
             if(data.static===1){
               _this.isStar = !_this.isStar;
@@ -120,9 +121,10 @@
         }else{
           this.$api.sendData('/startArticle',{
             uid:this.$store.state.user.uid,
-            id:this.$route.params.id
+            id:this.$route.params.id,
+            type:this.$route.params.type
           }).then((data)=>{
-            if(data.static===1){
+            if(data.static==1){
               _this.isStar = !_this.isStar;
             }
           })
@@ -131,7 +133,7 @@
       getContent(url){
         let _this = this;
         this.$api.sendData('/'+url,{
-          'id':this.$route.params.id,
+          'id':this.$route.params.id
         }).then((data)=>{
           data[0].time = _this.$store.state.GMTToStr(data[0].time);
           _this.artData = data[0];

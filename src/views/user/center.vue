@@ -5,12 +5,12 @@
     <div class="user_main">
       <div class="user_head">
         <img :src="userData.imgUrl" alt="" v-show="!isSelf">
-        <p v-show="!isSelf">
+        <p @click="routePush()" v-show="!isSelf">
           {{userData.username}}
         </p>
 
         <img style="cursor: pointer;" :src="this.$store.state.user.imgUrl" alt="" @click="modal1=true" v-show="isSelf">
-        <p v-show="isSelf">
+        <p @click="routePush()" v-show="isSelf">
           {{userData.username}}
           <router-link :to="{'name':'userset'}">设置</router-link>
         </p>
@@ -107,6 +107,9 @@
       })
     },
     methods:{
+      routePush(){
+        this.$router.push('/user/'+this.$route.params.uid+'/wei')
+      },
       localStr(){
         let url = location.href;
         let arr = url.split('/');
@@ -316,6 +319,7 @@
         font-size:25px;
         font-weight:700;
         margin-left:140px;
+        cursor: pointer;
         a {
           color:#cecece;
           font-size:15px;

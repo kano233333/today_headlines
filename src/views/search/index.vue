@@ -50,7 +50,7 @@
       }
     },
     mounted(){
-      //axios
+      window.onscroll = function(){}
     }
   }
 </script>
@@ -99,9 +99,6 @@
     .search_wrap {
       width:40%;
     }
-    img {
-      transform: scale(0.6);
-    }
     .search_list {
       margin:0 0 0 200px;
     }
@@ -138,6 +135,9 @@
         animation:0.5s Show forwards;
         margin:10px;
         cursor: pointer;
+        img {
+          transform: scale(0.6);
+        }
       }
       .fans_list:hover {
         color:cadetblue;

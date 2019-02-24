@@ -29,7 +29,6 @@
     mounted(){
       let _this = this;
       this.$api.getData('/hotArticle').then(function(data){
-        console.log(data)
         for(let i=0;i<data.length; i++){
           data[i].time = _this.$store.state.GMTToStr(data[i].time);
         }
@@ -44,6 +43,7 @@
     padding:20px 15px;
     background-color:#F4F5F6;
     border-top:5px solid #ef5353;
+    animation:0.5s Show forwards;
     h3 {
       font-size:18px;
       font-weight:700;

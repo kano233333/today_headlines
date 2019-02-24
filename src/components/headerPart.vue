@@ -67,6 +67,10 @@
         <!--</li>-->
       </ul>
       <ul class="header-right">
+        <li @click="userClick()" v-if="login" class="li_img">
+          <img :src="this.$store.state.user.imgUrl" alt="">
+        </li>
+        <li @click="loginClick()" v-if="!login">登录</li>
         <li>反馈</li>
         <li>投诉</li>
         <li class="user_head" @click="clickIndex('/search/article?keyWord=')">
@@ -96,7 +100,8 @@
         cityShow:false,
         countyShow:false,
         constData:this.$store.state.constData,
-        weather:{}
+        weather:{},
+        login:this.$store.state.isLogin
       }
     },
     created(){
@@ -105,6 +110,12 @@
     methods:{
       clickIndex(str){
         this.$router.push(str);
+      },
+      loginClick(){
+        this.$router.push('/sign/in');
+      },
+      userClick(){
+        this.$outer.push('/user/'+this.$store.state.user.uid+'/wei')
       },
       clickPush(){
         if(this.$store.state.user.isLogin==1){
@@ -129,7 +140,6 @@
       },
       getWeather(){
         let _this = this;
-        console.log(this.constData['citys'][this.cityIndex].city)
         this.$api.sendData('/getWeather',{
           city:this.constData['citys'][this.cityIndex].city
         }).then((data)=>{
@@ -251,8 +261,21 @@
     }
     .header-right {
       display:flex;
+      /*margin-right:50px;*/
+      .li_img {
+        padding:1px;
+        img {
+          width:30px;
+          height:30px;
+          border-radius:50%;
+          background-color: #fff;
+        }
+      }
+      .li_img:hover {
+        background-color: transparent;
+      }
       >li {
-        padding:8px 15px;
+        padding:10px 15px;
         margin:0 5px;
         cursor: pointer;
         overflow: hidden;

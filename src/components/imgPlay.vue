@@ -2,7 +2,7 @@
   <div id="img_play" @mouseenter="clear()" @mouseleave="play()">
     <div class="img_show" ref="imgs">
       <img @click="artDetail(value)" v-for="(value,index) in imgs" :src="value.imgUrl" :style="{'opacity':imgOpacity(index)}">
-      <p class="img_title">{{imgs[imgIndex].title}}</p>
+      <p class="img_title" v-if="xxx">{{imgs[imgIndex]['title']}}</p>
     </div>
     <div class="img_nav">
       <ul>
@@ -18,7 +18,8 @@
     data(){
       return {
         imgIndex:0,
-        imgs:[]
+        imgs:[],
+        xxx:false
       }
     },
     methods:{
@@ -54,6 +55,7 @@
       let _this = this;
       this.$api.getData('/slideArticle').then(function(data){
         _this.imgs = data;
+        _this.xxx = true;
       })
     }
   }

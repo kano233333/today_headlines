@@ -13,9 +13,7 @@
     "world":"国际",
     "travel":"旅游",
     "history":"历史",
-    "regimen":"养生",
     "essay":"美文",
-    "discovery":"探索",
     "baby":"育儿"
   },
   "navF":{
@@ -32,9 +30,7 @@
     "国际":"world",
     "旅游":"travel",
     "历史":"hFtory",
-    "养生":"regimen",
     "美文":"essay",
-    "探索":"discovery",
     "育儿":"baby"
   },
   "nav_arr":["recommend","hot","tech","entertainment","game","sports","car","finance","funny","military","world","travel","history","regimen","essay","discovery","baby"],
