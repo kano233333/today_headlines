@@ -1,7 +1,7 @@
 <template>
   <div class="star">
     <div v-show="list.length == 0" class="fans_list2">无</div>
-    <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list" :key="item.id" v-if="list.length !== 0">
+    <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':item.type}}" class="list" v-for="item in list" v-if="list.length !== 0">
       <news-bar :data="item"></news-bar>
       <hr />
     </router-link>

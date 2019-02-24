@@ -71,6 +71,7 @@
 <style scoped lang="less">
   #comment {
     margin:40px auto;
+    animation: 1s Show forwards;
     /*background-color: #edeeee;*/
     >div:nth-of-type(1){
       font-size:16px;

@@ -3,7 +3,7 @@
     <header-part></header-part>
     <div class="wrap">
       <router-link to="/">
-        <img class="aaa" src="../../assets/img/logo.png">
+        <img style="transform: scale(0.6)" class="aaa" src="../../assets/img/logo.png">
       </router-link>
       <div class="search_wrap">
         <search :searchVal="this.$route.query.keyWord" type="1"></search>

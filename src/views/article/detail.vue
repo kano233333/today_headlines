@@ -174,6 +174,7 @@
       .art_main {
         .main_center{
           width:90%;
+          animation: 0.5s Show forwards;
         }
         .main_left,.main_right,.main_left>a {
           width:0;

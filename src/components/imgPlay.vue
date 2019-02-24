@@ -65,6 +65,7 @@
   #img_play {
     height: 300px;
     display: flex;
+    animation: 0.5s Show forwards;
     .img_show {
       width:90%;
       height:100%;

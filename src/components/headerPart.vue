@@ -67,10 +67,10 @@
         <!--</li>-->
       </ul>
       <ul class="header-right">
-        <li @click="userClick()" v-if="login" class="li_img">
+        <li @click="userClick()" v-if="this.$store.state.user.isLogin" class="li_img">
           <img :src="this.$store.state.user.imgUrl" alt="">
         </li>
-        <li @click="loginClick()" v-if="!login">登录</li>
+        <li @click="loginClick()" v-if="!this.$store.state.user.isLogin==1">登录</li>
         <li>反馈</li>
         <li>投诉</li>
         <li class="user_head" @click="clickIndex('/search/article?keyWord=')">
@@ -115,7 +115,7 @@
         this.$router.push('/sign/in');
       },
       userClick(){
-        this.$outer.push('/user/'+this.$store.state.user.uid+'/wei')
+        this.$router.push('/user/'+this.$store.state.user.uid+'/wei')
       },
       clickPush(){
         if(this.$store.state.user.isLogin==1){

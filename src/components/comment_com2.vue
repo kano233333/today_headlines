@@ -1,10 +1,10 @@
 <template>
   <div class="com_com">
     <div class="com_img">
-      <img :src="data.imgUrl" alt="#">
+      <img @click="userClick()" :src="data.imgUrl" alt="#">
     </div>
     <div class="content">
-      <a>{{data.from_name}}</a>
+      <a @click="userClick()">{{data.from_name}}</a>
       <p>
         {{data.content}}
         <span v-if="data.rcontent">
@@ -44,6 +44,9 @@
       Write
     },
     methods:{
+      userClick(){
+        this.$router.push('/user/'+this.data.from_id+'/wei')
+      },
       routePush(){
         this.$router.push('/user/'+this.data.to_id+'/wei')
       },
@@ -123,6 +126,7 @@
       width:40px;
       height:40px;
       border-radius:50%;
+      cursor: pointer;
     }
     .content {
       width:93%;

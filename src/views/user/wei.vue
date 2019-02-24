@@ -4,7 +4,7 @@
     <div v-for="item in data" class="list" @click="detail(item)">
       <Delete v-if="isSelf" :obj="{id:item.id,type:0}" class="del"></Delete>
       <p>{{item.content}}</p>
-      <p>{{item.readNum}}阅读数 · {{item.zanNum}}点赞数 · {{item.time}}</p>
+      <p>{{item.readNum}}阅读数 · {{item.time}}</p>
     </div>
 
     <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">

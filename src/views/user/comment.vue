@@ -86,6 +86,9 @@
     }
     .list_pad {
       padding:20px;
+      >a {
+        animation:0.5s Show forwards;
+      }
     }
     .list {
       display: block;
