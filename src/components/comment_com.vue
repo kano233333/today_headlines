@@ -6,7 +6,7 @@
     <div class="content">
       <a @click="routePush()">{{data.username}}</a>
       <p>{{data.content}}</p>
-      <div class="dian_zan" @click="zanClick()">
+      <div class="dian_zan" @click="clickParse && zanClick()">
         <sicon :name="'zan'+zan" scale="2"></sicon><span>{{data.zan}}</span>
       </div>
       <div>
@@ -34,7 +34,8 @@
         replyContent:false,
         zan:0,
         page:1,
-        more:true
+        more:true,
+        clickParse:true
       }
     },
     props:{
@@ -117,6 +118,7 @@
           },2000)
           return;
         }
+        this.clickParse = false;
         let type = 0;
         if(this.zan == 0){
           this.$api.sendData('/dianZanComment',{
@@ -130,6 +132,10 @@
             }else{
               _this.zan = 0;
             }
+            _this.clickParse = true;
+          }).catch(function(){
+            _this.$Message.info('错误');
+            _this.clickParse = true;
           })
         }else if(this.zan==1){
           this.$api.sendData('/removeZanComment',{
@@ -143,6 +149,10 @@
             }else{
               _this.zan = 1;
             }
+            _this.clickParse = true;
+          }).catch(function(){
+            _this.$Message.info('错误');
+            _this.clickParse = true;
           })
         }
       },

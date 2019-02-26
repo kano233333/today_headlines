@@ -15,6 +15,10 @@
         <hr />
         <p v-html="artData.content" ref="article"></p>
         <div class="star_jb">
+          <div v-if="this.$route.params.type==1" @click="clickParse && zanClick()">
+            <sicon :name="'zan'+zan" scale="2"></sicon>点赞
+            <!--<span>{{data.zan}}</span>-->
+          </div>
           <div @click="star" v-if="followIsShow()">
             <i :class="{'i_active':isStar}">⚝</i>收藏
           </div>
@@ -51,6 +55,8 @@
           artData:{},
           isStar:'',
           authorData:{},
+          zan:0,
+          clickParse:true
         }
     },
     components:{
@@ -60,6 +66,72 @@
       Comment
     },
     methods:{
+      zanClick(){
+        let _this = this;
+        if(this.$store.state.user.isLogin==0){
+          this.$Message.info('请先登录');
+          setTimeout(function(){
+            _this.$router.push('/sign/in')
+          },2000)
+          return;
+        }
+        this.clickParse = false;
+        let type = 1;
+        if(this.zan == 0){
+          this.$api.sendData('/dianZanComment',{
+            uid:this.$store.state.user.uid,
+            id:this.$route.params.id,
+            type:type
+          }).then((data)=>{
+            if(data.static==1){
+              _this.zan = 1;
+              // _this.data.zan++;
+            }else{
+              _this.zan = 0;
+            }
+            _this.clickParse = true;
+          }).catch(function(){
+            _this.$Message.info('错误');
+            _this.clickParse = true;
+          })
+        }else if(this.zan==1){
+          this.$api.sendData('/removeZanComment',{
+            uid:this.$store.state.user.uid,
+            id:this.$route.params.id,
+            type:type
+          }).then((data)=>{
+            if(data.static==1){
+              _this.zan = 0;
+              // _this.data.zan--;
+            }else{
+              _this.zan = 1;
+            }
+            _this.clickParse = true;
+          }).catch(function(){
+            _this.$Message.info('错误');
+            _this.clickParse = true;
+          })
+        }
+      },
+      isZan(){
+        let type = 0;
+        let _this = this;
+        let uid = this.$store.state.user.uid;
+        if(this.$store.state.user.isLogin==0){
+          return;
+        }
+        this.$api.sendData('/isZan',{
+          uid:uid,
+          id:this.$route.params.id,
+          type:1
+        }).then((data)=>{
+          if(data.zan=='true'){
+            _this.zan = 1;
+          }else{
+            _this.zan = 0;
+          }
+        })
+      },
       isFollow(){
         if(this.$store.state.user.isLogin==0){
           return 0;
@@ -86,6 +158,7 @@
           if(data.static==1){
             _this.$store.state.user.uid = data.uid;
             _this.getUserData(_this);
+            _this.isZan();
           }
         })
       },
@@ -162,7 +235,7 @@
       if(this.type==0){
         this.getContent('articleDetail');
       }else if(this.type==1){
-        this.getContent('weiDetail')
+        this.getContent('weiDetail');
       }
     }
   }
@@ -184,7 +257,6 @@
       }
     }
   }
-
 
   .art {
     .art_main {
@@ -271,6 +343,11 @@
         padding:5px;
         color: #b9b6b3;
         cursor: pointer;
+        svg{
+          margin:0 5px;
+          position:relative;
+          top:2px;
+        }
       }
       >div:hover {
         i {

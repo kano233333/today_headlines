@@ -11,7 +11,7 @@
 
     <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">
       <Loading v-show="flag" style="margin:0 auto; transform: scale(0.3)"></Loading>
-      <p class="end" v-show="!flag">到底了</p>
+      <p class="end" v-show="!flag">...</p>
     </div>
 
   </div>

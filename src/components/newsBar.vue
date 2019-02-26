@@ -12,8 +12,9 @@
         <!--<router-link :to="'/user'">-->
           <span class="author" v-if="data.author!==undefined && type">{{data.author}}</span>
         <!--</router-link>-->
-        <span class="recommend" v-if="data.recommendNum!==undefined && type">·{{data.recommendNum}}评论·</span>
-        <span v-if="data.time!==undefined && type">{{data.time}}</span>
+        <span class="recommend" v-if="data.commentNum!==undefined && type && data.commentNum!=0">·{{data.commentNum}}评论</span>
+        <span class="recommend" v-if="data.readNum!==undefined && type"> · {{data.readNum}}阅读数</span>
+        <span v-if="data.time!==undefined && type"> · {{data.time}}</span>
       </p>
     </div>
   </div>

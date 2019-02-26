@@ -11,7 +11,7 @@
           <span  @click="routePush()">@{{data.to_name}}</span>//:{{data.rcontent}}
         </span>
       </p>
-      <div class="dian_zan" @click="zanClick()">
+      <div class="dian_zan" @click="clickParse && zanClick()">
         <sicon :name="'zan'+zan" scale="2"></sicon><span>{{data.zan}}</span>
       </div>
       <div>
@@ -30,7 +30,8 @@
     data(){
       return {
         replyShow:false,
-        zan:0
+        zan:0,
+        clickParse:true
       }
     },
     props:{
@@ -59,6 +60,14 @@
       zanClick(){
         let type = -1;
         let _this = this;
+        if(this.$store.state.user.isLogin==0){
+          this.$Message.info('请先登录');
+          setTimeout(function(){
+            _this.$router.push('/sign/in')
+          },2000)
+          return;
+        }
+        this.clickParse = false;
         if(this.zan == 0){
           this.$api.sendData('/dianZanComment',{
             uid:this.$store.state.user.uid,
@@ -71,6 +80,10 @@
             }else{
               _this.zan = 0;
             }
+            _this.clickParse = true;
+          }).catch(function(){
+            _this.$Message.info('错误');
+            _this.clickParse = true;
           })
         }else if(this.zan==1){
           this.$api.sendData('/removeZanComment',{
@@ -84,6 +97,10 @@
             }else{
               _this.zan = 1;
             }
+            _this.clickParse = true;
+          }).catch(function(){
+            _this.$Message.info('错误');
+            _this.clickParse = true;
           })
         }
       },
