@@ -68,19 +68,7 @@
             }
           })
         }else if(this.me_type==3){
-          let _this = this;
-          this.$api.sendData(this.url,{
-            'content':this.content,
-            'uid':this.$store.state.user.uid
-          }).then((data)=>{
-            if(data.static==1){
-              _this.content = '';
-              _this.flushCom('freshIndex');
-              _this.$Message.info('发表成功');
-            }else{
-              _this.$Message.info('发表失败');
-            }
-          })
+
         }
       }
     },

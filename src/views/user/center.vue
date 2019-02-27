@@ -53,7 +53,7 @@
     </Modal>
 
     <Modal v-model="modal2" title="发表">
-      <write :url="'/userPublishArticle'" :me_type="3"></write>
+      <publish></publish>
       <div slot="footer"></div>
     </Modal>
 
@@ -67,6 +67,7 @@
   import constData from '../../json/const.json'
   import Follow from '../../components/follow'
   import Write from '../../components/write'
+  import Publish from '../../components/publish'
 
   export default {
     name: "center",
@@ -93,7 +94,8 @@
       HeaderPart,
       ArtHeader,
       Follow,
-      Write
+      Write,
+      Publish
     },
     created(){
       let _this = this;

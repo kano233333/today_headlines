@@ -1,7 +1,7 @@
 <template>
   <div id="other">
     <img-play v-if="this.$route.params.type == 'recommend' && !this.$store.state.user.isLogin"></img-play>
-    <write v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"  :url="'/userPublishArticle'" :me_type="3"></write>
+    <publish v-if="this.$route.params.type == 'recommend' && this.$store.state.user.isLogin"></publish>
     <div class="news_list">
       <router-link :to="{'name':'article','params':{'id':item.id,'data':item,'type':'0'}}" class="list" v-for="item in list">
           <news-bar :data="item"></news-bar>
@@ -22,6 +22,7 @@
   import newsBar from '../../components/newsBar'
   import Write from '../../components/write'
   import Loading from '../loading'
+  import Publish from '../../components/publish'
 
   let count = 0;
   export default {
@@ -40,7 +41,8 @@
       imgPlay,
       newsBar,
       Write,
-      Loading
+      Loading,
+      Publish
     },
     methods:{
       loadMore:function(){
