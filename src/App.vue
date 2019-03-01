@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created(){
+    // document.querySelector('body').style.width = document.documentElement.clientWidth + 'px';
+  }
 }
 </script>
 

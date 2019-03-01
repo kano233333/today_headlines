@@ -14,6 +14,9 @@
         <div v-if="artData.title" class="f_title">{{artData.author}} · {{artData.time}}</div>
         <hr />
         <p v-html="artData.content" ref="article"></p>
+        <a :href="'/'+item"  v-for="item in artData['pic']" target="_blank">
+          <img v-if="artData['pic']" :src="item">
+        </a>
         <div class="star_jb">
           <div v-if="this.$route.params.type==1" @click="clickParse && zanClick()">
             <sicon :name="'zan'+zan" scale="2"></sicon>点赞

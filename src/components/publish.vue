@@ -2,11 +2,11 @@
   <div class="publish">
     <textarea placeholder="写下您的看法..." v-model="content"></textarea>
     <button class="sub">
-      上传图片
-      <div class="add_img">
+      <span @click="imgShow=!imgShow">上传图片</span>
+      <div class="add_img" v-show="imgShow">
         <p>共{{imgNum}}张，最多上传4张</p>
         <div class="imgs">
-          <img-fist v-for=" i in arr" v-show="i<=imgNum"></img-fist>
+          <img-fist :index="i" v-for=" i in arr" v-show="i<=imgNum"></img-fist>
         </div>
       </div>
     </button>
@@ -24,7 +24,8 @@
         imgNum:0,
         content:'',
         imgSrc:'',
-        arr:[0,1,2,3]
+        arr:[0,1,2,3],
+        imgShow:false
       }
     },
     components:{
@@ -32,17 +33,29 @@
     },
     methods:{
       imgAdd(){
-        this.imgNum++;
+        if(this.imgNum<4){
+          this.imgNum++;
+        }
+      },
+      flushCom(){
+        this.$store.state.freshIndex3 = false;
+        let _this = this;
+        this.$nextTick(() => (_this.$store.state.freshIndex3 = true))
       },
       sub(){
         let _this = this;
+        if(this.content==''){
+          this.$Message.info('请填写内容');
+          return;
+        }
         this.$api.sendData('/userPublishArticle',{
           'content':this.content,
           'uid':this.$store.state.user.uid,
-          'pic':this.$store.state.imgs
+          'picX':this.$store.state.imgs
         }).then((data)=>{
           if(data.static==1){
-            _this.content = '';
+            _this.$store.state.imgs = [];
+            _this.flushCom();
             _this.$Message.info('发表成功');
           }else{
             _this.$Message.info('发表失败');
@@ -71,13 +84,7 @@
     .sub:nth-of-type(1){
       position:relative;
     }
-    .sub:nth-of-type(1):hover{
-      position:relative;
-      .add_img {
-        width:auto;
-        height:160px;
-      }
-    }
+
     textarea:focus {
       height:200px;
       color: #858585;
@@ -85,8 +92,8 @@
       box-shadow: 0 0 5px #8e89ff;
     }
     .add_img {
-      width:0;
-      height:0;
+      animation: 0.5s Show forwards;
+      height:160px;
       overflow: hidden;
       cursor: default;
       position:absolute;
@@ -94,7 +101,7 @@
       left:0;
       min-width:200px;
       max-width:400px;
-      /*height:160px;*/
+      box-shadow: 0 0 4px #777777;
       background-color: #fff;
       p {
         font-size:15px;

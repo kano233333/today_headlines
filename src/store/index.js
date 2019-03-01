@@ -18,6 +18,7 @@ export default new vuex.Store({
     constData:constData,
     freshIndex:true,
     freshIndex2:true,
+    freshIndex3:true,
     freshComment:true,
     GMTToStr(time){
       let date = new Date(time)

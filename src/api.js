@@ -23,7 +23,13 @@ class Api {
   static async sendData (url, data) {
     let form = new FormData();
     for(let a in data){
-      form.append(a,data[a])
+      if(a=='picX'){
+        for(let i in data[a]){
+          form.append('pic',data[a][i]);
+        }
+      }else {
+        form.append(a,data[a])
+      }
     }
     return new Promise((resolve, reject) => {
       ajax.post(url, form)

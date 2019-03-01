@@ -11,7 +11,15 @@
 
 <script>
   export default {
-    name: "sign"
+    name: "sign",
+    // created(){
+    //   let _this = this;
+    //   this.$api.getData('').then(function(data){
+    //
+    //   }).catch(function(){
+    //     _this.$Message.info('失败');
+    //   })
+    // }
   }
 </script>
 

@@ -34,7 +34,8 @@ ajax.interceptors.response.use(response => {
 
 export default {
   install(Vue) {
-    Vue.prototype.$ajax = ajax
+    Vue.prototype.$ajax = ajax;
+    Vue.prototype.$axios = axios;
   },
   ajax
 }

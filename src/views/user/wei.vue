@@ -2,9 +2,14 @@
   <div class="wei">
     <div v-if="data.length === 0" class="fans_list2">无</div>
     <div v-for="item in data" class="list" @click="detail(item)">
+      <div class="bar_img" v-if="item.imgUrl.length!=0">
+        <img :src="item.imgUrl" alt="">{{xxx(item)}}
+      </div>
       <Delete v-if="isSelf" :obj="{id:item.id,type:0}" class="del"></Delete>
-      <p>{{item.content}}</p>
-      <p>{{item.readNum}}阅读数 · {{item.time}}</p>
+      <div>
+        <p>{{item.content}}</p>
+        <p>{{item.readNum}}阅读数 · {{item.time}}</p>
+      </div>
     </div>
 
     <div v-infinite-scroll ="loadMore" infinite-scroll-disabled ="busy" infinite-scroll-distance="1000">
@@ -35,6 +40,9 @@
       Delete
     },
     methods:{
+      xxx(item){
+        console.log(item)
+      },
       loadMore:function(){
         this.busy = true;
         let _this = this;
@@ -71,16 +79,35 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+  .bar_img {
+    width:20%;
+    height:100%;
+    overflow: hidden;
+    cursor: pointer;
+    margin-right:20px;
+    img {
+      display:block;
+      width:100%;
+      height:100%;
+      transition:0.5s all;
+    }
+    img:hover {
+      width:120%;
+      height:120%;
+    }
+  }
   .wei .list {
     margin:20px 20px;
     padding:10px;
     background-color: #f3f3f3;
     cursor: pointer;
     animation:0.5s Show forwards;
-
+    display: flex;
+    align-items:center;
+    height:100px;
   }
-  .wei .list >p:nth-of-type(1){
+  .wei .list p:nth-of-type(1){
     max-height:50px;
     font-size:16px;
     line-height:1.5;
@@ -91,7 +118,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-  .wei .list >p:nth-of-type(2) {
+  .wei .list p:nth-of-type(2) {
     font-size:14px;
     color:#868686;
     margin-top:20px;

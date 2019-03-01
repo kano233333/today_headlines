@@ -53,7 +53,7 @@
     </Modal>
 
     <Modal v-model="modal2" title="发表">
-      <publish></publish>
+      <publish v-if="this.$store.state.freshIndex3"></publish>
       <div slot="footer"></div>
     </Modal>
 
@@ -128,7 +128,6 @@
           }else{
             _this.isFollowNum = 0;
           }
-          console.log(_this.isFollowNum)
         })
       },
       isDL(){
